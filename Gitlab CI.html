@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gitlab CI</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="how-to-create-and-trigger-pipeline-in-gitlab-ci">How to Create and Trigger pipeline in Gitlab CI</h1>
+<h2 id="introduction-of-gitlab">Introduction of Gitlab</h2>
+<blockquote>
+<p>GitLab is a web-based Git repository that provides free open and private repositories, issue-following capabilities, and wikis<br>
+It is a complete DevOps platform that enables professionals to perform all the tasks in a project - from project planning and source code management to monitoring and security.</p>
+</blockquote>
+<h3 id="features-of-gitlab">Features of Gitlab</h3>
+<ol>
+<li>
+<p>CI/CD</p>
+<blockquote>
+<p>Gitlab has feature i.e “Gitlab CI” for Continuous Integration and Continuous Delivery through pipeline on Code commits to Gitlab Repository.</p>
+</blockquote>
+</li>
+<li>
+<p>Artifactory registry</p>
+<blockquote>
+<p>Output resulting of code builds like .jar, .tgz, .war are store in package registry and like images are stored container registry.</p>
+</blockquote>
+</li>
+<li>
+<p>Role base access</p>
+<blockquote>
+<p>There are five roles in Gitlab (Guest, Reporter, Developer, Maintainer, Owner), which will provide permission to do the actions.</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="how-to-create-pipeline">How to Create Pipeline</h2>
+<blockquote>
+<p>In Gitlab, pipelines are written in yaml format and filename should be gitlab-ci.yaml file, it is placed at root directory in repository.</p>
+</blockquote>
+<blockquote>
+<p>There are five major keywords used to define pipeline.</p>
+<ol>
+<li>
+<p>Cache</p>
+</li>
+<li>
+<p>Variables</p>
+</li>
+<li>
+<p>Stage</p>
+</li>
+<li>
+<p>Jobs</p>
+</li>
+<li>
+<p>include</p>
+</li>
+</ol>
+</blockquote>
+<p>Lets now create simple pipeline to build the python app,  and deploy.</p>
+<pre class=" language-yaml"><code class="prism  language-yaml"><span class="token comment"># this is gitlab-ci.yaml</span>
+<span class="token comment"># create a stage for job to be tagged</span>
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> Test Python app
+  <span class="token punctuation">-</span> Build Python image
+  <span class="token punctuation">-</span> Build Helm chart
+  <span class="token punctuation">-</span> Deploy python app
+<span class="token comment"># Create variable to be use in pipeline</span>
+<span class="token key atrule">variables</span><span class="token punctuation">:</span>
+  <span class="token key atrule">BUILDAPP</span><span class="token punctuation">:</span> <span class="token string">"true"</span>
+  <span class="token key atrule">TESTAPP</span><span class="token punctuation">:</span> <span class="token string">"false"</span>
+  <span class="token key atrule">BUILDAPPIMAGE</span><span class="token punctuation">:</span> <span class="token string">"false"</span>
+  <span class="token key atrule">BUILDAPPCHART</span><span class="token punctuation">:</span> <span class="token string">"false"</span>
+  <span class="token key atrule">DEPLOYAPP</span><span class="token punctuation">:</span> <span class="token string">"false"</span>
+
+<span class="token key atrule">test-python-app</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> Test Python app
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> echo "Testing the python app"
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> $BUILDAPP == "true"
+    <span class="token punctuation">-</span> $TESTAPP == "true"
+    <span class="token key atrule">refs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> main
+    <span class="token punctuation">-</span> merge_request
+
+<span class="token key atrule">build-python-app-image</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> Build Python image
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> echo "Build the python app image"
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> $BUILDAPP == "true"
+    <span class="token punctuation">-</span> $BUILDAPPIMAGE == "true"
+    <span class="token key atrule">refs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> main
+    <span class="token punctuation">-</span> merge_request
+
+<span class="token key atrule">build-python-app-chart</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> Build Helm chart
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> echo "Build helm chart for python app "
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> $BUILDAPP == "true"
+    <span class="token punctuation">-</span> $BUILDAPPCHART == "true"
+    <span class="token key atrule">refs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> main
+    <span class="token punctuation">-</span> merge_request
+
+<span class="token key atrule">deploy-python-app</span><span class="token punctuation">:</span>   
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> Deploy python app
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> echo "Deploying the python app"
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> $DEPLOYAPP == "true"
+    <span class="token key atrule">refs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> main
+
+
+
+</code></pre>
+<h2 id="how-to-trigger-pipeline">How to Trigger pipeline</h2>
+<blockquote>
+<p>There are three ways to trigger pipeline in Gitlab.</p>
+<ol>
+<li>By Commit</li>
+<li>By Variables</li>
+<li>By Labels</li>
+</ol>
+</blockquote>
+</div>
+</body>
+
+</html>
