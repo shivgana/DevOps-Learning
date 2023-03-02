@@ -29,6 +29,7 @@
   <div>
 	  <form>
                <label for="file">Select a file:</label>
+	       <input type="text" id="filename-input"><br>
                <input type="file" id="file" name="file"><br><br>
                <button type="button" onclick="uploadFile()">Upload</button>
           </form>
@@ -42,12 +43,15 @@ function uploadFile() {
   // Create a new FormData object
   const formData = new FormData();
   formData.append("file", file);
-
+  // Read filename
+  const filenameInput = document.getElementById("filename-input");
+  const filename = filenameInput.value;
+  
   // Send a POST request to the GitHub API to create a new file
-  fetch("https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/FILENAME", {
+  fetch("https://api.github.com/repos/shivgana/DevOps-Learning/contents/"+filename, {
     method: "POST",
     headers: {
-      Authorization: "Bearer YOUR_ACCESS_TOKEN"
+      Authorization: "Bearer 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"
     },
     body: JSON.stringify({
       message: "Upload a file",
