@@ -26,6 +26,39 @@
 		<li><a href="./SecDevOps.html">Commands</a></li>
 	</ul>
   </div>
+  <div>
+	  <form>
+               <label for="file">Select a file:</label>
+               <input type="file" id="file" name="file"><br><br>
+               <button type="button" onclick="uploadFile()">Upload</button>
+          </form>
+  </div>
 </body>
+<script>
+function uploadFile() {
+  // Get the selected file from the input field
+  const file = document.getElementById("file").files[0];
 
+  // Create a new FormData object
+  const formData = new FormData();
+  formData.append("file", file);
+
+  // Send a POST request to the GitHub API to create a new file
+  fetch("https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/FILENAME", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer YOUR_ACCESS_TOKEN"
+    },
+    body: JSON.stringify({
+      message: "Upload a file",
+      content: btoa(formData),
+      branch: "main"
+    })
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
+
+	</script>
 </html>
