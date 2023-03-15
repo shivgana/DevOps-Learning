@@ -1,0 +1,77 @@
+Questions: 
+  1: A pod has a   which has an array of   (podstatus, podcondition) 
+  2: A Kubernetes   is a logical grouping of   while   is a logical set of   ([Service, Containers, pods, Containers],[Pods, Containers, Service, Pods],[Pods, Containers, Service, Containersj,Not of the Above) 
+  3: Correct Statement: (CoreOS tectonic includes open source tectonic installer, conjure-up is an open source) 
+  4:
+  5: which of the following are resources in cluster (persistentvolume or pPrsistPntvolumPrlaim) 
+  6: It is possible to rebind a pod to another node once it got bound to a node (True or False) 
+  7: Which of the following responsible for implementing a form of virtual IP for services (kubelet, kube-proxy, kubectl, AlloftheAbove) 
+  8: What kubectl command can be used to do a deployment update? (kubectl set image, kubectl rollout undo,kubectl rollout status,kubectl rollout image) 
+  9: To run the node conformance test, steps are (point your kubelet to localhost, --pod-cidr=10.180.0.0/24 , --cloud-provider=gce, All are True) 
+  10: Hostalias is supported in (1.7 or/and 1.8) 
+  11: Pod can never be automatically destroyed (True or False) 
+  12: Kubernetes secret volumes is backed by (local filesystem, RAM-backed filesystem, RAM-backed volumes) 
+  13: volume at pod level are erased after pods get deleted for all volume types (True or False) 
+  14: Pod will be replaced by a new pod which is scheduled to a new node 
+  15: Which of the following controller can be used to create/manage pods with restartPolicy as always (ReplicationController, ReplicaSet, Deployment, DaemonSet) 
+  16: Kubernetes supports network load balancer from which version (1.7, 1.8, 1.9) 
+  17: at is the scope of a rolling update (To update a Service, To update a Deployment, AlloftheAbove, To scale an app) 
+  18: For all services including headles services cluster-ip must be allocated (True or False) 
+  19: How to terminate all pods on node while marking the node as unschedulable (kubectl drain $NODENAME, kubectl drain $1101M3iNiE, kubectl node $NODENAME drain, NoneoftheAbove) 
+  20: Which of the following is not a possible value to restartPolicy of container (Always, OnSuccess, OnFailure, Never) 
+  21: Display information about the Deployment (kubectl get deployment hello-word, kubectl describe deployment hello-word kubectl describe, A and B) 
+  22: The content of the volume type, cephfs or glusterfs are erased when the pod is removed (True or False) 
+  23: Which of the following validate and configures data for the api object such as pod, services? (kube-apiserver, kube-scheduler, kube-controller-manager, None of the Above) 
+  24: Kubernetes allow custom plugin to be written to support different storage vendor volume type (True or False) 
+  25: Pod with which of the following phase for more than some duration will expire and automatically destroyed? (Succeeded, Failed, Both of the Above, None of the Above) 
+  26: Taints and Tolerations are introduced from which versoin of kubernetes? (1.5, 1.6, 1.7, 1.8) 
+  27: How to rollback (kubectl rollout status nginx-deployment, kubectl rollout, kubectl rollout nginx-deployment, kubectl rollout status deployments nginx-deployment) 
+  28: Which of the following handler(s) is invoked by kubelet to check if a containers IP address is open (ExecAction, TCPSocketAction, HttpGetAction, AlloftheAbove) 
+  29: The port number of service type, NodePort, must fall in the range such as ________  (0-65000, 32000-32767, 20000-22767, 10000-12767) 
+  30: Kubernetes cluster have two categories of users are (service accounts and admin user, service accounts managed by Kubernetes and normal users) 
+  31: The volume for the container is specified using which of the following field (spec.volumes, spec.containers.volumeMounts, spec.volumeMounts, None of the Above) 
+  32: How to scale a deployment (kubectl scale nginx-deployment --replicas=10, kubectl scale deployment nginx-deployment --replicas=10, kubectl deployment nginx-deployment --replicas=10, kubectl scale deployment) 
+  33: Kubernetes support which of the following (docker, rkt, bothoftheAbove, NoneoftheAbove) 
+  34: Which of the following servicetype makes service reachable from outsideThe cluster on a specific port of a Node (ClusterIP, NodePort, LoadBalance, ExternalName) 
+  35: How can you create a Service (With "Kubectl expose",With "Kubectl describe",With "Kubectl proxy",With "Kubectl service') 
+  36: Kubernetes cluster data is stored in which of the following (kube-apiserver, etcd, kubelet, kube-proxy) 
+  37: which of the following volume types allow several volume to be mapped into same directory (hostpath, local, projected, pPrsistentVolumeClaim) 
+  38: restartPolicy refers to restart of the container by the kubelet on   node (Any, Same) 
+  39: Which one is correct ( Kubernetes Objects are a way of storing structured data about you cluster Kubernetes Objects are mondified via the kubernetes Api Kubernetes Objects need not to have a controller. Configmap act purely as storage AlloftheAbove A and B 
+  40: Chose Correct Statement(s) ( The cloud controller manager (CCM) concept was originaly created to allow cloud specific vendor code and the kubernetes core to evolve independent of one another, 49 The cloud controller manager runs alongside other master components such as kubernetes controller manager, the API server, and scheduler, it can also be 50000 asNkubernetes addon, in which case it runs on top of kubernetes, 50 ThP cloud controller manager's design is based on a plugin mechanism that allow new cloud provider to integrate with kubernetes
+  41: Use of $ kubectl get rs We can run kubectl get rs to see that the Deployment updated the pods by creating Scaling it up to 3 replicas, as well as scaling down the ReplicaSet to 0 replicas A and B AlloftheAbove 
+  ) 
+  42: Which statements are true ( For pods with a replica set, the pod will be replaced by a new pod which will be scheduled to a new node. Additionally, if the pod is part of a service , the clients will automatically be redirected to the new pod, For pod with no replica set, you need to bring up a new copy, and assumming it is not part of service, redirect clients to It BothoftheAbove are true 
+) 43: Which of the following servicetype makes service reachable from the load balancer (ClusterIP, NodePort, LoadBalance, ExternalName) 
+  44: Which of the following run as a node agentand watches for the pods that have been assigned to its node? (kubelet, kube-proxy, kubectl, etcd) 
+  45: Which of the following servicetype makes service reachable from within the cluster (ClusterlP, NodePort, LoadBalance, ExternalName) 
+  46: What is the link between scalind and deployments ( Scaling changes the number of replicas in deployment Scaling exposes a Deployment to •external network traffic Scaling creates a new service Scaling creates a new node 
+  47: Choose the Correct Option. ( Conjure-up is an open-source installeril 0 Wbernetes that creates Kubernetes cluster with native Ubuntu, Kubernetes Operations - Production Grade Os installation, Upgrades and Management. Support running only RHEL in AWS. CoreOS Tectonic includes the open-source Tectonic installer that creates Kubernetes Clusters with Containers Linux nodes on AWS A and C 
+  48: Which of the following is true for tha phase of the pod ( The Phase of the pod is a comprehensive rollup of observation of Container or Pod state, The Phase of the pod is a simple, high-level summary of where the pods is in its lifecycle, The Phase of the pod is a comprehensive state machine None of these 
+  49: Kubernetes controller manager ( Node controller & Route controller Service controller PersistentVolumeLabel controller AlloftheAbove 
+  50: runs kubectl in a node where it acts as a reverse proxy (kubectl proxy --port=8080 &, ubectl proxy --port-8880, kubectl proxy, NoneoftheAbove) 
+  51: Which of the following is used to mount persistent volume into the pod gersistentvolume, persistentVolumeClaim, Both, NoneoftheAbove) 
+  52: Now to see the rollout status (kubectl rollout status deployment/nginx-deployment, kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1, kubectl rollout deployment/nginx-deployment, ubectl set image deployment/nginx-deployment rollout) 
+  53: Only one volume can be specified at the pod level (True or False) 
+  54: If a Deployment is exposed publicly, what happends with the network traffic during an update? (is droppped, is load-balancer only to the old instances,is load-balancer only to available instances, is exposed) 
+  55: Which of the following are valid servicetype (ExternalService, NodePort, ClusterlP, Option b and c) 
+  56: Switching you config files to a new API version (kubectl convert -f pod.yaml, kubectl convert -f pod.yaml --output-version vi, kubectl convert -f, kubectl convert -f output-version v1) 
+  57: Step to upgrade to a new API version A. Upgrade the clusters storage to use the new version B. Tuern on the new API version C. Upgrade all config files. Identify users of the old API version endpoint D. Update existing objects in the storage to new version by running cluster/update-storage-object.sh E. Turn of the old API version 
+    D>A>C>DA A.4>C>DA C>A>100>E 
+  58:
+  
+  
+  52: How to see the rollout status (kubectl rollout status deploymentinginx-deployment, kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1, kubectl rollout deployment/nginx-deployment, ubectl set image deployment/nginx-deployment rollout) 
+  53: Only one volume can be specified at the pod level (True or False) 
+  54: If a Deployment is exposed publicly, what happends with the network traffic during an update? (is droppped, is load-balancer only to the old instances,is load-balancer only to available instances, is exposed) 
+  55: Which of the following are valid servicetype (ExternalService, NodePort, ClusterlP, Option b and c) 
+  56: Switching you config files to a new API version (kubectl convert -f pod.yaml, kubectl convert -f pod.yaml --output-version vi, kubectl convert -f, kubectl convert -f output-version v1) 
+  57: Step to upgrade to a new API version A. Upgrade the clusters storage to use the new version B. Tuern on the new API version C. Upgrade all config files. Identify users of the old API version endpoint D. Update existing objects in the storage to new version by running clugyr/update-storage-object.sh E. Turn of the old API version 
+
+113 114 115 116 117 118 119 
+B>A>C>D>E A>B>C>D>E C>A>B>D>E D>A>C>B>E 
+) 
+  58: Components of the CCM (Node controller & Volume controller, Route controller & service controller, A & B, NoneoftheAbove) 
+  59: Function Trigger Support in Kubernetes (HTTP, PubSub, HTTPS, BOTH A & B) 
+  60: Which of the following probe handler is invoked by kubelet to perform diagnostics on a container (ExecAction, TCPSocketAction, HttpGetAction, AlloftheAbove) 
+  61: Correct Command(s): ( kubectl get pods kubectl describe pod nginx-deployment-10062308;4-6winp kubectl get events --namespace=my-namespace All OK )
