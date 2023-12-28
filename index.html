@@ -31,23 +31,19 @@
             padding: 0 10px 0 10px;
         }
 
-        #menu div {
-            padding: 5px;
-            margin: 5px;
-            box-sizing: border-box;
-        }
-
-        #menu div a {
-            color: #ecf0f1;
+        #menu div div {
             text-decoration: none;
             padding: 10px;
+            margin: 5px;
+            box-sizing: border-box;
             border-radius: 3px;
             transition: background-color 0.3s;
             cursor: pointer;
         }
 
-        #menu div:hover {
+        #menu div div:hover {
             background-color: #34495e;
+            color: #ecf0f1; 
         }
 
         #content {
@@ -78,7 +74,7 @@
         <div id="menu">
             <!-- Menu content goes here -->
             <h2>DevOps Learning</h2>
-            <ul id="menuList"></ul>
+            <div id="menuList"></div>
         </div>
         <div id="content"></div>
     </div>

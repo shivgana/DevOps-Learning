@@ -11,10 +11,8 @@ function loadMenu() {
 
     menuItems.forEach(item => {
         const div = document.createElement('div');
-        const link = document.createElement('a');
-        link.textContent = item.label;
-        link.addEventListener('click', () => loadContent(item));
-        div.appendChild(link)
+        div.textContent = item.label;
+        div.addEventListener('click', () => loadContent(item));
         menuList.appendChild(div);
     });
 }
