@@ -1,130 +1,87 @@
-﻿<!DOCTYPE html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>index</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Page</title>
+    <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        #menu {
+            width: 20%;
+            background-color: #9a929293;
+            transition: width 0.4s ease;
+            overflow: hidden;
+        }
+
+        #menu h2 {
+            padding: 0 10px 0 10px;
+        }
+
+        #menu div {
+            padding: 5px;
+            margin: 5px;
+            box-sizing: border-box;
+        }
+
+        #menu div a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        #menu div:hover {
+            background-color: #34495e;
+        }
+
+        #content {
+            width: 80%;
+            background-color: #f1f1f1;
+            overflow: auto;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #menu {
+                width: 0;
+            }
+
+            #container:hover #menu {
+                width: 50%;
+            }
+
+            #content {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-
-<body class="stackedit">
-  <div class="stackedit__html"><h1 id="devops-learning-path">DevOps Learning Path</h1>
-<h2 id="containerization">Containerization</h2>
-<ul>
-<li>Docker</li>
-</ul>
-
-<table>
-<thead>
-<tr>
-<th>Documentation</th>
-<th>Exam Link</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://docs.docker.com/reference/">Official Reference for Command-line, API, DockerFile and Docker Compose</a></td>
-<td><a href="https://prod.examity.com/docker/">Exam Link</a></td>
-</tr>
-</tbody>
-</table><ul>
-<li>Podman</li>
-</ul>
-
-<table>
-<thead>
-<tr>
-<th>Documentation</th>
-<th>Exam Link</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://docs.podman.io/en/latest/Commands.html#">Commands</a></td>
-<td><a href="">Exam Link</a></td>
-</tr>
-</tbody>
-</table><h2 id="orchestration">Orchestration</h2>
-<ul>
-<li>Kubernetes</li>
-</ul>
-
-<table>
-<thead>
-<tr>
-<th>References</th>
-<th>Exam Link</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://kubernetes.io/docs/home/">Official Documentation</a></td>
-<td><a href="https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/">CKA Exam Link</a>, <a href="https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/">CKAD Exam Link</a>, <a href="https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/">CKS Exam Link</a></td>
-</tr>
-</tbody>
-</table><ul>
-<li>Helm</li>
-</ul>
-
-<table>
-<thead>
-<tr>
-<th>References</th>
-<th>Exam Link</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://helm.sh/docs/">Official Documentation</a></td>
-<td>No Exam</td>
-</tr>
-</tbody>
-</table><h2 id="infrastructure-as-code">Infrastructure as Code</h2>
-<ul>
-<li>Terraform</li>
-</ul>
-
-<table>
-<thead>
-<tr>
-<th>References</th>
-<th>Practice MCQs</th>
-<th>Exam Link</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://developer.hashicorp.com/terraform/language">Official Documentation of Hashicorp Configuration Language</a></td>
-<td><a href="https://codingnconcepts.com/post/terraform-associate-exam-questions/">By CodingNConcepts</a></td>
-<td><a href="https://www.redhat.com/en/services/certification/rhcs-container">Exam Link</a></td>
-</tr>
-<tr>
-<td><a href="./terraform/index.html">Self Documentation</a></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table><ul>
-<li>AWS CloudFormation</li>
-</ul>
-<h2 id="configuration-management">Configuration Management</h2>
-<ul>
-<li>Ansible
-<ul>
-<li><a href="https://docs.ansible.com/ansible/latest/index.html">Official Documentation</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="linux">Linux</h2>
-<ul>
-<li><a href="./commands-list.html">Commands</a></li>
-</ul>
-<h2 id="secdevops-guide">SecDevOps Guide</h2>
-<ul>
-<li><a href="./SecDevOps.html">Commands</a></li>
-</ul>
-</div>
+<body>
+    <div id="container">
+        <div id="menu">
+            <!-- Menu content goes here -->
+            <h2>DevOps Learning</h2>
+            <ul id="menuList"></ul>
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
-
 </html>

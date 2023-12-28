@@ -10,12 +10,12 @@ function loadMenu() {
     const menuList = document.getElementById('menuList');
 
     menuItems.forEach(item => {
-        const listItem = document.createElement('li');
+        const div = document.createElement('div');
         const link = document.createElement('a');
         link.textContent = item.label;
         link.addEventListener('click', () => loadContent(item));
-        listItem.appendChild(link);
-        menuList.appendChild(listItem);
+        div.appendChild(link)
+        menuList.appendChild(div);
     });
 }
 
