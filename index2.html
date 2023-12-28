@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Page</title>
+    <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        #menu {
+            width: 20%;
+            background-color: #9a929293;
+            transition: width 0.4s ease;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        #menu h2 {
+            padding: 0 10px;
+        }
+
+        #content {
+            width: 80%;
+            background-color: #f1f1f1;
+            overflow: auto;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #menu {
+                width: 0;
+            }
+
+            #container:hover #menu {
+                width: 50%;
+            }
+
+            #content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="menu">
+            <!-- Menu content goes here -->
+            <h2>DevOps Learning</h2>
+            <ul id="menuList"></ul>
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

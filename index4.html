@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Orchestration Theme</title>
+    <style>
+        /* Styles from the previous example remain unchanged */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kubernetes Orchestration Theme</h1>
+    </header>
+
+    <div id="container">
+        <div id="menu">
+            <!-- Menu content goes here -->
+            <ul>
+                <li><a href="#" onclick="showContent('deployments')">Deployments</a></li>
+                <li><a href="#" onclick="showContent('services')">Services</a></li>
+                <li><a href="#" onclick="showContent('pods')">Pods</a></li>
+                <li><a href="#" onclick="showContent('configMaps')">Config Maps</a></li>
+            </ul>
+        </div>
+        <div id="content">
+            <!-- Content goes here -->
+            <div id="deploymentsContent">
+                <h2>Deployments Content</h2>
+                <p>This is the content for Deployments.</p>
+            </div>
+            <div id="servicesContent" style="display: none;">
+                <h2>Services Content</h2>
+                <p>This is the content for Services.</p>
+            </div>
+            <div id="podsContent" style="display: none;">
+                <h2>Pods Content</h2>
+                <p>This is the content for Pods.</p>
+            </div>
+            <div id="configMapsContent" style="display: none;">
+                <h2>Config Maps Content</h2>
+                <p>This is the content for Config Maps.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(contentId) {
+            // Hide all content blocks
+            document.getElementById('deploymentsContent').style.display = 'none';
+            document.getElementById('servicesContent').style.display = 'none';
+            document.getElementById('podsContent').style.display = 'none';
+            document.getElementById('configMapsContent').style.display = 'none';
+
+            // Show the selected content block
+            document.getElementById(contentId + 'Content').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
