@@ -1,11 +1,11 @@
 const menuItems = [
-    { id: 'linux', label: 'Linux', file: 'linux.html'},
+    { id: 'os', label: 'Operating System', file: 'os.html'},
     { id: 'containerization', label: "Containerization", file: 'containerization.html' },
     { id: 'orchestration', label: "Orchestration", file: 'orchestration.html' },
     { id: 'infrastructure-as-code', label: "Infrastructure as Code", file: 'infrastructure-as-code.html' },
     { id: 'configuration-management', label: "Configuration Management", file: 'configuration-management.html' },
     { id: 'cloud', label: 'Cloud', file: 'cloud.html'},
-    { id: 'security-devops', label: 'Security DevOps', file: 'security-devops.html'}
+    { id: 'security-devops', label: 'Security DevOps', file: 'SecDevOps.html'}
 ];
 
 // Function to load menu dynamically
