@@ -1,163 +1,83 @@
 ﻿<!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terraform</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Page</title>
+    <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        #menu {
+            width: 20%;
+            background-color: #9a929293;
+            transition: width 0.4s ease;
+            overflow: hidden;
+        }
+
+        #menu h2 {
+            padding: 0 10px 0 10px;
+        }
+
+        #menu div div {
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px;
+            box-sizing: border-box;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        #menu div div:hover {
+            background-color: #34495e;
+            color: #ecf0f1; 
+        }
+
+        #content {
+            width: 80%;
+            background-color: #f1f1f1;
+            overflow: auto;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #menu {
+                width: 0;
+            }
+
+            #container:hover #menu {
+                width: 50%;
+            }
+
+            #content {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-
-<body class="stackedit">
-  <div class="stackedit__html"><blockquote>
-<p><a href="../index.html">Back to Home</a></p>
-</blockquote>
-<h1 id="terraform-code-help">Terraform Code help</h1>
-<h2 id="data-types">Data Types</h2>
-<h3 id="basic-type">Basic type</h3>
-<ul>
-<li>bool</li>
-<li>number</li>
-<li>string</li>
-</ul>
-<h3 id="collection-type">Collection type</h3>
-<ul>
-<li>list</li>
-<li>map</li>
-<li>set</li>
-</ul>
-<h3 id="structure-type">Structure type</h3>
-<ul>
-<li>object</li>
-<li>tuple</li>
-</ul>
-<h2 id="terraform-blocks-types">Terraform Blocks types</h2>
-<blockquote>
-<p>terraform | provider |  resource |  variable |  locals |  data |  module |  output |  provisioner</p>
-</blockquote>
-<h3 id="terraform">terraform</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">terraform <span class="token verb keyword">{</span> 
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="provider">provider</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">provider <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="resource">resource</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">resource <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span> <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="variable">variable</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">variable <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-   type <span class="token verb keyword">=</span> map<span class="token punctuation">(</span>string<span class="token punctuation">)</span>
-   description <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span><span class="token punctuation">(</span>optional<span class="token punctuation">)</span> describe your variable<span class="token conjunction variable">"</span>
-   default <span class="token verb keyword">=</span> <span class="token verb keyword">{</span>
-       key1 <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span>val1<span class="token conjunction variable">"</span>
-       key2 <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span>val2<span class="token conjunction variable">"</span>
-   <span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="locals">locals</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">locals <span class="token verb keyword">{</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="data">data</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">data <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span> <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
- count <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span><span class="token verb keyword">,</span>
- depends_on <span class="token verb keyword">=</span> <span class="token verb keyword">[</span>  <span class="token verb keyword">]</span>
- dynamic <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-   for_each <span class="token verb keyword">=</span> <span class="token verb keyword">#</span><span class="token verb keyword">[</span> <span class="token conjunction variable">"</span>value<span class="token conjunction variable">"</span> <span class="token verb keyword">]</span><span class="token verb keyword">,</span>cidrsubnets<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>coalesce<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>coalescelist<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>compact<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>concat<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token conjunction variable">.</span>contains<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>csvdecode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>distinct<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>element<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>fileset<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>format<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span><span class="token verb keyword">,</span>formatlist<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>index<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>jsondecode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>lookup<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>matchkeys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>merge<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>nonsensitive<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>one<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>parseint<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>range<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>regex<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>regexall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>reverse<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>sensitive<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>setintersection<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>setproduct<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>setsubtract<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>setunion<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>slice<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>sum<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>templatefile<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>tomap<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>toset<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>transpose<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>try<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>values<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>yamldecode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>zipmap<span class="token punctuation">(</span><span class="token punctuation">)</span>
-   iterator <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span>value<span class="token conjunction variable">"</span>
-   labels <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span>chip<span class="token conjunction variable">"</span>   
- <span class="token adverb builtin">}</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="module">module</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">module <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="output">output</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">output <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-   value <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h3 id="provisioner">provisioner</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">provisioner <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<h2 id="terraform-nested-blocks">Terraform Nested blocks</h2>
-<h3 id="check">check</h3>
-<blockquote>
-<pre class=" language-j"><code class="prism  language-j">check <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-    assert <span class="token verb keyword">{</span>
-        condition <span class="token verb keyword">=</span> <span class="token verb keyword">[</span>abspath<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">,</span>assert<span class="token verb keyword">,</span>bool<span class="token verb keyword">,</span>check<span class="token verb keyword">,</span>chip<span class="token verb keyword">,</span>condition<span class="token verb keyword">,</span>content<span class="token verb keyword">,</span>daffy<span class="token verb keyword">,</span>dale<span class="token verb keyword">,</span>data<span class="token verb keyword">,</span>default<span class="token verb keyword">,</span>depends_on<span class="token verb keyword">,</span>describe<span class="token verb keyword">,</span>description<span class="token verb keyword">,</span>distance<span class="token verb keyword">,</span>donald<span class="token verb keyword">,</span>error_message<span class="token verb keyword">,</span>fast<span class="token verb keyword">,</span>Female<span class="token verb keyword">,</span>filename<span class="token verb keyword">,</span>first<span class="token verb keyword">,</span>for_each<span class="token verb keyword">,</span>gender<span class="token verb keyword">,</span>hard_drive<span class="token verb keyword">,</span>HHD<span class="token verb keyword">,</span>jedi<span class="token verb keyword">,</span>jerry<span class="token verb keyword">,</span>key<span class="token verb keyword">,</span>key1<span class="token verb keyword">,</span>key2<span class="token verb keyword">,</span>list<span class="token verb keyword">,</span>Male<span class="token verb keyword">,</span>map<span class="token verb keyword">,</span>Mark<span class="token verb keyword">,</span>module<span class="token verb keyword">,</span>name<span class="token verb keyword">,</span>number<span class="token verb keyword">,</span>optional<span class="token verb keyword">,</span>phanius<span class="token verb keyword">,</span>pluto<span class="token verb keyword">,</span>provider<span class="token verb keyword">,</span>provisioner<span class="token verb keyword">,</span>root<span class="token verb keyword">,</span>set<span class="token verb keyword">,</span>slow<span class="token verb keyword">,</span>source<span class="token verb keyword">,</span>SSD<span class="token verb keyword">,</span>string<span class="token verb keyword">,</span>tom<span class="token verb keyword">,</span>true<span class="token verb keyword">,</span>users<span class="token verb keyword">,</span>val1<span class="token verb keyword">,</span>val2<span class="token verb keyword">,</span>value<span class="token verb keyword">,</span>variable<span class="token verb keyword">,</span>your<span class="token verb keyword">]</span>
-        error_message <span class="token verb keyword">=</span> <span class="token verb keyword">[</span>abs<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token verb keyword">]</span>
-    <span class="token adverb builtin">}</span>
-    data <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span> <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-        depends_on <span class="token verb keyword">=</span> <span class="token verb keyword">[</span>  <span class="token verb keyword">]</span>
-        provider <span class="token verb keyword">=</span> <span class="token verb keyword">[</span><span class="token verb keyword">]</span>
-    <span class="token adverb builtin">}</span>
-    for_each <span class="token verb keyword">=</span> <span class="token verb keyword">{</span>
-       key <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span>value<span class="token conjunction variable">"</span>
-    <span class="token adverb builtin">}</span>
-    module <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-       source <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span>  
-    <span class="token adverb builtin">}</span>
-    output <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-       value <span class="token verb keyword">=</span> <span class="token conjunction variable">"</span><span class="token conjunction variable">"</span>
-    <span class="token adverb builtin">}</span>
-    provisioner <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-    <span class="token adverb builtin">}</span>
-    variable <span class="token conjunction variable">"</span>name<span class="token conjunction variable">"</span> <span class="token verb keyword">{</span>
-    <span class="token adverb builtin">}</span>
-<span class="token adverb builtin">}</span>
-</code></pre>
-</blockquote>
-<p>fast<br>
-filename<br>
-first<br>
-for_each = {<br>
-key = “value”<br>
-}<br>
-Female<br>
-gender<br>
-hard_drive<br>
-HHD<br>
-import {<br>
-id = “value”<br>
-provider = “”<br>
-to = “”<br>
-}<br>
-jedi<br>
-jerry<br>
-key<br>
-moved {<br>
-}<br>
-name<br>
-set<br>
-slow<br>
-source<br>
-SSD<br>
-users<br>
-your</p>
-</div>
+<body>
+    <div id="container">
+        <div id="menu">
+            <!-- Menu content goes here -->
+            <h2>IaC: Terraform</h2>
+            <div id="menuList"></div>
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
-
 </html>

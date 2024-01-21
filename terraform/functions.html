@@ -1,0 +1,541 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>t_function</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="terraform-functions">Terraform Functions</h1>
+<blockquote>
+<p><strong>Function Format and its Return type</strong></p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">functionName</span><span class="token punctuation">(</span>argument <span class="token keyword">type</span><span class="token punctuation">)</span> <span class="token keyword">type</span> 
+</code></pre>
+</blockquote>
+<h3 id="absolute-path">Absolute Path</h3>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">abspath</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: abspath takes a string containing a filesystem path and converts it to an absolute path. That is, if the path is not absolute, it will be joined with the current working directory.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">alltrue</span><span class="token punctuation">(</span>list list<span class="token operator">-</span>of<span class="token operator">-</span><span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: alltrue returns true if all elements in a given collection are true or “true”. It also returns true if the collection is empty</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">anytrue</span><span class="token punctuation">(</span>list list<span class="token operator">-</span>of<span class="token operator">-</span><span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: anytrue returns true if any element in a given collection is true or “true”. It also returns false if the collection is empty.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">base64decode</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: base64decode takes a string containing a Base64 character sequence and returns the original string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">base64encode</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: base64encode applies Base64 encoding to a string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">base64gzip</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: base64gzip compresses a string with gzip and then encodes the result in Base64 encoding.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">base64sha256</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: base64sha256 computes the SHA256 hash of a given string and encodes it with Base64. This is not equivalent to base64encode(sha256(“test”)) since sha256() returns hexadecimal representation.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">base64sha512</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: base64sha512 computes the SHA512 hash of a given string and encodes it with Base64. This is not equivalent to base64encode(sha512(“test”)) since sha512() returns hexadecimal representation.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">basename</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: basename takes a string containing a filesystem path and removes all except the last portion from it.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">bcrypt</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token operator">...</span>cost number<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: bcrypt computes a hash of the given string using the Blowfish cipher, returning a string in the Modular Crypt Format usually expected in the shadow password file on many Unix systems.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">can</span><span class="token punctuation">(</span>expression dynamic<span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: can evaluates the given expression and returns a boolean value indicating whether the expression produced a result without any errors.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">chomp</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: chomp removes newline characters at the end of a string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">cidrhost</span><span class="token punctuation">(</span>prefix <span class="token builtin">string</span><span class="token punctuation">,</span> hostnum number<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: cidrhost calculates a full host IP address for a given host number within a given IP network address prefix.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">cidrnetmask</span><span class="token punctuation">(</span>prefix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: cidrnetmask converts an IPv4 address prefix given in CIDR notation into a subnet mask address.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">cidrsubnet</span><span class="token punctuation">(</span>prefix <span class="token builtin">string</span><span class="token punctuation">,</span> newbits number<span class="token punctuation">,</span> netnum number<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: cidrsubnet calculates a subnet address within given IP network address prefix.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">coalesce</span><span class="token punctuation">(</span>…vals dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: coalesce takes any number of arguments and returns the first one that isn’t null or an empty string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">coalescelist</span><span class="token punctuation">(</span>…vals dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: coalescelist takes any number of list arguments and returns the first one that isn’t empty.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">concat</span><span class="token punctuation">(</span>…seqs dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: concat takes two or more lists and combines them into a single list.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">contains</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">,</span> value dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: contains determines whether a given list or set contains a given single value as one of its elements.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">csvdecode</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: csvdecode decodes a string containing CSV-formatted data and produces a list of maps representing that data.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">dirname</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: dirname takes a string containing a filesystem path and removes the last portion from it.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">element</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">,</span> index number<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: element retrieves a single element from a list.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">endswith</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> suffix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: endswith takes two values: a string to check and a suffix string. The function returns true if the first string ends with that exact suffix.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">file</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: file reads the contents of a file at the given path and returns them as a string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filebase64</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filebase64 reads the contents of a file at the given path and returns them as a base64-encoded string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filebase64sha256</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filebase64sha256 is a variant of base64sha256 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filebase64sha512</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filebase64sh512 is a variant of base64sha512 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">fileexists</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: fileexists determines whether a file exists at a given path.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filemd5</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filemd5 is a variant of md5 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filesha1</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filesha1 is a variant of sha1 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filesha256</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filesha256 is a variant of sha256 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">filesha512</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: filesha512 is a variant of sha512 that hashes the contents of a given file rather than a literal string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">flatten</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: flatten takes a list and replaces any elements that are lists with a flattened sequence of the list contents.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">format</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> …args dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: The format function produces a string by formatting a number of other values according to a specification string. It is similar to the printf function in C, and other similar functions in other programming languages.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">formatdate</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> time <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: formatdate converts a timestamp into a different time format.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">formatlist</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> …args dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: formatlist produces a list of strings by formatting a number of other values according to a specification string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">indent</span><span class="token punctuation">(</span>spaces number<span class="token punctuation">,</span> str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: indent adds a given number of spaces to the beginnings of all but the first line in a given multi-line string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">index</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">,</span> value dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: index finds the element index for a given value in a list.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">join</span><span class="token punctuation">(</span>separator <span class="token builtin">string</span><span class="token punctuation">,</span> …lists list of <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: join produces a string by concatenating together all elements of a given list of strings with the given delimiter.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">jsondecode</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: jsondecode interprets a given string as JSON, returning a representation of the result of decoding that string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">jsonencode</span><span class="token punctuation">(</span>val dynamic<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: jsonencode encodes a given value to a string using JSON syntax.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">keys</span><span class="token punctuation">(</span>inputMap dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: keys takes a map and returns a list containing the keys from that map.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">lookup</span><span class="token punctuation">(</span>inputMap dynamic<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> …<span class="token keyword">default</span> dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: lookup retrieves the value of a single element from a map, given its key. If the given key does not exist, the given default value is returned instead.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">lower</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: lower converts all cased letters in the given string to lowercase.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">md5</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: md5 computes the MD5 hash of a given string and encodes it with hexadecimal digits.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">merge</span><span class="token punctuation">(</span>…maps dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: merge takes an arbitrary number of maps or objects, and returns a single map or object that contains a merged set of elements from all arguments.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">nonsensitive</span><span class="token punctuation">(</span>value dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: nonsensitive takes a sensitive value and returns a copy of that value with the sensitive marking removed, thereby exposing the sensitive value.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">one</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: one takes a list, set, or tuple value with either zero or one elements. If the collection is empty, one returns null. Otherwise, one returns the first element. If there are two or more elements then one will return an error.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">parseint</span><span class="token punctuation">(</span>number dynamic<span class="token punctuation">,</span> base number<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: parseint parses the given string as a representation of an integer in the specified base and returns the resulting number. The base must be between 2 and 62 inclusive.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">pathexpand</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: pathexpand takes a filesystem path that might begin with a ~ segment, and if so it replaces that segment with the current user’s home directory path.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">plantimestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: plantimestamp returns a UTC timestamp string in RFC 3339 format, fixed to a constant time representing the time of the plan.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">regex</span><span class="token punctuation">(</span>pattern <span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span> <span class="token builtin">string</span><span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: regex applies a regular expression to a string and returns the matching substrings.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">replace</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> substr <span class="token builtin">string</span><span class="token punctuation">,</span> replace <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: replace searches a given string for another given substring, and replaces each occurrence with a given replacement string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">reverse</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: reverse takes a sequence and produces a new sequence of the same length with all of the same elements as the given sequence but in reverse order.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">rsadecrypt</span><span class="token punctuation">(</span>ciphertext <span class="token builtin">string</span><span class="token punctuation">,</span> privatekey <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: rsadecrypt decrypts an RSA-encrypted ciphertext, returning the corresponding cleartext.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">sensitive</span><span class="token punctuation">(</span>value dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: sensitive takes any value and returns a copy of it marked so that Terraform will treat it as sensitive, with the same meaning and behavior as for sensitive input variables.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">setproduct</span><span class="token punctuation">(</span>…sets dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: The setproduct function finds all of the possible combinations of elements from all of the given sets by computing the Cartesian product.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">sha1</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: sha1 computes the SHA1 hash of a given string and encodes it with hexadecimal digits.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">sha256</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: sha256 computes the SHA256 hash of a given string and encodes it with hexadecimal digits.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">sha512</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: sha512 computes the SHA512 hash of a given string and encodes it with hexadecimal digits.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">slice</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">,</span> start_index number<span class="token punctuation">,</span> end_index number<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: slice extracts some consecutive elements from within a list.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">startswith</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> prefix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: startswith takes two values: a string to check and a prefix string. The function returns true if the string begins with that exact prefix.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">strcontains</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> substr <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: strcontains takes two values: a string to check and an expected substring. The function returns true if the string has the substring contained within it.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">strrev</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: strrev reverses the characters in a string. Note that the characters are treated as Unicode characters (in technical terms, Unicode grapheme cluster boundaries are respected).</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">substr</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> offset number<span class="token punctuation">,</span> length number<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: substr extracts a substring from a given string by offset and (maximum) length.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">sum</span><span class="token punctuation">(</span>list dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: sum takes a list or set of numbers and returns the sum of those numbers.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">templatefile</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">,</span> vars dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: templatefile reads the file at the given path and renders its content as a template using a supplied set of template variables.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">textdecodebase64</span><span class="token punctuation">(</span>source <span class="token builtin">string</span><span class="token punctuation">,</span> encoding <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: textdecodebase64 function decodes a string that was previously Base64-encoded, and then interprets the result as characters in a specified character encoding.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">textencodebase64</span><span class="token punctuation">(</span><span class="token builtin">string</span> <span class="token builtin">string</span><span class="token punctuation">,</span> encoding <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: textencodebase64 encodes the unicode characters in a given string using a specified character encoding, returning the result base64 encoded because Terraform language strings are always sequences of unicode characters.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">timeadd</span><span class="token punctuation">(</span>timestamp <span class="token builtin">string</span><span class="token punctuation">,</span> duration <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: timeadd adds a duration to a timestamp, returning a new timestamp.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">timestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: timestamp returns a UTC timestamp string in RFC 3339 format.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">title</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: title converts the first letter of each word in the given string to uppercase.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">tobool</span><span class="token punctuation">(</span>v dynamic<span class="token punctuation">)</span> <span class="token builtin">bool</span> 
+</code></pre>
+<p><strong>Description</strong>: tobool converts its argument to a boolean value.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">tostring</span><span class="token punctuation">(</span>v dynamic<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: tostring converts its argument to a string value.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">trim</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> cutset <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: trim removes the specified set of characters from the start and end of the given string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">trimprefix</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> prefix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: trimprefix removes the specified prefix from the start of the given string. If the string does not start with the prefix, the string is returned unchanged.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">trimspace</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: trimspace removes any space characters from the start and end of the given string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">trimsuffix</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">,</span> suffix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: trimsuffix removes the specified suffix from the end of the given string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">try</span><span class="token punctuation">(</span>…expressions dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: try evaluates all of its argument expressions in turn and returns the result of the first one that does not produce any errors.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">upper</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: upper converts all cased letters in the given string to uppercase.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">urlencode</span><span class="token punctuation">(</span>str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: urlencode applies URL encoding to a given string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">uuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: uuid generates a unique identifier string.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">uuidv5</span><span class="token punctuation">(</span>namespace <span class="token builtin">string</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: uuidv5 generates a name-based UUID, as described in RFC 4122 section 4.3, also known as a “version 5” UUID.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">values</span><span class="token punctuation">(</span>mapping dynamic<span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: values takes a map and returns a list containing the values of the elements in that map.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">yamldecode</span><span class="token punctuation">(</span>src <span class="token builtin">string</span><span class="token punctuation">)</span> dynamic 
+</code></pre>
+<p><strong>Description</strong>: yamldecode parses a string as a subset of YAML, and produces a representation of its value.</p>
+</blockquote>
+<blockquote>
+<p><strong>Function</strong>:</p>
+<pre class=" language-go"><code class="prism  language-go"><span class="token function">yamlencode</span><span class="token punctuation">(</span>value dynamic<span class="token punctuation">)</span> <span class="token builtin">string</span> 
+</code></pre>
+<p><strong>Description</strong>: yamlencode encodes a given value to a string using YAML 1.2 block syntax.<br>
+zipmap(keys list of string, values dynamic) dynamic</p>
+<pre><code>**Description**: zipmap constructs a map from a list of keys and a corresponding list of values.
+</code></pre>
+</blockquote>
+</div>
+</body>
+
+</html>
