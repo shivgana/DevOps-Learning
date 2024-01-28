@@ -1,12 +1,6 @@
 const menuItems = [
-    { id: 'lang', label: 'Languages', file: 'languages/index.html'},
-    { id: 'os', label: 'Operating System', file: 'os.html'},
-    { id: 'containerization', label: "Containerization", file: 'containerization.html' },
-    { id: 'orchestration', label: "Orchestration", file: 'orchestration.html' },
-    { id: 'infrastructure-as-code', label: "Infrastructure as Code", file: 'infrastructure-as-code.html' },
-    { id: 'configuration-management', label: "Configuration Management", file: 'configuration-management.html' },
-    { id: 'cloud', label: 'Cloud', file: 'cloud.html'},
-    { id: 'security-devops', label: 'Security DevOps', file: 'SecDevOps.html'}
+    { id: 'python', label: 'Python', file: 'python.html'},
+    { id: 'golang', label: 'Golang', file: 'golang.html' }
 ];
 
 // Function to load menu dynamically
