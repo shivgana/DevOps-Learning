@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>practice test1 result</title>
+  <title>index</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
@@ -802,6 +802,402 @@ Which Azure service should you use?</p>
 <p>Azure Network Watcher provides tools to monitor, diagnose, view metrics, and enable or disable logs for resources on an Azure virtual network. Azure Resource Manager is the deployment and management service for Azure. Network security groups (NSGs) are used only for security, not monitoring. Azure Monitor is used for the HTTP Data Collector API to send log data to Log Analytics.</p>
 <p><a href="https://learn.microsoft.com/azure/network-watcher/network-watcher-monitoring-overview">Azure Network Watcher | Microsoft Learn</a><br>
 <a href="https://learn.microsoft.com/training/modules/configure-network-watcher/">Configure Network Watcher - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-1-of-50">Question 1 of 50</h2>
+<p>You have a Microsoft Entra tenant named <a href="http://contoso.com">contoso.com</a>. Microsoft Entra Connect is configured to sync users to the tenant.<br>
+You need to assign licenses to the users based on Microsoft Entra ID attributes. The solution must minimize administrative effort.<br>
+Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h3 id="correct-answer-50">Correct Answer</h3>
+<ul>
+<li>Assign the licenses to the dynamic groups.</li>
+<li>Create dynamic groups.</li>
+</ul>
+<blockquote>
+<p>To assign licenses to users based on Microsoft Entra ID attributes, you must create a dynamic security group and configure rules based on custom attributes. The dynamic group must be added to a license group for automatic synchronization. All users in the groups will get the license automatically. Microsoft Entra evaluates the users in the organization that are in scope for an assignment policy rule and creates assignments for the users who don’t have assignments to an access package; automatic assignment policies are not used for licensing.</p>
+<p><a href="https://learn.microsoft.com/azure/active-directory/enterprise-users/licensing-groups-assign">Assign licenses to a group - Azure Active Directory - Microsoft Entra | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-user-group-accounts/">Configure user and group accounts - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-5-of-50">Question 5 of 50</h2>
+<p>You have the following resource groups, management groups, and Azure subscriptions:</p>
+<ul>
+<li>Two resource groups named RG1 and RG2 that are associated with a subscription named 111-222-333 and a management group named MG1</li>
+<li>Two resource groups named RG3 and RG4 that are associated with a subscription named 777-888-999 and a management group named MG1</li>
+<li>Two resource groups named RG5 and RG6 that are associated with a subscription named 444-555-666 and a management group named MG1</li>
+<li>Two resource group named RG10 and RG11 that are associated with a subscription named 222-333-444 and a management group named MG2</li>
+<li>Two resource group named RG11 and RG12 that are associated with a subscription named 555-666-888 and a management group named MG2</li>
+</ul>
+<p>You need to assign a role to a user to ensure the user can view all the resources in the subscriptions. The solution must use the principle of least privilege.<br>
+Which role should you assign?</p>
+<h3 id="correct-answer-51">Correct Answer</h3>
+<ul>
+<li>the Reader role for MG1 and MG2</li>
+</ul>
+<blockquote>
+<p>Assigning the Reader role for MG1 and MG2 is correct because the simplest way to give user access to all resources is to assign a role at the management group level.</p>
+<p><a href="https://learn.microsoft.com/azure/role-based-access-control/role-assignments-steps">Steps to assign an Azure role - Azure RBAC | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-role-based-access-control/">Configure role-based access control - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-7-of-50">Question 7 of 50</h2>
+<p>You have an Azure subscription that contains several storage accounts.<br>
+You need to provide a user with the ability to perform the following tasks:</p>
+<ul>
+<li>Manage containers within the storage accounts.</li>
+<li>View storage account access keys.</li>
+</ul>
+<p>The solution must use the principle of least privilege.<br>
+Which role should you assign to the user?</p>
+<h3 id="correct-answer-52">Correct Answer</h3>
+<ul>
+<li>Storage Account Contributor</li>
+</ul>
+<blockquote>
+<p>Storage Account Contributor allows the management of storage accounts. It provides access to the account key, which can be used to access data via Shared Key authorization. Storage Blob Data Contributor grants permissions to read, write, and delete Azure Storage containers and blobs. Reader allows you to view all resources but does not allow you to make any changes. Owner grants full access to manage all resources, including the ability to assign roles in Azure RBAC.</p>
+<p><a href="https://learn.microsoft.com/azure/role-based-access-control/built-in-roles">Azure built-in roles - Azure RBAC | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-role-based-access-control/">Configure role-based access control - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-9-of-50">Question 9 of 50</h2>
+<p>You have several management groups and Azure subscriptions.<br>
+You want to prevent the accidental deletion of resources.<br>
+To which three resource types can you apply delete locks? Each correct answer presents a complete solution.</p>
+<h3 id="correct-answer-53">Correct Answer</h3>
+<ul>
+<li>resource groups</li>
+<li>subscriptions</li>
+<li>virtual machines</li>
+</ul>
+<blockquote>
+<p>You can use delete locks to block the deletion of virtual machines, subscriptions, and resource groups. You cannot use delete locks on management groups or storage account data.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-resource-manager/management/lock-resources?tabs=json">Protect your Azure resources with a lock - Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/use-azure-resource-manager/">Use Azure Resource Manager - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-10-of-50">Question 10 of 50</h2>
+<p>You have an Azure subscription.<br>
+You plan to create an Azure Policy definition named Policy1.<br>
+You need to include remediation information to indicate when users use Microsoft Defender for Cloud Regulatory and Compliance.<br>
+To which definition section should you add remediation information for Policy1?</p>
+<h3 id="correct-answer-54">Correct Answer</h3>
+<ul>
+<li>metadata</li>
+</ul>
+<blockquote>
+<p>You must use the RemediationDescription field in the metadata section from properties to specify a custom recommendation. The remaining options are Azure policies, but do not allow specific custom remediation information.</p>
+<p><a href="https://learn.microsoft.com/azure/defender-for-cloud/custom-security-policies?pivots=azure-portal#enhance-your-custom-recommendations-with-detailed-information">Create custom Azure security policies in Microsoft Defender for Cloud | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-policy/">Configure Azure Policy - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-12-of-50">Question 12 of 50</h2>
+<p>You need to generate the shared access signature (SAS) token required to authorize a request to a resource.<br>
+Which two parameters are required for the SAS token? Each correct answer presents part of the solution</p>
+<h3 id="correct-answer-55">Correct Answer</h3>
+<ul>
+<li><code>SignedResourceTypes (srt)</code></li>
+<li><code>SignedServices (ss)</code></li>
+</ul>
+<blockquote>
+<p><code>SignedServices (ss)</code>  is required to refer blobs, queues, tables, and files.  <code>SignedResourceTypes (srt)</code>  is required to refer services, containers, or objects.  <code>SignedStart (st)</code>  is an optional parameter that refers to the time when the SAS becomes valid. If unmentioned, the start time is assumed to be the time when the storage service receives the request.  <code>SignedIP (sip)</code>  is an optional parameter that refers to the range of IP addresses from which to accept requests.</p>
+<p><a href="https://learn.microsoft.com/rest/api/storageservices/create-account-sas">Create an account SAS - Azure Storage | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-storage-security/">Configure Azure Storage security - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-13-of-50">Question 13 of 50</h2>
+<p>You have an Azure Storage account.<br>
+You need to copy data to the storage account by using the AzCopy tool.<br>
+Which two types of data storage are supported by AzCopy? Each correct answer presents a complete solution.</p>
+<h3 id="correct-answer-56">Correct Answer</h3>
+<ul>
+<li>blob</li>
+<li>file</li>
+</ul>
+<blockquote>
+<p>You can provide authorization credentials by using Microsoft Entra, or by using a shared access signature (SAS) token. Both storage types, blob and file, are supported in AzCopy.</p>
+<p><a href="https://learn.microsoft.com/azure/storage/common/storage-use-azcopy-v10">Copy or move data to Azure Storage by using AzCopy v10 | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-storage-tools/">Configure Azure Storage with tools - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-15-of-50">Question 15 of 50</h2>
+<p>You have an Azure subscription that contains multiple storage accounts.<br>
+A storage account named storage1 has a file share that stores marketing videos. Users reported that 99 percent of the assigned storage is used.<br>
+You need to ensure that the file share can support large files and store up to 100 TiB.<br>
+Which two PowerShell commands should you run? Each correct answer presents part of the solution.</p>
+<h3 id="correct-answer-57">Correct Answer</h3>
+<ul>
+<li><code>Set-AzStorageAccount -ResourceGroupName RG1 -Name storage1 -EnableLargeFileShare</code></li>
+<li><code>Update-AzRmStorageShare -ResourceGroupName RG1 -Name -StorageAccountName storage1 -Name share1 -QuotaGiB 102400</code></li>
+</ul>
+<blockquote>
+<p>You must enable the storage account to support large files and update the storage account quota to 102,400 GB. You do not need to change the type of storage account, and you are updating the existing share.</p>
+<p><a href="https://learn.microsoft.com/azure/storage/blobs/object-replication-overview">Object replication overview - Azure Storage | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-blob-storage/">Configure Azure Blob Storage - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-18-of-50">Question 18 of 50</h2>
+<p>You have an Azure subscription that contains a storage account named storage1.<br>
+You need to provide storage1 with access to a partner organization. Access to storage1 must expire after 24 hours.<br>
+What should you configure?</p>
+<h3 id="correct-answer-58">Correct Answer</h3>
+<ul>
+<li>a shared access signature (SAS)</li>
+</ul>
+<blockquote>
+<p>A SAS provides secure delegated access to resources in a storage account. With a SAS, you have granular control over how a client can access data, including time restrictions.<br>
+Access keys and Azure CDN provide permanent access to resources. They will require manual steps to remove access. Lifecycle management is not needed.</p>
+<p><a href="https://learn.microsoft.com/training/modules/configure-storage-security/">Configure Azure Storage security - Training | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/azure/storage/common/storage-sas-overview">Grant limited access to data with shared access signatures (SAS) - Azure Storage | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-22-of-50">Question 22 of 50</h2>
+<p>You have an Azure subscription that contains a resource group named RG1. RG1 contains an Azure virtual machine named VM1.<br>
+You need to use VM1 as a template to create a new Azure virtual machine.<br>
+Which three methods can you use to complete the task? Each correct answer presents a complete solution.</p>
+<h3 id="correct-answer-59">Correct Answer</h3>
+<ul>
+<li>From Azure Cloud Shell, run the  <code>Save-AzDeploymentTemplate</code>  and  <code>New-AzResourceGroupDeployment</code>  cmdlets.</li>
+<li>From RG1, select  <strong>Export template</strong>, select  <strong>Download</strong>, and then, from Azure Cloud Shell, run the  <code>New-AzResourceGroupDeployment</code>  cmdlet.</li>
+<li>From VM1, select  <strong>Export template</strong>, and then select  <strong>Deploy</strong>.</li>
+</ul>
+<blockquote>
+<p>From RG1, selecting the Download option from the Export template page exports the Azure Resource Manager (ARM) template from the resource group properties. You can then deploy the ARM template by running the  <code>New-AzResourceGroupDeployment</code>  cmdlet.<br>
+By using the  <code>Save-AzDeploymentTemplate</code>  cmdlet, you can save the resource ARM template. You can then deploy the ARM template by running the  <code>New-AzResourceGroupDeployment</code>  cmdlet.<br>
+From VM1, selecting the Deploy option from the Export template page allows you to deploy a new Azure virtual machine and use the configuration of VM1 as the template.<br>
+The  <code>Save-AzDeploymentScriptLog</code>  cmdlet is used to save the log of a deployment script execution.<br>
+The  <code>Get-AzVM</code>  cmdlet generates a list of virtual machines that are created in the Azure subscription.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-resource-manager/templates/export-template-portal">Export template in Azure portal - Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/azure/azure-resource-manager/templates/export-template-powershell">Export template in Azure PowerShell - Azure Resource Manager | Microsoft Learn</a></p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/training/modules/automate-azure-tasks-with-powershell/">Automate Azure tasks using scripts with PowerShell - Training | Microsoft Learn</a></p>
+<h2 id="question-23-of-50">Question 23 of 50</h2>
+<p>You have an Azure Resource Manager (ARM) template named deploy.json that is stored in an Azure Blob storage container.<br>
+You plan to deploy the template by running the  <code>New-AzDeployment</code>  cmdlet.<br>
+Which parameter should you use to reference the template?</p>
+<h3 id="correct-answer-60">Correct Answer</h3>
+<ul>
+<li><code>-TemplateUri</code></li>
+</ul>
+<blockquote>
+<p>The PowerShell deployment cmdlets can be used to deploy JSON templates that are stored locally in a resources group as a template spec, or from a web-based location. You can use the  <code>-TemplateUri</code>  parameter to specify a web-based location, such as GitHub or an Azure Blob Storage account. You can use  <code>-Templatefile</code>  to specify a local file. You can use  <code>-TemplateSpecId</code>  to specify a template that was save to Azure as a template spec.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-resource-manager/templates/deploy-powershell">Deploy resources with PowerShell and template - Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/create-azure-resource-manager-template-vs-code/">Deploy Azure infrastructure by using JSON ARM templates - Training | Microsoft Learn</a></p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/training/modules/automate-azure-tasks-with-powershell/">Automate Azure tasks using scripts with PowerShell - Training | Microsoft Learn</a></p>
+<h2 id="question-24-of-50">Question 24 of 50</h2>
+<p>You plan to deploy an Azure virtual machine based on a basic template stored in the Azure Resource Manager (ARM) library.<br>
+What can you configure during the deployment of the template?</p>
+<h3 id="correct-answer-61">Correct Answer</h3>
+<ul>
+<li>the resource group</li>
+</ul>
+<blockquote>
+<p>When you deploy a resource by using a template, you can mention the resource group for the deployment. The resource group is a container for Azure resources and makes it easier to manage the resources.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal">Deploy template - Azure portal - Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/powershell/module/az.resources/new-azresourcegroupdeployment?view=azps-9.2.0&amp;viewFallbackFrom=azps-8.0.0">New-AzResourceGroupDeployment (Az.Resources) | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-resources-arm-templates/">Configure resources with Azure Resource Manager templates - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-28-of-50">Question 28 of 50</h2>
+<p>You have an Azure virtual network that contains two subnets named Subnet1 and Subnet2. You have a virtual machine named VM1 that is connected to Subnet1. VM1 runs Windows Server.<br>
+You need to ensure that VM1 is connected directly to both subnets.<br>
+What should you do first?</p>
+<h3 id="correct-answer-62">Correct Answer</h3>
+<ul>
+<li>From the Azure portal, add a network interface.</li>
+</ul>
+<blockquote>
+<p>A network interface is used to connect a virtual machine to a subnet. Since VM1 is connected to Subnet1, VM1 already has a network interface attached that is connected to Subnet1. To connect VM1 directly to Subnet2, you must create a new network interface that is connected to Subnet2. Next, you must attach the new network interface to VM1.<br>
+An IP group is a user-defined collection of static IP addresses, ranges, and subnets. A network bridge allows you to connect multiple existing network connection in Windows together. Changing the IP configurations of the existing network interface results in VM1 being connected to Subnet2 but not to Subnet1.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/network-overview">Virtual networks and virtual machines in Azure | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-networks/">Configure virtual networks - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-29-of-50">Question 29 of 50</h2>
+<p>You are deploying a virtual machine by using an availability set in the East US Azure region.<br>
+You have deployed 18 virtual machines in two fault domains and 10 update domains.<br>
+Microsoft performed planned physical hardware maintenance in the East US region.<br>
+What is the maximum number of virtual machines that will be unavailable?</p>
+<h3 id="correct-answer-63">Correct Answer</h3>
+<ul>
+<li>2</li>
+</ul>
+<blockquote>
+<p>18 virtual machines are shared across 10 update domains. The first 10 virtual machines go to 10 update domains, so eight update domains will have two virtual machines. When there is physical hardware maintenance, some virtual machines will be unavailable based on their configuration. If there was a rack failure, then 18 virtual machines will be distributed to two fault domains with nine virtual machines each.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-machines/availability-set-overview">Availability sets overview - Azure Virtual Machines | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-machine-availability/">Configure virtual machine availability - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-31-of-50">Question 31 of 50</h2>
+<p>You have an Azure subscription that contains a Docker container image named container1.<br>
+You plan to create a new Azure web app named WebApp1.<br>
+You need to ensure that you can use container1 for WebApp1.<br>
+Which WebApp1 setting should you configure?</p>
+<h3 id="correct-answer-64">Correct Answer</h3>
+<ul>
+<li>Publish</li>
+</ul>
+<blockquote>
+<p>If you want to run a Docker container as an Azure web service, you must configure the Publish option and select Docker container.<br>
+Runtime stack specifies the stack that you want to use for the web app. If you want to deploy a Docker container as web app, the runtime stack option is unavailable.<br>
+Pricing plan specifies the location, features, and costs of the web app.<br>
+Continuous deployment is a strategy for software releases. This option is unavailable when you publish a Docker container as an Azure web app.</p>
+<p><a href="https://learn.microsoft.com/azure/app-service/overview">Overview - Azure App Service | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-container-instances/">Configure Azure Container Instances - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-33-of-50">Question 33 of 50</h2>
+<p>You have an Azure subscription that contains a resource group named RG1. RG1 contains an application named App1 and a container app named containerapp1.<br>
+App1 is experiencing performance issues when attempting to add messages to the containerapp1 queue.<br>
+You need to create a job to perform an application resource cleanup when a new message is added to a queue.<br>
+Which command should you run?</p>
+<h3 id="correct-answer-65">Correct Answer</h3>
+<ul>
+<li><code>az containerapp job create \ --name "my-job" --resource-group "RG1" -trigger-type "Event" \ -replica-timeout 60 --replica-retry-limit 1 ...</code></li>
+</ul>
+<blockquote>
+<p>Azure Container Apps jobs enable you to run containerized tasks that execute for a finite duration, and then exit. You can use jobs to perform tasks such as data processing, machine learning, or any scenario where on-demand processing is required. Container apps and jobs run in the same environment, allowing them to share capabilities such as networking and logging.<br>
+A job’s trigger type determines how the job is started. The following trigger types are available:<br>
+Manual: Manual jobs are triggered on demand.<br>
+Schedule: Scheduled jobs are triggered at specific times and can run repeatedly.<br>
+Event: Event-driven jobs are triggered by events such as a message arriving in a queue.</p>
+<p><a href="https://learn.microsoft.com/azure/container-apps/jobs?tabs=azure-cli">Jobs in Azure Container Apps (preview) | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-34-of-50">Question 34 of 50</h2>
+<p>You have two Azure subscriptions named Sub1 and Sub2.<br>
+Sub1 contains a virtual network named VNet1 and a VPN gateway. Sub2 contains a virtual network named VNet2.<br>
+You have an on-premises device named Device1 that runs Windows and has a Point-to-Site (P2S) VPN client installed.<br>
+You configure network peering between VNet1 and VNet2.<br>
+You need to ensure that Device1 can access VNet2 when a VPN connection is established.<br>
+What should you do?</p>
+<h3 id="correct-answer-66">Correct Answer</h3>
+<ul>
+<li>Download and reinstall the P2S VPN client on Device1.</li>
+</ul>
+<blockquote>
+<p>Point-to-Site (P2S) VPN clients must be downloaded and reinstalled again after virtual network peering is successfully configured to ensure that the new routes are downloaded to the client.<br>
+A private endpoint and Azure Front Door are not required nor used to be able to access VNet2 from VNet1.<br>
+Device1 already has a digital certificate when you install the P2S VPN client, so you do not need to create new certificate manually.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-peering?tabs=peering-portal#requirements-and-constraints">Create, change, or delete an Azure virtual network peering | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-vnet-peering/">Configure virtual network peering - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-38-of-50">Question 38 of 50</h2>
+<p>You deploy web servers to two virtual machines named VM1 and VM2 in an availability set named AVSet1.<br>
+You need to configure Azure Load Balancer with a backend pool of VM1 and VM2. The solution must minimize costs.<br>
+Which SKU should you use for the Azure Load Balancer configuration?</p>
+<h3 id="correct-answer-67">Correct Answer</h3>
+<ul>
+<li>Basic Azure Load Balancer with Basic SKU public IP</li>
+</ul>
+<blockquote>
+<p>Basic Azure Load Balancer supports deployment in a single availability zone. Basic Azure Load Balancer supports only Basic SKU public IP. Azure Standard Load Balancer is zone-redundant, but has a higher cost.</p>
+<p><a href="https://learn.microsoft.com/azure/load-balancer/skus">Azure Load Balancer SKUs | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-load-balancer/">Configure Azure Load Balancer - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-41-of-50">Question 41 of 50</h2>
+<p>You have an Azure subscription that contains a virtual network named VNet1 and a virtual machine named VM1.<br>
+VM1 can only be accessed from the internal network.<br>
+An external contractor needs access to VM1. The solution must minimize administrative effort.<br>
+What should you configure?</p>
+<h3 id="correct-answer-68">Correct Answer</h3>
+<ul>
+<li>a public IP address</li>
+</ul>
+<blockquote>
+<p>To share a virtual machine with an external user, you must add a public IP address to the virtual machine. An additional IP address or firewall configuration will not help in this case. Configuring a S2S VPN does not have minimal administrative effort.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/network-overview">Virtual networks and virtual machines in Azure | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/azure/virtual-machines/windows/quick-create-portal">Quickstart - Create a Windows VM in the Azure portal - Azure Virtual Machines | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-42-of-50">Question 42 of 50</h2>
+<p>You have an Azure subscription.<br>
+You plan to implement four Azure virtual networks that will be peered. All virtual machines will use a DNS suffix of <a href="http://contoso.com">contoso.com</a>.<br>
+You need to configure name resolution for the virtual networks to ensure that all the virtual machines can communicate by using their FQDNs. The solution must minimize administrative effort.<br>
+What should you use?</p>
+<h3 id="correct-answer-69">Correct Answer</h3>
+<ul>
+<li>an Azure Private DNS zone</li>
+</ul>
+<blockquote>
+<p>Azure Private DNS allows for private name resolution between Azure virtual networks. Azure public DNS provides DNS for public access, such as name resolution for a publicly accessible website. Azure-provided name resolution does not support user-defined domain names and only supports a single virtual network. A DNS server on a virtual machine can also be used to achieve the goal but involves much more administrative effort to implement and maintain than using Azure Private DNS.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/virtual-networks-name-resolution-for-vms-and-role-instances#azure-provided-name-resolution">Name resolution for resources in Azure virtual networks | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/host-domain-azure-dns/">Host your domain on Azure DNS - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-44-of-50">Question 44 of 50</h2>
+<p>You have a Log Analytics workspace that collects data from various data sources.<br>
+You create a new Azure Monitor log query.<br>
+You plan to view data pinned as a chart to a shared dashboard.<br>
+What is the maximum number of days for which data can be pinned as a chart on the dashboard?</p>
+<h3 id="correct-answer-70">Correct Answer</h3>
+<ul>
+<li>14</li>
+</ul>
+<blockquote>
+<p>Data pinned on a shared dashboard can only be displayed for a maximum of 14 days.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-monitor/visualize/workbooks-chart-visualizations">Azure Monitor workbook chart visualizations - Azure Monitor | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-monitor/">Configure Azure Monitor - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-46-of-50">Question 46 of 50</h2>
+<p>You have multiple Azure virtual machines and an Azure recovery services vault. Virtual machines are configured with the default backup policy.<br>
+What is the retention period of virtual machine backups in the default backup policy?</p>
+<h3 id="correct-answer-71">Correct Answer</h3>
+<ul>
+<li>30 days</li>
+</ul>
+<blockquote>
+<p>By default, backups of virtual machines are kept for 30 days.</p>
+<p><a href="https://learn.microsoft.com/azure/backup/backup-azure-vms-first-look-arm">Back up an Azure VM from the VM settings - Azure Backup | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-machine-backups/">Configure virtual machine backups - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-47-of-50">Question 47 of 50</h2>
+<p>You have an Azure virtual machine named Server1 that runs Windows Server.<br>
+You need to configure Azure Backup to back up files and folders.<br>
+What should you install on Server1?</p>
+<h3 id="correct-answer-72">Correct Answer</h3>
+<ul>
+<li>the Microsoft Azure Recovery Services (MARS) agent</li>
+</ul>
+<blockquote>
+<p>The Microsoft Azure Recovery Service (MARS) agent must be installed on the servers. The MARS agent is mandatory to perform backup and recovery services for any servers.</p>
+<p><a href="https://learn.microsoft.com/training/modules/configure-file-folder-backups/6-manage-azure-recovery-services-agent?ns-enrollment-type=learningpath&amp;ns-enrollment-id=learn.az-104-monitor-backup-resources">Manage the Azure recovery services agent - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-48-of-50">Question 48 of 50</h2>
+<p>You have an Azure virtual machine that you back up by using Azure Backup.<br>
+The backup policy sub type is Standard, and the backup policy has the following configurations:</p>
+<ul>
+<li>Backup schedule frequency: Weekly</li>
+<li>Retain instant recovery snapshot(s) for: 5 days</li>
+<li>Retention of weekly backup point: On Sunday at 8:00 AM for 12 weeks</li>
+</ul>
+<p>You plan to reduce the amount of storage used by Instant Restore.<br>
+You need to instance recovery snapshots to be retained for only two days.<br>
+What should you do first?</p>
+<h3 id="correct-answer-73">Correct Answer</h3>
+<ul>
+<li>Change the backup schedule frequency to <strong>Daily</strong>.</li>
+</ul>
+<blockquote>
+<p>You can choose to store between one and five instant recovery snapshots and the default value is two. However, when the backup schedule frequency is weekly, you must retain five instant recovery snapshots.</p>
+<p><a href="https://learn.microsoft.com/azure/backup/backup-instant-restore-capability">Azure Instant Restore Capability - Azure Backup | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-file-folder-backups/">Configure file and folder backups - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-49-of-50">Question 49 of 50</h2>
+<p>You have an Azure virtual network named VNet1 that is deployed to the Azure East US region.<br>
+You need to ensure that email is sent to an administrator when a virtual machine is connected to VNet1.<br>
+What should you create?</p>
+<h3 id="correct-answer-74">Correct Answer</h3>
+<ul>
+<li>an action group</li>
+<li>an alert rule</li>
+</ul>
+<blockquote>
+<p>Azure Monitor alerts proactively notify you when important conditions are found in monitoring data. They allow you to identify and address issues in the system before customers notice them. You can set alerts on metrics, logs, and the activity log. Different types of alerts have benefits and drawbacks. Metrics is a feature of Azure Monitor that collects numeric data from monitored resources into a time-series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time.<br>
+When Azure Monitor data indicates that there may be an issue with an infrastructure or application, an alert is triggered. Azure Monitor, Azure Service Health, and Azure Advisor then use action groups to notify users about the alert and take action. An action group is a collection of notification preferences defined by the owner of an Azure subscription.</p>
+<p><a href="https://docs.microsoft.com/azure/virtual-network/monitor-virtual-network">Monitoring Azure virtual networks | Microsoft Docs</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-monitor/4-define-metrics-logs">Define metrics and logs - Training | Microsoft Learn</a></p>
+</blockquote>
+<h2 id="question-50-of-50">Question 50 of 50</h2>
+<p>You have an Azure subscription that contains the following resources:</p>
+<ul>
+<li>Eight virtual networks</li>
+<li>24 virtual machines</li>
+<li>16 storage accounts</li>
+</ul>
+<p>You need to implement a monitoring solution that provides the ability to view diagnostics and telemetry data generated by Azure resources.<br>
+What should you include in the solution?</p>
+<h3 id="correct-answer-75">Correct Answer</h3>
+<ul>
+<li>a Log Analytics workspace</li>
+</ul>
+<blockquote>
+<p>A Log Analytics workspace is a unique environment for log data from Azure Monitor and other Azure services, such as Microsoft Sentinel and Microsoft Defender for Cloud. Each workspace has its own data repository and configuration and can combine data from multiple services.</p>
+<p><a href="https://docs.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview">Log Analytics workspace overview - Azure Monitor | Microsoft Docs</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-log-analytics/2-determine-uses">Determine Log Analytics uses - Training | Microsoft Learn</a></p>
 </blockquote>
 </div>
 </body>
