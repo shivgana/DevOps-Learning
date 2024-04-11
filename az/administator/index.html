@@ -2389,6 +2389,218 @@ b. Data retention period: This parameter is auto-selected based on your backup f
 <p>Azure Site Recovery service allows you to ensure business continuity by keeping your apps running on VMs and physical servers available if a site goes down. It replicates workloads running on physical and virtual machines from a primary site to a secondary location.</p>
 <p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-overview">About Azure Site Recovery - Azure Site Recovery | Microsoft Learn</a></p>
 </blockquote>
+<h3 id="question-1-6">Question 1</h3>
+<p>You have a mission-critical VM in Azure that not only requires regular backups but also a solution for disaster recovery to ensure business continuity. Which of the following Azure services would you utilize for disaster recovery?</p>
+<h4 id="correct-answer-171">Correct answer</h4>
+<ul>
+<li>Azure Site Recovery</li>
+</ul>
+<blockquote>
+<p>Azure Site Recovery contributes to your business continuity and disaster recovery strategy by orchestrating replication, failover, and recovery of VMs. Azure Backup provides backup services but doesn’t handle disaster recovery scenarios like Site Recovery.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-overview">About Azure Site Recovery - Azure Site Recovery | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-2-3">Question 2</h3>
+<p>Which of the following are crucial components when setting up a backup strategy in Azure?</p>
+<h4 id="correct-answer-172">Correct answer</h4>
+<ul>
+<li>Setting up a backup frequency</li>
+<li>Determining retention period</li>
+</ul>
+<blockquote>
+<p>a. The backup frequency determines how often your data is backed up, which is essential for data recovery points. b. While the storage tier impacts cost, it’s not a direct component of the backup strategy.<br>
+c. The retention period determines how long each backup is kept, which impacts data restore possibilities and storage costs.<br>
+d. Public IP addresses have no relevance to backups.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-backup-recovery">Microsoft cloud security benchmark - Backup and recovery | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-3-4">Question 3</h3>
+<p>You’re planning to safeguard your data against data loss in Azure. Which of the following would you utilize to store backup data, such as files, folders, and system state?</p>
+<h4 id="correct-answer-173">Correct answer</h4>
+<ul>
+<li>Recovery Services vault</li>
+</ul>
+<blockquote>
+<p>The Recovery Services vault is a management entity that stores recovery points created over time and provides an interface to perform backup-related operations. The Azure Backup vault was an older construct and has been superseded by the Recovery Services vault.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/backup/backup-azure-recovery-services-vault-overview">Overview of Recovery Services vaults - Azure Backup | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-9-5">Question 9</h3>
+<p>A partner company is collaborating with you on a project. You’re required to provide some of their team members with access to specific Azure resources without giving them a permanent email within your organization. Which of the following steps should you take FIRST to enable such access?</p>
+<h4 id="correct-answer-174">Correct answer</h4>
+<ul>
+<li>Enable Microsoft Entra B2B collaboration for the partner’s domain.</li>
+</ul>
+<blockquote>
+<p>Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant. This doesn’t require the external users to be licensed in your tenant. Once they’re invited, they can be given access to resources.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b">Microsoft Entra B2B collaboration overview | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-10-5">Question 10</h3>
+<p>Your company has deployed Microsoft Entra SSPR. To enhance security, which of the following configurations can you enforce for users utilizing SSPR? (Choose two)</p>
+<h4 id="correct-answer-175">Correct answer</h4>
+<ul>
+<li>Mandate a mobile phone number.</li>
+<li>Enforce multi-factor authentication during reset.</li>
+</ul>
+<blockquote>
+<p>a. Minimum password age is a password policy setting but is not directly tied to SSPR.<br>
+b. Microsoft Entra ID SSPR allows admins to require users to register at least one or more authentication methods such as mobile phone or email.<br>
+c. Multi-factor authentication can be enforced during the reset process to ensure the user is who they claim to be.<br>
+d. Assigning users to the Global Administrator role upon reset poses a huge security risk and is not a feature of SSPR.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr">Enable Microsoft Entra self-service password reset | Microsoft Learn</a>,  <a href="https://help.protectedtrust.com/manage-user-settings-with-azure-multi-factor-authentication-in-the-cloud">Require Re-Register Multi Factor Authentication (MFA) (protectedtrust.com)</a>  and  <a href="https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sspr-howitworks">Self-service password reset deep dive | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-11-4">Question 11</h3>
+<p>You’re an Azure administrator for a multinational corporation. You’ve been tasked with delegating access to a team to manage virtual machines within an Azure subscription but not to modify the networking configurations. Which built-in Azure role should you assign?</p>
+<h4 id="correct-answer-176">Correct answer</h4>
+<ul>
+<li>Virtual Machine Contributor</li>
+</ul>
+<blockquote>
+<p>The Virtual Machine Contributor role allows the assigned user or group to manage virtual machine resources but does not grant access to the virtual network resources, preventing modification of networking configurations.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#virtual-machine-contributor">Azure built-in roles - Azure RBAC | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-12-6">Question 12</h3>
+<p>Which of the following is NOT a valid mode for an Azure Policy definition?</p>
+<h4 id="correct-answer-177">Correct answer</h4>
+<ul>
+<li>DoNotAllow</li>
+</ul>
+<blockquote>
+<p>Azure Policy definitions have modes like ‘Indexed’ and ‘All’. There isn’t a mode called ‘DoNotAllow’.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure#resource-manager-modes">Details of the policy definition structure - Azure Policy | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-13-6">Question 13</h3>
+<p>You have deployed a critical resource in Azure. You want to ensure that no one, including users with administrative access, accidentally deletes or modifies this resource. Which resource lock level should you apply and is most restrictive?</p>
+<h4 id="correct-answer-178">Correct answer</h4>
+<ul>
+<li>ReadOnly</li>
+</ul>
+<blockquote>
+<p>To prevent accidental deletion or modification of a critical resource in Azure, you should apply the ReadOnly lock level. This lock level ensures that authorized users can only read from a resource, but they can’t modify or delete it. This restriction applies across all users and roles, overriding any user permissions, and is more restrictive than the CanNotDelete lock level, which allows users to read and modify resources but not delete them. The lock is also inherited by all resources within the scope of the locked resource, ensuring comprehensive protection.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources?tabs=json">Protect your Azure resources with a lock - Azure Resource Manager | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-14-4">Question 14</h3>
+<p>Which of the following statements are TRUE regarding Azure resource tags?</p>
+<h4 id="correct-answer-179">Correct answer</h4>
+<ul>
+<li>Each resource or resource group can have a maximum of 50 tag name/value pairs.</li>
+<li>Tags provide metadata to logically organize resources within a subscription.</li>
+</ul>
+<blockquote>
+<p>a. Tags cannot be applied at the management group level.<br>
+b. Each resource or resource group can indeed have a maximum of 50 tag name/value pairs.<br>
+c. Tags help in logically organizing resources.<br>
+d. Tags applied to a resource group are not automatically inherited by resources within that group.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources#limitations">Tag resources, resource groups, and subscriptions for logical organization - Azure Resource Manager | Microsoft Learn</a>  and <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources">Tag resources, resource groups, and subscriptions for logical organization - Azure Resource Manager | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-15-7">Question 15</h3>
+<p>In Azure, when you set a budget, what feature can you use to trigger actions based on budget thresholds being met or exceeded?</p>
+<h4 id="correct-answer-180">Correct answer</h4>
+<ul>
+<li>Action Groups</li>
+</ul>
+<blockquote>
+<p>In Azure, when a budget is set, you can use Azure Monitor Action Groups to trigger actions when budget thresholds are met or exceeded. These action groups can orchestrate a set of actions resulting from a budget event.<br>
+For instance, you can create an Azure Automation Runbook to stop Virtual Machines (VMs) using webhooks. Then, you can create an Azure Logic App that is triggered based on the budget threshold value and calls the runbook with the right parameters. Finally, you can create an Azure Monitor Action Group that will be configured to trigger the Azure Logic App when the budget threshold is met.<br>
+This way, you can automate actions based on your Azure spending and ensure you don’t exceed your budget.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/cost-management-budget-scenario">Azure billing and cost management budget scenario - Microsoft Cost Management | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-16-4">Question 16</h3>
+<p>You need to restrict access to your Azure Storage account so that only traffic from specific virtual networks can access it. Which feature of Azure Storage should you use?</p>
+<h4 id="correct-answer-181">Correct answer</h4>
+<ul>
+<li>Private Endpoints</li>
+</ul>
+<blockquote>
+<p>a. Azure Service Endpoints provide a way to secure Azure Storage accounts by allowing traffic only from specific virtual networks.<br>
+b. and c. Shared Access Signature (SAS) and Access Keys are used for delegating access to resources in your storage account. They control who can access your data and what permissions they have. However, they do not restrict the networks from which your storage account can be accessed.<br>
+d. The Azure Blob Public Access Setting controls whether your blobs can be accessed publicly or whether all requests must be authorized. However, it does not restrict access to specific networks.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-private-endpoints">Use private endpoints - Azure Storage | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-17-5">Question 17</h3>
+<p>You are setting up authentication mechanisms for your Azure Storage. Which of the following can be used to provide secure access to your data in Azure Files? (Choose two)</p>
+<h4 id="correct-answer-182">Correct answer</h4>
+<ul>
+<li>Microsoft Entra ID</li>
+<li>Storage account keys</li>
+</ul>
+<blockquote>
+<p>For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.<br>
+SAS tokens are typically used for blobs, queues, and tables, and stored access policies are specifically for controlling the start time, expiry time, and permissions for SAS tokens.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/storage/common/authorize-data-access">Authorize operations for data access - Azure Storage | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-18-5">Question 18</h3>
+<p>When creating an Azure Storage account, you have a requirement to ensure that the data remains available if there’s a failure at the primary region. Which redundancy option should you choose?</p>
+<h4 id="correct-answer-183">Correct answer</h4>
+<ul>
+<li>Geo-redundant storage (GRS)</li>
+</ul>
+<blockquote>
+<p>Geo-redundant storage (GRS) is designed to provide at least 99.999999999% (11 9’s) durability of objects over a given year by replicating your data to a secondary region (hundreds of miles away from the primary location of the source data). GRS copies your data synchronously three times (it creates three replicas of your data) in a storage scale unit in one region using LRS. It then copies your data asynchronously to another region.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy">Data redundancy - Azure Storage | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-19-4">Question 19</h3>
+<p>You’re managing the data flow between two Azure Storage accounts. You need to set up a one-way replication for blobs between the accounts and occasionally need to copy data manually. Which of the following tools or services will help you achieve this? (Choose two)</p>
+<h4 id="correct-answer-184">Correct answer</h4>
+<ul>
+<li>Azure Storage Explorer</li>
+<li>Object replication</li>
+</ul>
+<blockquote>
+<p>b. Azure Storage Explorer provides a platform to manage and move data across on-premises and cloud environments. You can use it to transfer data manually.<br>
+c. Object replication allows for automatic, asynchronous replication of blobs from a source container to a destination container in a different storage account.</p>
+<p>For more information: <a href="https://learn.microsoft.com/en-us/azure/storage/blobs/object-replication-overview">Object replication overview - Azure Storage | Microsoft Learn</a>  and  <a href="https://learn.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows">Get started with Storage Explorer | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-20-4">Question 20</h3>
+<p>You have been asked to set up an Azure file share for a department in your organization. They require the ability to retain file changes and ensure deleted files can be restored for 14 days. What should you enable on the Azure file share?</p>
+<h4 id="correct-answer-185">Correct answer</h4>
+<ul>
+<li>Soft delete</li>
+</ul>
+<blockquote>
+<p>b. When enabled on a storage account, if a file share is deleted, it transitions to a soft deleted state instead of being permanently erased. You can configure the amount of time soft deleted data is recoverable before it’s permanently deleted, and undelete the share anytime during this retention period. After being undeleted, the share and all of its contents, including snapshots, will be restored to the state it was in prior to deletion.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/storage/files/storage-files-prevent-file-share-deletion#how-soft-delete-works">Prevent accidental deletion - Azure file shares | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-22-5">Question 22</h3>
+<p>You are reviewing a Bicep file that intends to deploy a virtual machine. You noticed that the file lacks a declaration to specify the virtual machine’s size. To ensure the deployment uses a Standard_DS1_v2 size for the VM, which line should you add to the Bicep file?</p>
+<h4 id="correct-answer-186">Correct answer</h4>
+<ul>
+<li><code>vmSize: 'Standard_DS1_v2'</code></li>
+</ul>
+<blockquote>
+<p>a. When defining a virtual machine’s size in a Bicep file, the typical declaration is vmSize. This determines the compute capacity and characteristics of the VM.</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep">Bicep language for deploying Azure resources - Azure Resource Manager | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-23-5">Question 23</h3>
+<p>You’ve been asked to allow HTTP traffic to a Azure virtual machine (VM) from the internet. Which of the following rules in a Network Security Group (NSG) would accomplish this?</p>
+<h4 id="correct-answer-187">Correct answer</h4>
+<ul>
+<li>Source: Any | Destination: Any | Port Range: 80 | Action: Allow</li>
+</ul>
+<blockquote>
+<p>To allow HTTP traffic (which operates on port 80) from the internet to the VM, you should use a rule where the source is set to “Any” (indicating any source including the internet), and the port range is set to 80, with the action set to “Allow.”</p>
+<p>For more information:  <a href="https://learn.microsoft.com/en-us/azure/virtual-network/manage-network-security-group?tabs=network-security-group-portal">Create, change, or delete an Azure network security group | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-24-5">Question 24</h3>
+<p>What makes virtual machines a better choice over containers for your setup?</p>
+<h4 id="correct-answer-188">Correct answer</h4>
+<ul>
+<li>Virtual machines provide complete isolation from the host operating system and other virtual machines.</li>
+</ul>
+<blockquote>
+<p>a. Virtual machines run a complete operating system including the kernel.<br>
+b. Azure containers only provide lightweight isolation from the host.<br>
+c. Virtual machines use a virtual hard disk (VHD) for local storage for a single virtual machine.</p>
+<p>More info:  <a href="https://learn.microsoft.com/en-us/virtualization/windowscontainers/about/containers-vs-vm">Containers vs. virtual machines | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-25-5">Question 25</h3>
+<p>A company is considering using Azure for its different services. They want to make sure that each department is charged only for the resources they use. To accomplish this, the company has decided to implement Azure role-based access control to segregate bills based on departments.<br>
+Does this approach meet their requirement?</p>
+<h4 id="correct-answer-189">Correct answer</h4>
+<ul>
+<li>No</li>
+</ul>
+<blockquote>
+<p>This controls access to resources and can’t be used for billing purposes.</p>
+<p>If you want to learn more, go to:  <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/overview">What is Azure role-based access control (Azure RBAC)? | Microsoft Learn</a></p>
+</blockquote>
 </div>
 </body>
 
