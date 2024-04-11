@@ -1199,6 +1199,317 @@ What should you include in the solution?</p>
 <p><a href="https://docs.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview">Log Analytics workspace overview - Azure Monitor | Microsoft Docs</a><br>
 <a href="https://learn.microsoft.com/training/modules/configure-log-analytics/2-determine-uses">Determine Log Analytics uses - Training | Microsoft Learn</a></p>
 </blockquote>
+<h3 id="question-1-2">Question 1</h3>
+<p>You have a Microsoft Entra tenant that uses Microsoft Entra Connect to sync with an Active Directory Domain Services (AD DS) domain. You need to ensure that users can reset their AD DS password from the Azure portal. The users must be able to use two methods to reset their password.<br>
+Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-76">Correct Answer</h4>
+<ul>
+<li>From Password reset in the Azure portal, configure the Authentication methods settings.</li>
+<li>Run Microsoft Entra Connect and select <em>Password writeback</em>.</li>
+</ul>
+<blockquote>
+<p>You must run the Microsoft Entra Connect Wizard to enable Password writeback. You must configure the authentication option to enable the two methods required to reset a password.</p>
+<p><a href="https://learn.microsoft.com/azure/active-directory/authentication/tutorial-enable-sspr-writeback">Enable Azure Active Directory password writeback Microsoft Entra | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/allow-users-reset-their-password/3-implement-azure-ad-self-service-password-reset">Implement Azure AD self-service password reset Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-13-2">Question 13</h3>
+<p>You have an Azure Storage account named corpimages and an on-premises shared folder named \serverl\images.<br>
+You need to migrate all the contents from \serverl\images to corpimages.<br>
+Which two commands can you use? Each correct answer presents a complete solution?</p>
+<h4 id="correct-answer-77">Correct Answer</h4>
+<ul>
+<li><code>Azcopy copy \\serverl\images https://corpimages.blob.core.windows.net/public recursive</code></li>
+<li><code>Get-ChildItem -Path \\serverl\images -Recurse | Set-AzStorageBlobContent Container" corpimages</code></li>
+</ul>
+<blockquote>
+<p>The AzCopy command allows you to copy all files to a storage account. You then use to select everything, and then use the Set-AzureStorageBlobContent cmdlet. Get-ChildItem with the path parameter, recurse</p>
+<p><a href="https://learn.microsoft.com/azure/storage/common/storage-use-azcopy-v10#transfer-data">Copy or move data to Azure Storage by using AzCopy v10 | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/powershell/module/azure.storage/set-AzureStorageBlobContent?view=azurermps-6.13.0"> Set-azurestorageblobcontent?view=azurermps-6.13.0) Set-AzureStorageBlobContent (Azure.Storage) | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/upload-download-and-manage-data-with-azure-storage-explorer/">Upload, download, and manage data with Azure Storage Explorer Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-15-2">Question 15</h3>
+<p>You have two premium block blob Azure Storage accounts named storagel and storage2.<br>
+You need to configure object replication from storagel to storage2.<br>
+Which three features should be enabled before configuring object replication? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-78">Correct Answer</h4>
+<ul>
+<li>blob versioning for storagel</li>
+<li>blob versioning for storage2</li>
+<li>change feed for storagel</li>
+</ul>
+<blockquote>
+<p>Object replication can be used to replicate blobs between storage accounts. Before configuring object replication, you must enable blob versioning for both storage accounts, and you must enable the change feed for the source account.</p>
+<p><a href="https://learn.microsoft.com/azure/storage/blobs/object-replication-configure?tabs-portal">Configure object replication Azure Storage | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-blob-storage/">Configure Azure Blob Storage Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-17-1">Question 17</h3>
+<p>You have an Azure subscription and an on-premises Hyper-V virtual machine named VM1. VM1 contains a single virtual disk.<br>
+You plan toluse VMl as a template to deploy 25 new Azure virtual machines.<br>
+You need to upload VMI to Azure.<br>
+Which cmdlet should you run?</p>
+<h4 id="correct-answer-79">Correct Answer</h4>
+<ul>
+<li>Add-AzVhd</li>
+</ul>
+<blockquote>
+<p>Add-AzVhd: Uploads an on-premises VHD to Azure<br>
+New-AzVM: Used to create a new virtual machine<br>
+New-AzDisk: Used to create a managed disk<br>
+New-AzDatashare: Used to create an Azure data share</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-machines/windows/upload-generalized-managed">Create a VM from an uploaded generalized Windows VHD Azure Virtual Machines | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/azure/virtual-machines/windows/disks-upload-vhd-to-managed-disk-powershell">Upload a VHD to Azure or copy a disk across regions Azure PowerShell Azure Virtual Machines | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-machines/"> Configure virtual machines Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-28-2">Question 28</h3>
+<p>You have an Azure subscription that contains multiple resource groups and Azure App Service web apps. A resource group named RG1 hosts a app named appservice1. The App Service uses a free App Service Managed SSL certificate.<br>
+You create a resource group named RG2.<br>
+You plan to move all the resources in RG1 to RG2.<br>
+Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-80">Correct Answer</h4>
+<ul>
+<li>Delete the SSL Certificate from RG1 and upload it to RG2.</li>
+<li>Move all the resources from RG1 to RG2.</li>
+</ul>
+<blockquote>
+<p>The SSL certificate must be deleted. You will have to move all other resources to RG2.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-resource-manager/management/move-limitations/app-service-move-limitations">Move Azure App Service resources across resource groups or subscriptions Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-app-services/">Configure Azure App Service Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-30-1">Question 30</h3>
+<p>You have a Basic Azure App Service plan that contains a web app.<br>
+You need to ensure that the web app can scale automatically when the CPU percentage goes beyond 80 percent for a duration of 15 minutes. Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-81">Correct Answer</h4>
+<ul>
+<li>Configure a scaling condition to scale based on a metric, and then add the rules.</li>
+<li>Scale up the App Service plan.</li>
+</ul>
+<blockquote>
+<p>Scale up the web app by adding more CPU, memory, and disk space to fulfill the requirement. Increase the number of virtual machine instances that run the app. The scale settings take only seconds to apply and affect all the apps in the App Service plan. Then, you must set up a scaling condition with the required metrics to scale up/down and scale out/in when certain thresholds are met.</p>
+<p><a href="https://learn.microsoft.com/azure/app-service/manage-scale-up">Scale up features and capacities Azure App Service | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-app-services/">Configure Azure App Service Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-38-2">Question 38</h3>
+<p>You have an Azure subscription that contains an <a href="http://ASP.NET">ASP.NET</a> application. The application is hosted on four Azure virtual machines that run Windows Server.<br>
+You have a load balancer named LB1 to load balances requests to the virtual machines.<br>
+You need to ensure that site users connect to the same web server for all requests made to the application.<br>
+Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-82">Correct Answer</h4>
+<ul>
+<li>Set Session persistence to <em>Client IP</em>.</li>
+<li>Set Session persistence to <em>Protocol</em>.</li>
+</ul>
+<blockquote>
+<p>By setting Session persistence to Client IP and Protocol, you ensure that site users connect to the same web server for all requests made to the application. Setting Session persistence to None disables sticky sessions and an inbound NAT rule is used to forward traffic from a load balancer frontend to a backend pool.</p>
+<p><a href="https://learn.microsoft.com/azure/load-balancer/distribution-node-concepta">Azure Load Balancer distribution modes | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-load-balancer/">Configure Azure Load Balancer Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-43-1">Question 43</h3>
+<p>You have an Azure subscription that contains four virtual machines. Each virtual machine is connected to a mubnet on a different virtual network.<br>
+You install the DNS Server role on a virtual machine named VM1.<br>
+You configure each virtual network to use the IP address of VM1 as the DNS server.<br>
+You need to ensure that all four virtual machines can resolve IP addresses by using VM1.<br>
+What should you do?</p>
+<h4 id="correct-answer-83">Correct Answer</h4>
+<ul>
+<li>Configure network peering.</li>
+</ul>
+<blockquote>
+<p>By default, Azure virtual machines can communicate only with other virtual machines that are connected to the same virtual network. If you want a virtual machine to communicate with other virtual machines that are connected to other virtual networks, you must configure network peering. A route table controls how network traffic is routed. But without network peering, network traffic is still limited to single virtual network.<br>
+Configuring a Site-to-Site (823) VPN is incorrect because you are not connecting on-premises virtual machines to the cloud.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/virtual-network-service-endpoints-overview">Azure virtual network service endpoints | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-network-routing-endpoints/">Configure network routing and endpoints Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-45-1">Question 45</h3>
+<p>You have a Rusto query that returns 1,000 events from the SecurityEvent table in Azure Monitor.<br>
+You need to configure the query to aggregate the results by the Account column.<br>
+Which operator should you use?</p>
+<h4 id="correct-answer-84">Correct Answer</h4>
+<ul>
+<li>summarize</li>
+</ul>
+<blockquote>
+<p>Summarize is used to group records from one or more columns of data. Where is used to filter the rows. Project is used to rename and select columns. Extend is used to add columns.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-monitor/logs/get-started-queries">Get started with log queries in Azure Monitor Azure Monitor | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-azure-monitor/">Configure Azure Monitor Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-46-2">Question 46</h3>
+<p>You have an Azure subscription that contains two protected virtual machines named VM1 and VM2. VMI and VM2 are backed up to a Recovery Service vault named Vault1 by using the same backup policy. Your company plans to create additional virtual machines and Recovery Services vaults. During this process, Vault1 will be decommissioned.<br>
+You need to delete Vault1.<br>
+Which three actions should you perform before you can delete Vault1? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-85">Correct Answer</h4>
+<ul>
+<li>Disable the soft delete feature and delete all data.</li>
+<li>Permanently remove any items in the soft delete state.</li>
+<li>Stop the backup of VM1 and VM2.</li>
+</ul>
+<blockquote>
+<p>You must stop the backups so that you can prepare to move to the new policy. The soft delete feature is enabled by default, so it must be disabled. You must remove all the items that are in the soft delete state. Deleting the virtual machines is not required. You cannot delete the policy without deleting the vault and backup, and a new policy is not required.</p>
+<p><a href="https://learn.microsoft.com/azure/backup/">Overview of Recovery Services vaults backup-azure-recovery-services-vault-overview) Azure Backup | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/azure/backup/backup-azure-delete-vault?tabs-portal">Delete a Microsoft Azure Recovery Services vault Azure Backup | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-machine-backups/">Configure virtual machine backups Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-49-2">Question 49</h3>
+<p>You have an Azure subscription that contains 20 virtual networks and 500 virtual machines.<br>
+You deploy a new virtual machine named VM501.<br>
+You discover that VM501 is unable to communicate with a virtual machine named VM20 in the subscription. You suspect that a network security group (NSG) is the cause of the issue.<br>
+You need to identify whether an NSG is blocking communications. The solution must minimize administrative effort.<br>
+What should you use?</p>
+<h4 id="correct-answer-86">Correct Answer</h4>
+<ul>
+<li>IP flow verify</li>
+</ul>
+<blockquote>
+<p>IP flow verify lets you specify a source and destination IPv4 address, port, protocol (TCP or UDP), and traffic direction (inbound or outbound). IP flow verify can identify the specific network security group (NSG) that prevents communication. NSG flow logs is a feature of Azure Network Watcher that allows you to log information about IP traffic flowing through an NSG. Although the logs may help you identify the source of the issue, it requires much more configuration and manual evaluation. Packet capture allows you to create packet capture sessions to track traffic to and from a virtual machine. Packet capture may help narrow down the scope of the issue, but it will not identify the specific N3G that prevents communication.</p>
+<p><a href="https://learn.microsoft.com/azure/network-watcher/network-watcher-monitoring-overview">Azure Network Watcher | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-network-watcher/">Configure Network Watcher Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-50-2">Question 50</h3>
+<p>You plan to create an alert in Azure Monitor that will have an action group to send SMS messages. What is the maximum number of SMS messages that will be sent every hour if the alert gets triggered every minute?</p>
+<h4 id="correct-answer-87">Correct Answer</h4>
+<ul>
+<li>12</li>
+</ul>
+<blockquote>
+<p>A maximum of one SMS message can be sent every five minutes. Therefore, a maximum of 12 messages will be sent per hour.</p>
+<p><a href="https://learn.microsoft.com/azure/azure-monitor/alerts/alerts-rate-limiting">Rate limiting for SMS, emails, push notifications Azure Monitor | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/incident-response-with-alerting-on-azure/">Improve incident response with alerting on Azure Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-1-3">Question 1</h3>
+<p>You have a Microsoft Entra tenant that uses Microsoft Entra Connect to sync with an Active Directory Domain Services (AD DS) domain. You need to ensure that users can reset their AD DS password from the Azure portal. The users must be able to use two methods to reset their<br>
+password. Which two actions should you perform? Each correct answer presents part of the solution.</p>
+<h3 id="correct-answer-88">Correct Answer</h3>
+<ul>
+<li>From Password reset in the Azure portal, configure the Authentication methods settings.</li>
+<li>Run Microsoft Entra Connect and select <em>Password writeback</em>.</li>
+</ul>
+<blockquote>
+<p>You must run the Microsoft Ehtra Connect Wizard to enable Password writeback. You must configure the authentication option to enable the two methods required to reset a password.</p>
+<p><a href="https://learn.microsoft.com/azure/active-directory/">Enable Azure Active Directory password writeback authentication/tutorial-enable-sspr-writeback) Microsoft Entra | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/allow-users-reset-their-password/3-implement-azure-ad-self-service-password-reset">Implement Azure AD self-service password reset Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-12-2">Question 12</h3>
+<p>You need to create an Azure Storage account that meets the following requirements:</p>
+<ul>
+<li>Stores data in multiple Azure regions</li>
+<li>Supports reading the data from primary and secondary regions</li>
+</ul>
+<p>Which type of storage redundancy should you use?</p>
+<h4 id="correct-answer-89">Correct Answer</h4>
+<ul>
+<li>read-access geo-redundant storage (RA-GRS)</li>
+</ul>
+<blockquote>
+<p>Since you must ensure that data can be read from a secondary region, you must choose read-access geo-redundant storage (RA-GRS).</p>
+<p><a href="https://learn.microsoft.com/azure/storage/common/storage-redundancy">Data redundancy Azure Storage | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-storage-accounts/5-determine-replication-strategies">Determine replication strategies Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-15-3">Question 15</h3>
+<p>You plan to configure object replication between two Azure Storage accounts.<br>
+The Blob service of the source storage account has the following settings:</p>
+<pre><code>Hierarchical namespace: Disabled
+Default access tier: Hot
+Blob public access: Enabled
+Blob soft delete: Enabled (7 days)
+Container soft delete: Ehabled (7 days)
+Versioning: Disabled
+Change feed: Enabled
+NFS v3: Disabled
+Allow cross-tenant replication: Enabled
+</code></pre>
+<p>Which setting should be modified on the source storage account to support object replication?</p>
+<h4 id="correct-answer-90">Correct Answer</h4>
+<ul>
+<li>Versioning</li>
+</ul>
+<blockquote>
+<p>Versioning must be enabled for both the source and destination accounts. In this scenario, versioning is currently disabled.</p>
+</blockquote>
+<h3 id="question-25-1">Question 25</h3>
+<p>You have an Azure virtual machine.<br>
+You receive a notification that the virtual machine is going to be affected by an underlying maintenance activity on the physical infrastructure.<br>
+You need to move the virtual machine to a different host to avoid a service interruption.<br>
+What should you do?</p>
+<h4 id="correct-answer-91">Correct Answer</h4>
+<ul>
+<li>Redeploy the virtual machine.</li>
+</ul>
+<blockquote>
+<p>You must redeploy the virtual machine, which can move the virtual machine to a different host. Azure will shut down the virtual machine and move the virtual machine to a new node within the Azure infrastructure.</p>
+<p><a href="https://learn.microsoft.com/troubleshoot/azure/virtual-machines/redeploy-to-new-node-windows">Redeploy Windows virtual machines in Azure Virtual Machines | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-virtual-machines/">Configure virtual machines Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-36-1">Question 36</h3>
+<p>You have an Azure subscription that contains a network security group (NSG) named NSG1. You plan to configure NSG1 to allow the following types of traffic:</p>
+<ul>
+<li>Remote Desktop Management</li>
+<li>Secured HTTPS</li>
+</ul>
+<p>Which two ports should you allow in N8G1? Each correct answer presents part of the solution.</p>
+<h4 id="correct-answer-92">Correct Answer</h4>
+<ul>
+<li>443</li>
+<li>3369</li>
+</ul>
+<blockquote>
+<p>You must open port 443 to secured HTTPS traffic, port 3389 for Remote Desktop, and 587 to send outbound email by using authenticated SMTP relay. Port 80 is used for unsecured traffic. Port 25 is used by mail traffic.</p>
+<p><a href="https://learn.microsoft.com/azure/Azure-resource-manager/management/lock-resources?tabe-json">Protect your Azure resources with a lock Azure Resource Manager | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-network-security-groups/">Configure network security groups Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-37-1">Question 37</h3>
+<p>You have a virtual machine named VM1 that is assigned to a network security group (NSG) named NSG1. NSG1 has the following outbound security rules:<br>
+Rule1:</p>
+<pre class=" language-yaml"><code class="prism  language-yaml"><span class="token key atrule">Priority</span><span class="token punctuation">:</span> <span class="token number">900</span>
+<span class="token key atrule">Name</span><span class="token punctuation">:</span> BlockInternet
+<span class="token key atrule">Port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+<span class="token key atrule">Protocol</span><span class="token punctuation">:</span> TCP
+<span class="token key atrule">Source</span><span class="token punctuation">:</span> Any
+<span class="token key atrule">Destination</span><span class="token punctuation">:</span> Any
+<span class="token key atrule">Action</span><span class="token punctuation">:</span> Block
+</code></pre>
+<p>Rule2:</p>
+<pre class=" language-yaml"><code class="prism  language-yaml"><span class="token key atrule">Priority</span><span class="token punctuation">:</span> <span class="token number">1000</span>
+<span class="token key atrule">Name</span><span class="token punctuation">:</span> AllowInternet
+<span class="token key atrule">Port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+<span class="token key atrule">Protocol</span><span class="token punctuation">:</span> TCP
+<span class="token key atrule">Source</span><span class="token punctuation">:</span> Any
+<span class="token key atrule">Destination</span><span class="token punctuation">:</span> Any
+<span class="token key atrule">Action</span><span class="token punctuation">:</span> Allow
+</code></pre>
+<p>You need to ensure that internet access to VM1 on port 80 is allowed.<br>
+What should you do?</p>
+<h4 id="correct-answer-93">Correct Answer</h4>
+<ul>
+<li>Change the priority of Rule2.</li>
+</ul>
+<blockquote>
+<p>Rulel has higher priority, so the action will be blocked. You can increase the priority of Rule2, decrease the priority of Rulel, or change the action of Rulel to achieve the goal.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview">Azure network security groups overview | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-network-security-groups/">Configure network security groups Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-39-1">Question 39</h3>
+<p>Your company plans to migrate servers from on-premises to Azure. There will be dev, test, and production virtual machines on a single virtual network.<br>
+You need to restrict traffic between the dev, test, and production virtual machines to specific ports. What should you use?</p>
+<h4 id="correct-answer-94">Correct Answer</h4>
+<ul>
+<li>a network security group (NSG)</li>
+</ul>
+<blockquote>
+<p>Must configure network security group (NSG) rules to allow TCP or ICMP traffic for specific ports. Azure Firewall is a managed service that protects your Azure services across multiple virtual networks. Load balancers are used to distribute incoming traffic to available backend servers. Azure VPN is used to have a connection establishment between on-premises and Azure.</p>
+<p><a href="https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview">Azure network security groups overview | Microsoft Learn</a><br>
+<a href="https://learn.microsoft.com/training/modules/configure-network-security-groups/">Configure network security groups Training | Microsoft Learn</a></p>
+</blockquote>
+<h3 id="question-42-2">Question 42</h3>
+<p>You have an Azure subscription that contains a virtual network named VNet1.<br>
+You plan to enable VNet1 connectivity to on-premises resources by using an encrypted connection.<br>
+What should you configure for VNet1?</p>
+<h4 id="correct-answer-95">Correct Answer</h4>
+<ul>
+<li>a virtual network gateway gateway</li>
+</ul>
+<blockquote>
+<p>A VPN gateway is a type of virtual network gateway that sends encrypted traffic between a virtual network and an on-premises location across a public connection. You can also use a VPN gateway to send traffic between virtual networks across the Azure backbone. A VEN gatewa connection relies on the configuration of multiple resources, each of which contains configurable settings.</p>
+<p><a href="https://learn.microsoft.com/training/modules/intro-to-azure-von-gateway/">Introduction to Azure VPN Gateway Training | Microsoft Learn</a></p>
+</blockquote>
 </div>
 </body>
 
