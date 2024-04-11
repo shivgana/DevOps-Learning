@@ -2601,6 +2601,648 @@ Does this approach meet their requirement?</p>
 <p>This controls access to resources and can’t be used for billing purposes.</p>
 <p>If you want to learn more, go to:  <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/overview">What is Azure role-based access control (Azure RBAC)? | Microsoft Learn</a></p>
 </blockquote>
+<h3 id="question-1-7">Question 1</h3>
+<p>Apply the below tag to the resource group -  <strong>EngineerBlog</strong>. Which PowerShell cmdlet will you choose to apply the tag to the resource group?<br>
+$tags = @{Name="CostCenter”; Value=“0001”}</p>
+<h4 id="correct-answer-190">Correct answer</h4>
+<ul>
+<li>Set-AzResourceGroup -Name “EngineerBlog” -Tag $tags</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.resources/new-aztag?view=azps-10.4.1&amp;viewFallbackFrom=azps-8.2.0">https://learn.microsoft.com/en-us/powershell/module/az.resources/new-aztag?view=azps-10.4.1&amp;viewFallbackFrom=azps-8.2.0</a></p>
+<h3 id="question-2-4">Question 2</h3>
+<p>You have a virtual machine, and Network Security Groups (NSGs) are configured at both the subnet level and NIC level. For inbound traffic, which NSG will be evaluated first?</p>
+<h4 id="correct-answer-191">Correct answer</h4>
+<ul>
+<li>Subnet Level</li>
+</ul>
+<p>For inbound traffic, Azure processes the rules in a network security group associated to a subnet first, if there’s one, and then the rules in a network security group associated to the network interface.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-network/network-security-group-how-it-works">https://learn.microsoft.com/en-us/azure/virtual-network/network-security-group-how-it-works</a></p>
+<h3 id="question-3-5">Question 3</h3>
+<p>Your organization has hired a new cloud engineer and he should be able to manage cloud engineer’s access as well. You also need to follow Microsoft principle of least privilege.<br>
+Which role should be assigned to cloud engineer ?</p>
+<h4 id="correct-answer-192">Correct answer</h4>
+<ul>
+<li>User Access Administrator</li>
+</ul>
+<blockquote>
+<p>Consider assigning the “User Access Administrator” role. This role enables members to handle user access for Azure resources efficiently.<br>
+Avoid assigning the “Owner” role. While it provides extensive access to Azure resources, it grants full control, which may exceed the principle of least privilege in this context.<br>
+Avoid assigning the “Contributor” role. Although it allows for the creation and management of various resources, it does not cover user access management for Azure resources within the subscription.<br>
+Avoid assigning the “User Administrator” role. This is an Azure AD role not a subscription RBAC role.</p>
+</blockquote>
+<h3 id="question-4-4">Question 4</h3>
+<p>Your organization has purchased a public domain: <a href="http://cloudportalfinance.com">cloudportalfinance.com</a>. You configured the <a href="http://cloudportalfinance.com">cloudportalfinance.com</a> Azure public DNS zone. You have already created an app service and deployed your application to the Azure app service. Your website is currently being accessed from <a href="http://cloudportal.azurewebsites.net">cloudportal.azurewebsites.net</a>. But you want users to be able to access it through the <a href="http://cloudportalfinance.com">cloudportalfinance.com</a> domain. You create two DNS records (txt and A) using the below PowerShell cmdlets.<br>
+Is this the correct method?<br>
+![](<a href="https://img-c.udemycdn.com/redactor/raw/practice_test_###">https://img-c.udemycdn.com/redactor/raw/practice_test_###</a> Question/2023-09-19_05-09-07-33b7afde9342fe648d274a81cc27605e.png)</p>
+<h4 id="correct-answer-193">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/azure/dns/dns-web-sites-custom-domain">https://learn.microsoft.com/en-us/azure/dns/dns-web-sites-custom-domain</a></p>
+<h3 id="question-5-5">Question 5</h3>
+<p>In your Azure subscription named Subscription1, which contains an Azure Log Analytics workspace named Workspace1, you need to view the error events from a table named Event. What query should you run in Workspace 1?</p>
+<h4 id="correct-answer-194">Correct answer</h4>
+<ul>
+<li>search in (Event) “error”</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/searchoperator"><strong>https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/searchoperator</strong></a></p>
+<h3 id="question-6-4">Question 6</h3>
+<p>Your organization has an Azure subscription.<br>
+You are planning to create a virtual machine scale set (VMSS) that has the following settings:.</p>
+<pre><code>Resource group name: RG1
+Region: West US
+Orchestration Mode: uniform
+Security type: Standard
+OS disk type: SSD standard
+</code></pre>
+<p>You need to add custom virtual machines to VMSS.<br>
+Which settings do you need to modify?</p>
+<h4 id="correct-answer-195">Correct answer</h4>
+<ul>
+<li>Orchestration Mode</li>
+</ul>
+<blockquote>
+<p><strong>Uniform Mode</strong>: In uniform mode, all VM instances in the VMSS are identical, using the same image and configuration. Since our requirement is to add custom virtual machines to VMSS, we need to  <strong>choose orchestration mode as Flexi, as</strong> you can have a mix of custom and platform images within the same VMSS.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes">https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes</a></p>
+<h3 id="question-7-5">Question 7</h3>
+<p>You need to create a Network Security group using the PowerShell cmdlet and configure NSG rules to allow RDP and HTTP traffic.<br>
+$rule1 = <code>New-AzNetworkSecurityRuleConfig -Name rdp-rule -Description "Allow RDP" -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 3389</code><br>
+$rule2 = <code>New-AzNetworkSecurityRuleConfig -Name web-rule -Description "Allow HTTP" -Access Allow -Protocol Tcp -Direction Inbound -Priority 101 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 80</code><br>
+<code>New-AzNetworkSecurityGroup -ResourceGroupName TestRG -Location westus -Name "NSG-FrontEnd" -SecurityRules $rule1, $rule2</code></p>
+<p>You executed the above PowerShell cmdlet; is it correct?</p>
+<h4 id="correct-answer-196">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.network/new-aznetworksecuritygroup?view=azps-10.4.1">https://learn.microsoft.com/en-us/powershell/module/az.network/new-aznetworksecuritygroup?view=azps-10.4.1</a></p>
+<h3 id="question-8-4">Question 8</h3>
+<p>You want to implement Azure file share on your on-premises Windows server. What is the recommended Windows OS required?</p>
+<h4 id="correct-answer-197">Correct answer</h4>
+<ul>
+<li>Windows server 2019 and above.</li>
+</ul>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-19_05-11-53-9a1d3f7270f1bcf0e2b999b29d141c6f.png" alt=""></p>
+<h3 id="question-9-6">Question 9</h3>
+<p>You have an Azure virtual machine (Prod-VM01).<br>
+You received a notification that prod-vm01 will be affected by maintenance.<br>
+You need to move prod-vm01 to a different host immediately.<br>
+Solution: From the Redeploy+reapply blade, you click Redeploy.<br>
+Does this meet the goal?</p>
+<h4 id="correct-answer-198">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<blockquote>
+<p>If you have been facing difficulties troubleshooting a remote desktop (RDP) connection or application access to a Windows-based Azure virtual machine (VM), redeploying the VM may help. When you redeploy a VM, Azure will shut down the VM, move the VM to a new node within the Azure infrastructure, and then power it back on, retaining all your configuration options and associated resources.</p>
+</blockquote>
+<h3 id="question-10-6">Question 10</h3>
+<p>Which PowerShell cmdlet allows you to create a new Virtual machine scale set?</p>
+<h4 id="correct-answer-199">Correct answer</h4>
+<ul>
+<li>New-AzVmss</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.compute/new-azvmss?view=azps-10.3.0">https://learn.microsoft.com/en-us/powershell/module/az.compute/new-azvmss?view=azps-10.3.0</a></p>
+<h3 id="question-11-5">Question 11</h3>
+<p>A company is looking to amend its security policy to enhance security by reducing the exposure of certain ports—3389 and 22—on its Azure virtual machines (VMs). They want to achieve this while maintaining secure remote access options. Which Azure service can help them achieve this goal?</p>
+<h4 id="correct-answer-200">Correct answer</h4>
+<ul>
+<li>Azure Bastion</li>
+</ul>
+<blockquote>
+<p>Azure Bastion is the Azure service that enables secure remote access to Azure VMs while reducing the exposure of ports. It allows users to connect to VMs over RDP and SSH without the need for public IP addresses or direct internet exposure. You require access to the Azure portal to use this service.</p>
+</blockquote>
+<h3 id="question-12-7">Question 12</h3>
+<p>You must create an alert in Azure Monitor. You must create an action group that will be used to send voice and SMS messages.<br>
+What is the maximum number of voice and SMS messages that will be sent in an hour if the alert gets triggered every minute?</p>
+<h4 id="correct-answer-201">Correct answer</h4>
+<ul>
+<li>12</li>
+</ul>
+<blockquote>
+<p>Both SMS and voice are limited to no more than one notification every five minutes.</p>
+</blockquote>
+<h3 id="question-13-7">Question 13</h3>
+<p>You have an existing virtual machine (VM) in Azure, and you want to add it to an availability set for high availability. What is the correct approach to achieving this?</p>
+<h4 id="correct-answer-202">Correct answer</h4>
+<ul>
+<li>You cannot add an existing VM to an availability set; you must create a new VM within the set.</li>
+</ul>
+<blockquote>
+<p>A VM can only be added to an availability set when it is created. To change the availability set, you need to delete and then recreate the virtual machine.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/windows/change-availability-set">https://learn.microsoft.com/en-us/azure/virtual-machines/windows/change-availability-set</a></p>
+<h3 id="question-14-5">Question 14</h3>
+<p>Your organization wants to start using Azure premium file shares to replace on-premises file servers.<br>
+You have the storage account in your Azure Subscription as shown below.</p>
+<p>![](<a href="https://img-c.udemycdn.com/redactor/raw/practice_test_###">https://img-c.udemycdn.com/redactor/raw/practice_test_###</a> Question/2023-09-14_06-57-31-96f7732f1966a6ededcbfefcf100a425.png)</p>
+<p>Select Yes if the statement is True. Otherwise select No.<br>
+Statement: You should create a new premium storage account since existing storage accounts will not allow you to create premium file share</p>
+<h4 id="correct-answer-203">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<blockquote>
+<p>To provision an Azure premium file share, creating a new storage account is required even though it incurs additional costs. Converting an existing General-Purpose storage V2 account to Azure premium file share is not feasible.<br>
+In the below screenshot provided, you’ll notice that to create a premium file share, you must choose “Premium” as the storage account performance level and set the account type to “File Share.”</p>
+</blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_06-57-31-736604d69e3256d09187e885232e085e.png" alt=""></p>
+<h3 id="question-15-8">Question 15</h3>
+<p>Your company has an Azure Active Directory (Azure AD) subscription. You need to deploy five virtual machines (VMs) to your company’s virtual network subnet.<br>
+The VMs will each have both a public and private IP address. Inbound and outbound security rules for all of these virtual machines must be identical. Which of the following is the least number of security groups needed for this configuration?</p>
+<h4 id="correct-answer-204">Correct answer</h4>
+<ul>
+<li>1</li>
+</ul>
+<blockquote>
+<p>Single NSG can be applied to the subnet, and the rules within it would be applicable to all VMs within that subnet.</p>
+</blockquote>
+<h3 id="question-16-5">Question 16</h3>
+<p>You are executing the below PowerShell cmdlet to enable encryption.<br>
+$RGName = “MyResourceGroup”<br>
+$VMName = “MyTestVM”<br>
+$VaultName= “MyKeyVault”<br>
+$KeyVault = Get-AzKeyVault -VaultName $VaultName -ResourceGroupName $RGName<br>
+$DiskEncryptionKeyVaultUrl = $KeyVault.VaultUri<br>
+$KeyVaultResourceId = $KeyVault.ResourceId<br>
+$VolumeType = “All”<br>
+<code>Set-AzVMDiskEncryptionExtension -ResourceGroupName $RGName -VMName $VMName -DiskEncryptionKeyVaultUrl $DiskEncryptionKeyVaultUrl -DiskEncryptionKeyVaultId $KeyVaultResourceId -VolumeType $VolumeType</code></p>
+<p>Is it required to stop the VM first before enabling encryption?</p>
+<h4 id="correct-answer-205">Correct answer</h4>
+<ul>
+<li>False</li>
+</ul>
+<blockquote>
+<p>We can enable encryption on a running IaaS virtual machine in Azure.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.compute/set-azvmdiskencryptionextension?view=azps-10.4.1&amp;viewFallbackFrom=azps-10.1.0">https://learn.microsoft.com/en-us/powershell/module/az.compute/set-azvmdiskencryptionextension?view=azps-10.4.1&amp;viewFallbackFrom=azps-10.1.0</a></p>
+<h3 id="question-17-6">Question 17</h3>
+<p>Your company has an Azure Active Directory (Azure AD) subscription. You need to deploy five virtual machines (VMs) to your company’s virtual network subnet. The VMs will each have both a public and private IP address. Inbound and outbound security rules for all of these virtual machines must be identical. Which of the following is the least number of network interfaces needed for this configuration?</p>
+<h4 id="correct-answer-206">Correct answer</h4>
+<ul>
+<li>5</li>
+</ul>
+<blockquote>
+<p>5 VMs, so 5 NIC cards would be needed.</p>
+</blockquote>
+<h3 id="question-18-6">Question 18</h3>
+<p>You deploy an Azure Kubernetes cluster (AKS) named prod-AKS1. You have created a YAML file to create a POD. You need to deploy this YAML file to AKS.<br>
+Solution: From Azure CLI, you run Kubectl client?<br>
+Does this meet the goal?</p>
+<h4 id="correct-answer-207">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<blockquote>
+<p>Deploy the application using the  <strong>Kubectl apply</strong>  command and specify the name of your YAML manifest.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli">https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli</a></p>
+<h3 id="question-19-5">Question 19</h3>
+<p>Your Azure subscription contains 10 virtual machines. You need to enable alerts if any virtual machine restarts, stops, or delocalizes. Alerts must be sent to three administrators by email and Azure App push notifications.<br>
+You need to create alert rules, action groups, and actions in the Azure portal.<br>
+What are the minimum number of alert rules, action groups, and actions you should create?</p>
+<h4 id="correct-answer-208">Correct answer</h4>
+<ul>
+<li>Alert Rules = 3; Action groups = 1; Actions = 3</li>
+</ul>
+<blockquote>
+<p>You need to establish three alert rules, each corresponding to a specific condition: restarting a virtual machine, powering off a virtual machine, and deallocating a virtual machine.<br>
+Additionally, you should create a single action group, which can be linked to multiple alert rules. Within this action group, you will define multiple actions.<br>
+To cater to three administrators, you must create three distinct actions within the action group.</p>
+</blockquote>
+<h3 id="question-20-5">Question 20</h3>
+<p>Which log tracks all control-plane operations that occur within the subscription, like stopping or restarting a virtual machine?</p>
+<h4 id="correct-answer-209">Correct answer</h4>
+<ul>
+<li>Activity Logs</li>
+</ul>
+<blockquote>
+<p>The Azure Monitor activity log is a  <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/platform-logs-overview">platform log</a>  in Azure that provides insight into subscription-level events. The activity log includes information like when a resource is modified or a virtual machine is started.</p>
+</blockquote>
+<h3 id="question-21-4">Question 21</h3>
+<p>You have an Azure subscription, and below is the hub and spoke topology given.<br>
+HUB-VNET is connected to on-premises using a site-to-site VPN, and SPOKE-VNET is peering into HUB-VNET.<br>
+How VM1 can communicate with On-premises using the same HUB-VNET virtual network gateway.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-09-14_07-36-10-f31f4f9f7bf8bcdb3723ea3c10a8ac79.png" alt=""><br>
+Select yes if the statement is true. Otherwise, select no.<br>
+<strong>Statement</strong>: You are planning to use Gateway Transit.</p>
+<h4 id="correct-answer-210">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview#gateways-and-on-premises-connectivity">Gatewaytransit</a>  is a peering property that lets one virtual network use the VPN gateway in the peered virtual network for cross-premises or VNet-to-VNet connectivity.<br>
+To add peering, you can go to HUB-VNET and configure the below settings.<br>
+checking the box: <em>Allow traffic to be forwarded from the remote virtual network (allow gateway transit).</em><br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-36-10-f533ab0d4a8916b090f3238c465228d4.png" alt=""><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-36-10-8edd160b70a57a191218e32fabea54f1.png" alt=""><br>
+Once you enable peering after configuring the option, you will find the Gateway transit option is enabled on the HUB-VNET, which means your Spoke-VNET can use the remote virtual network gateway to communicate with the on-premises environment.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-36-11-7e688276ce4247c67dd20f5228e277f0.png" alt=""></p>
+</blockquote>
+<h3 id="question-22-6">Question 22</h3>
+<p>You have an Azure subscription, which contains the following resources:<br>
+Prod-VM1 (virtual machine)<br>
+Prod-Webapp1 (app service)<br>
+<a href="http://Contoso.com">Contoso.com</a> (Azure AD domain services)<br>
+All the resources connect to prod-vnet1. You are planning to deploy an Azure Bastion host from Prod-Bastion1 to Prod-Vnet1.<br>
+Which resources can be protected by Prod-Bastion1?</p>
+<h4 id="correct-answer-211">Correct answer</h4>
+<ul>
+<li>Prod-VM1 only</li>
+</ul>
+<blockquote>
+<p>Bastion provides secure RDP and SSH connectivity to all of the VMs in the virtual network on which it is provisioned.</p>
+</blockquote>
+<h3 id="question-23-6">Question 23</h3>
+<p>You need to create a DNS record set with the relative name  <em>www</em>  in DNS Zone  <strong><a href="http://contoso.com">contoso.com</a></strong>. Fully qualified domain name of the record set will be <a href="http://www.contoso.com">www.contoso.com</a>.<br>
+Record Type is ‘A’ and TTL is 3600 seconds. Record set contains a single record set with IP Address ‘1.2.3.4’.<br>
+Complete the PowerShell cmdlet.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-09-14_07-09-45-6c70761c7742607d45d05255f3939211.png" alt=""></p>
+<h4 id="correct-answer-212">Correct answer</h4>
+<ul>
+<li>A = “1.2.3.4”, B = New-AzDnsRecordSet</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-09-45-18218c48db9080ea490a4964f6399542.png" alt=""><br>
+<a href="https://learn.microsoft.com/en-us/azure/dns/dns-operations-recordsets">https://learn.microsoft.com/en-us/azure/dns/dns-operations-recordsets</a></p>
+</blockquote>
+<h3 id="question-24-6">Question 24</h3>
+<p>How can you successfully delete an Azure Recovery Services Vault that currently protects VM1 and VM2, given that you no longer need to maintain backups for these virtual machines and you are encountering error messages during the deletion process? Which three actions should you perform to delete the Azure recovery services vault?</p>
+<p>a. Delete VM1 and VM2.<br>
+b. Stop the backup of VM1 and VM2.<br>
+c. Disable the soft delete feature and delete all the data.<br>
+d. Permanently remove any items in the soft delete state.<br>
+e. Delete the backup policy.</p>
+<h4 id="correct-answer-213">Correct answer</h4>
+<ul>
+<li>b,c,d</li>
+</ul>
+<blockquote>
+<p>Soft delete is enabled by default on newly created vaults to protect backup data from accidental or malicious deletes. Backup data that exists in a soft deleted state before disabling this feature will remain in a soft deleted state for a period of 14 days. If you wish to permanently delete these immediately, then you need to undelete and delete them again to get them permanently deleted.<br>
+<a href="https://learn.microsoft.com/en-us/azure/backup/backup-azure-delete-vault?tabs=portal">https://learn.microsoft.com/en-us/azure/backup/backup-azure-delete-vault?tabs=portal</a><br>
+<a href="https://learn.microsoft.com/en-us/azure/backup/backup-azure-security-feature-cloud">https://learn.microsoft.com/en-us/azure/backup/backup-azure-security-feature-cloud</a></p>
+</blockquote>
+<h3 id="question-25-6">Question 25</h3>
+<p>In the Azure Recovery Services vault, if you delete any data mistakenly, it goes to soft delete to protect your data and recover backups. For how many days is the data retained before being permanently deleted?</p>
+<h4 id="correct-answer-214">Correct answer</h4>
+<ul>
+<li>14 days</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-19_05-14-45-8c44f7e8cc07990d7f713f5c4ad12c7c.png" alt=""><br>
+<a href="https://learn.microsoft.com/en-us/azure/backup/backup-azure-enhanced-soft-delete-configure-manage?tabs=recovery-services-vault">https://learn.microsoft.com/en-us/azure/backup/backup-azure-enhanced-soft-delete-configure-manage?tabs=recovery-services-vault</a></p>
+</blockquote>
+<h3 id="question-26-1">Question 26</h3>
+<p>Let’s examine the following situation:.<br>
+<strong>The resource group</strong>  includes:<br>
+· Virtual Machine A<br>
+· Storage account B<br>
+· Virtual network C</p>
+<p><strong>You are trying to deploy the below resource using the ARM template</strong>:<br>
+· Network security group D</p>
+<p>Below is the PowerShell cmdlet you are using to deploy the template.<br>
+<code>New-AzResourceGroupDeployment -Mode Complete -Name ExampleDeployment -ResourceGroupName ExampleResourceGroup -TemplateFile c:\MyTemplates\storage.json</code><br>
+As you can see in the above cmdlet, we are using mode as complete. When deploying resources with Azure Resource Manager templates (ARM templates), you have two options for deployment mode: incremental or complete. What will happen if we use mode as complete?</p>
+<h4 id="correct-answer-215">Correct answer</h4>
+<ul>
+<li>Resource Manager  <strong>deletes</strong>  resources in the resource group that aren’t specified in the template. – that means virtual machine A, Storage account B, Virtual Network C will be deleted since these are not defined in ARM template.</li>
+</ul>
+<blockquote>
+<p>In complete mode, the Resource Manager  <strong>deletes</strong>  resources in the resource group that aren’t specified in the template.<br>
+<a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes">https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes</a></p>
+</blockquote>
+<h3 id="question-27-1">Question 27</h3>
+<p>Your organization has deployed Microsoft 365 Business Standard licenses and has implemented Azure Active Directory self-service password reset. Now, you aim to establish a hybrid environment that connects your on-premises Active Directory Domain Services to Azure AD. As part of this setup, you must enable password writeback from Azure AD to your on-premises network.<br>
+Select Yes if the statement is True. Otherwise select No.<br>
+<strong>Statement</strong>: Microsoft 365 Business Standard License supports password writeback.</p>
+<h4 id="correct-answer-216">Correct answer</h4>
+<ul>
+<li>No</li>
+</ul>
+<blockquote>
+<p>You need at least an Azure AD Premium P1 or P2 license, or a Microsoft 365 Business Premium license for password writeback.<br>
+<a href="https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-licensing">https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-licensing</a></p>
+</blockquote>
+<h3 id="question-28-3">Question 28</h3>
+<p>You are a global administrator in an Azure AD tenant responsible for managing user access to Azure resources. You need to invite an external partner to collaborate on a project in your Azure environment, but you are encountering an error:  <strong>unable to invite a user. a generic authorization exception</strong>  when trying to invite guest users.<br>
+What should you check to resolve this problem?</p>
+<h4 id="correct-answer-217">Correct answer</h4>
+<ul>
+<li>Verify that external collaboration settings allow guest invitations.</li>
+</ul>
+<blockquote>
+<p>To invite guest users to your Azure AD tenant, it’s essential to ensure that your external collaboration settings allow guest invitations. Azure AD provides settings to control who can invite guests and collaborate externally. By verifying and adjusting these settings as necessary, you can resolve issues related to inviting guest users.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/active-directory/external-identities/external-collaboration-settings-configure">https://learn.microsoft.com/en-us/azure/active-directory/external-identities/external-collaboration-settings-configure</a></p>
+</blockquote>
+<h3 id="question-29-2">Question 29</h3>
+<p>We need to upload a blob to a storage account (Prod-storage01). You have created the storage context using the below PowerShell command.<br>
+$Storage = “Prod-storage01”<br>
+$Container = container1.<br>
+$Context = New-AzStorageContext -StorageAccountName $Storage -UseConnectedAccount<br>
+We need to upload a BLOB to a container. Which PowerShell cmdlet allows you to upload a Blob to a container?<br>
+_______________ -Container $Container -File “Prod-RG1.json” -Blob “Prod-RG1.json” -context $Context -StandardBlobTier Hot</p>
+<h4 id="correct-answer-218">Correct answer</h4>
+<ul>
+<li>Set-AzStorageBlobContent</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.storage/set-azstorageblobcontent?view=azps-10.4.1&amp;viewFallbackFrom=azps-8.2.0">https://learn.microsoft.com/en-us/powershell/module/az.storage/set-azstorageblobcontent?view=azps-10.4.1&amp;viewFallbackFrom=azps-8.2.0</a></p>
+</blockquote>
+<h3 id="question-30-2">Question 30</h3>
+<p>Which Network Watcher tool allows you to check if a packet is allowed or denied to or from a virtual machine?</p>
+<h4 id="correct-answer-219">Correct answer</h4>
+<ul>
+<li>IP Flow verify</li>
+</ul>
+<blockquote>
+<p>IP flow verify checks if a packet is allowed or denied to or from a virtual machine. The information consists of direction, protocol, local IP, remote IP, local port, and a remote port. If the packet is denied by a security group, the name of the rule that denied the packet is returned.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-ip-flow-verify-overview">https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-ip-flow-verify-overview</a></p>
+</blockquote>
+<h3 id="question-31-2">Question 31</h3>
+<p>The policy must be configured to require members of the Global Administrators group to use multi-factor authentication and an Azure AD-joined device when they connect to Azure AD from untrusted locations.<br>
+Solution: You can access the multi-factor authentication page to alter the user settings. Does the solution meet the goal?</p>
+<h4 id="correct-answer-220">Correct answer</h4>
+<ul>
+<li>No</li>
+</ul>
+<blockquote>
+<p>The most effective approach for implementing multi-factor authentication (MFA) is through conditional access policies.</p>
+</blockquote>
+<h3 id="question-32-1">Question 32</h3>
+<p>You have to create an alert in Azure Monitor. You must create an action group that will be used to send email and SMS messages.<br>
+What is the maximum number of email messages that will be sent in an hour if the alert gets triggered every minute?</p>
+<h4 id="correct-answer-221">Correct answer</h4>
+<ul>
+<li>60</li>
+</ul>
+<blockquote>
+<p>An email message will be generated every minute.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups">https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups</a></p>
+</blockquote>
+<h3 id="question-33-2">Question 33</h3>
+<p>You have an Azure subscription, and there are 100 virtual machines in your subscription. You need to identify the underutilized VMs so that the service tier of those VMs can be changed to a less expensive offering.<br>
+Which Azure service will you use?</p>
+<h4 id="correct-answer-222">Correct answer</h4>
+<ul>
+<li>Advisor</li>
+</ul>
+<blockquote>
+<p>Azure Advisor is a personalized cloud consultant that helps you follow best practices to optimize your Azure deployments. It analyzes your resource configuration and usage telemetry and then recommends solutions that can help you improve the cost effectiveness, performance, reliability (formerly called high availability), and security of your Azure resources.<br>
+<a href="https://learn.microsoft.com/en-us/azure/advisor/advisor-overview">https://learn.microsoft.com/en-us/azure/advisor/advisor-overview</a></p>
+</blockquote>
+<h3 id="question-34-2">Question 34</h3>
+<p>You have migrated your on-premises web application to the Azure web app, <strong>prod-webapp.</strong> After migration, it has been observed that the website is not accessible using the old domain name, <a href="https://www.cloudfinanceportal.com">https://www.cloudfinanceportal.com</a>.<br>
+You need to configure DNS to resolve this issue.<br>
+Which two DNS records are needed to resolve this issue?</p>
+<h4 id="correct-answer-223">Correct answer</h4>
+<ul>
+<li>Create A record and map it to IP address of  <strong>prod-webapp.</strong></li>
+<li>Create CNAME record and map it to <a href="http://prod-webapp.azurewebsites.net">prod-webapp.azurewebsites.net</a>.</li>
+</ul>
+<blockquote>
+<p><strong>A record</strong> points the domain (<a href="http://www.cloudfinanceportal.com/"><strong>www.cloudfinanceportal.com</strong></a>) to the specific IP address where your Azure Web App is hosted. Make sure the IP address you provide is the correct public IP address of your Azure Web app.<br>
+<strong>The CNAME record</strong>  allows you to alias one domain name to another.<br>
+<a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain?tabs=root%2Cazurecli">https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain?tabs=root%2Cazurecli</a></p>
+</blockquote>
+<h3 id="question-35-1">Question 35</h3>
+<p>You have the below NSG configured in your Azure environment.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-10-03_14-07-04-c9fd7682aa0e65ac429837cd1c395190.png" alt=""><br>
+At the destination, we are directly providing the names of the services. What are these called?</p>
+<h4 id="correct-answer-224">Correct answer</h4>
+<ul>
+<li>Service tags</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview">https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview</a></p>
+</blockquote>
+<h3 id="question-36-2">Question 36</h3>
+<p>You have below Azure VM in your subscription.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-10-03_13-53-18-82b2394e4ad9b4441611dd9fed3ac6c8.png" alt=""><br>
+You need to create 10 more VMs based on the same configuration. Which blade will you use so that you can use the existing ARM template and modify it according to your requirements?</p>
+<h4 id="correct-answer-225">Correct answer</h4>
+<ul>
+<li>A</li>
+</ul>
+<blockquote>
+<p>You need to click on Export Template to download the ARM template.</p>
+</blockquote>
+<h3 id="question-37-2">Question 37</h3>
+<p>You have an Azure Key Vault in your subscription. You executed the below powershell cmdlet:<br>
+<strong>$vault = Get-AzKeyVault -ResourceGroupName 'myrg1’</strong></p>
+<p>Below is the output of the cmdlet:<br>
+![](<a href="https://img-c.udemycdn.com/redactor/raw/practice_test_###">https://img-c.udemycdn.com/redactor/raw/practice_test_###</a> Question/2023-10-03_13-55-15-c488b5d84f648d3981ff6e46d5e88e30.png)<br>
+How would you retrieve only the resource ID property of the above-executed cmdlet?</p>
+<h4 id="correct-answer-226">Correct answer</h4>
+<ul>
+<li>$vault.ResourceID</li>
+</ul>
+<blockquote>
+<p>The most common way to get the values of the properties of an object is to use the member access operator (<code>.</code>). Type a reference to the object, such as a variable that contains the object, or a command that gets the object. Then, type the operator (<code>.</code>) followed by the property name.</p>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_properties?view=powershell-7.3">https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_properties?view=powershell-7.3</a></p>
+</blockquote>
+<h3 id="question-38-3">Question 38</h3>
+<p>Which agent will replace the old log analytics agent for Windows and Linux machines?</p>
+<h4 id="correct-answer-227">Correct answer</h4>
+<ul>
+<li>Azure Monitor agent (AMA)</li>
+</ul>
+<blockquote>
+<p>Azure Monitor Agent (AMA) replaces the Log Analytics agent (also known as MMA and OMS) for Windows and Linux machines in Azure and non-Azure environments, including on-premises and third-party clouds.<br>
+<a href="https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-migration">https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-migration</a></p>
+</blockquote>
+<h3 id="question-39-2">Question 39</h3>
+<p>You have an Azure File Share, Fileshare-01. You are checking the connectivity using the below PowerShell cmdlet.<br>
+$hostName = “<a href="http://mystorageaccount.file.core.windows.net">mystorageaccount.file.core.windows.net</a>”<br>
+Test-NetConnection -ComputerName $hostName -Port ___<br>
+Which port number should you use for connectivity?</p>
+<h4 id="correct-answer-228">Correct answer</h4>
+<ul>
+<li>445</li>
+</ul>
+<blockquote>
+<ul>
+<li>Replace this value with the fully qualified domain name for your storage account.</li>
+<li>Different storage accounts, especially in different Azure environments,</li>
+<li>may have different suffixes than <a href="http://file.core.windows.net">file.core.windows.net</a>, so be sure to use the correct</li>
+<li>suffix for your storage account.<br>
+$hostName = “<a href="http://mystorageaccount.file.core.windows.net">mystorageaccount.file.core.windows.net</a>”</li>
+<li>Do the TCP connection test - see the above protocol/port table to figure out which</li>
+<li>port to use for your test. This test uses port 445, the port used by SMB.<br>
+Test-NetConnection -ComputerName $hostName -Port 445<br>
+<a href="https://learn.microsoft.com/en-us/troubleshoot/azure/azure-storage/files-troubleshoot?tabs=powershell">https://learn.microsoft.com/en-us/troubleshoot/azure/azure-storage/files-troubleshoot?tabs=powershell</a></li>
+</ul>
+</blockquote>
+<h3 id="question-40-1">Question 40</h3>
+<p>In your Azure subscription, there is a highly important resource group named “Prod-rg1.” The subscription owner intends to prevent the deletion of the resource group itself or any resources contained within it.<br>
+Which solution would you recommend. You also want to use a minimal amount of administrative effort.</p>
+<h4 id="correct-answer-229">Correct answer</h4>
+<ul>
+<li>Add a delete lock on the resource group.</li>
+</ul>
+<blockquote>
+<p>Add a delete lock on the resource group itself. We can also place a lock on the resources inside a resource group as well, but it involves more administrative effort. Since our requirement is to use a minimal amount of administrative effort, we should place a lock on the resource group itself.</p>
+</blockquote>
+<h3 id="question-41-2">Question 41</h3>
+<p>You have an Azure Resource Manager (ARM) template designed to deploy 10 virtual machines, and you want to automate the deployment. Identify one PowerShell and one Azure CLI command for this task. What are the two commands you would select?</p>
+<h4 id="correct-answer-230">Correct answer</h4>
+<ul>
+<li>New-AzResourceGroupDeployment</li>
+<li>
+<ol>
+<li>az deployment group create</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create()"><strong>https://learn.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create()</strong></a><br>
+<a href="https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azresourcegroupdeployment?view=azps-10.3.0"><strong>https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azresourcegroupdeployment?view=azps-10.3.0</strong></a></p>
+</blockquote>
+<h3 id="question-42-3">Question 42</h3>
+<p>A storage account is “serverless storage” to store data. You can access the data without running a VM from the internet and/or VMs in Azure. Can we also access data on the data disk if the disk is not attached to the VM?</p>
+<h4 id="correct-answer-231">Correct answer</h4>
+<ul>
+<li>False</li>
+</ul>
+<blockquote>
+<p>A storage account is “serverless storage” to store data. You are able to access the data without running a VM from the internet and/or VMs in Azure.<br>
+A storage account (fileshare or blob storage, for example) can be used by a VM like a “network share.”.<br>
+A data disk is always attached to a VM. You can’t access the data on the data disk directly from the internet.</p>
+</blockquote>
+<h3 id="question-43-2">Question 43</h3>
+<p>The following sample rule filters the Storage account to run the actions on objects that exist inside  <code>sample-container</code>  and start with  <code>blob1</code>.</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+<span class="token string">"rules"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+<span class="token punctuation">{</span>
+<span class="token string">"enabled"</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+<span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"sample-rule"</span><span class="token punctuation">,</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"Lifecycle"</span><span class="token punctuation">,</span>
+<span class="token string">"definition"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"actions"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"version"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"delete"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"daysAfterCreationGreaterThan"</span><span class="token punctuation">:</span> <span class="token number">90</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token string">"baseBlob"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"tierToCool"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"daysAfterModificationGreaterThan"</span><span class="token punctuation">:</span> <span class="token number">30</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token string">"tierToArchive"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"daysAfterModificationGreaterThan"</span><span class="token punctuation">:</span> <span class="token number">90</span><span class="token punctuation">,</span>
+<span class="token string">"daysAfterLastTierChangeGreaterThan"</span><span class="token punctuation">:</span> <span class="token number">7</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token string">"delete"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"daysAfterModificationGreaterThan"</span><span class="token punctuation">:</span> <span class="token number">2555</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token string">"filters"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+<span class="token string">"blobTypes"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+<span class="token string">"blockBlob"</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token string">"prefixMatch"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+<span class="token string">"sample-container/blob1"</span>
+<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Select Yes if the statements are true. Otherwise, Select No.</p>
+<ul>
+<li><strong>Delete previous Blob versions 90 days after creation.</strong></li>
+<li><strong>Tier blob to cool tier 30 days after last modification.</strong></li>
+</ul>
+<h4 id="correct-answer-232">Correct answer</h4>
+<ul>
+<li>Yes, Yes</li>
+</ul>
+<blockquote>
+<p>Previous blob versions are deleted automatically 90 days after creation.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-17-59-8e4aa16a431829e8d025aff174a25ce1.png" alt=""><br>
+It will tier blob to cool tier 30 days after last modification.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question_explanation/2023-09-14_07-17-59-1f8b3b75c0c5ef975df347783dd1b934.png" alt=""></p>
+</blockquote>
+<h3 id="question-44-2">Question 44</h3>
+<p>You have an Azure Storage account that contains a blob container – container4626.<br>
+You need to configure access to container4626.<br>
+Which authorization types can be used.</p>
+<h4 id="correct-answer-233">Correct answer</h4>
+<ul>
+<li>Azure AD, shared access signature (SAS) or storage key only.</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/common/authorize-data-access">https://learn.microsoft.com/en-us/azure/storage/common/authorize-data-access</a></p>
+</blockquote>
+<h3 id="question-45-2">Question 45</h3>
+<p>Which Azure CLI command will be required to create an Azure Key Vault?</p>
+<h4 id="correct-answer-234">Correct answer</h4>
+<ul>
+<li>az keyvault create</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/cli/azure/keyvault?view=azure-cli-latest#az-keyvault-create()">https://learn.microsoft.com/en-us/cli/azure/keyvault?view=azure-cli-latest#az-keyvault-create()</a></p>
+</blockquote>
+<h3 id="question-46-3">Question 46</h3>
+<p>You have an administrative unit –  <strong>Chicago</strong>. Below users and groups are added to administrative unit – Chicago.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-09-14_07-04-46-552cc4264c6ced81488ddf200ff1ff80.png" alt=""><br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-09-14_07-04-47-fd38824f3fb8aa1d84c037894d15eaaf.png" alt=""><br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-09-14_07-04-47-704c7c7634dc80dd4ae558dd1942313b.png" alt=""></p>
+<p>You need to identify Which Azure AD objects can be administered by Admin of administrative unit.</p>
+<h4 id="correct-answer-235">Correct answer</h4>
+<ul>
+<li>Chris Green, john, group2</li>
+</ul>
+<blockquote>
+<p>Adding a group to an administrative unit brings the group itself into the management scope of the administrative unit, but not the members of the group. In other words, an administrator scoped to the administrative unit can manage properties of the group, such as group name or membership, but they cannot manage properties of the users or devices within that group (unless those users and devices are separately added as members of the administrative unit). Since Godfred is part of group2, that means the admin won’t be able to manage the user Godfred as he is not the direct user added to the administrative unit.</p>
+</blockquote>
+<h3 id="question-47-2">Question 47</h3>
+<p>You have two Azure virtual networks (VNet-A and VNet-B) connected via a virtual network peering configuration. You want resources in VNet-A to resolve Fully Qualified Domain Names (FQDNs) of resources in VNet-B. What Azure service can you use to achieve this?</p>
+<h4 id="correct-answer-236">Correct answer</h4>
+<ul>
+<li>Azure DNS Private Zones</li>
+</ul>
+<blockquote>
+<p>Azure DNS Private Zones allows you to create a private DNS zone that can be associated with one or more virtual networks. By associating the private DNS zone with both VNet-A and VNet-B, resources in VNet-A can resolve the FQDNs of resources in VNet-B using the private DNS zone, ensuring secure and private name resolution within the connected virtual networks.</p>
+</blockquote>
+<h3 id="question-48-2">Question 48</h3>
+<p>Which network watcher tool allows you to measure latency between Azure and on-premises resources?</p>
+<h4 id="correct-answer-237">Correct answer</h4>
+<ul>
+<li>Connection Monitor</li>
+</ul>
+<blockquote>
+<p>The Connection Monitor monitors communication at regular intervals. It informs you of changes in reachability and latency.<br>
+<a href="https://learn.microsoft.com/en-us/azure/network-watcher/connection-monitor-overview">https://learn.microsoft.com/en-us/azure/network-watcher/connection-monitor-overview</a></p>
+</blockquote>
+<h3 id="question-49-3">Question 49</h3>
+<p>What is the primary purpose of the  <strong>Export-AzResourceGroup</strong>  cmdlet in Azure PowerShell?</p>
+<h4 id="correct-answer-238">Correct answer</h4>
+<ul>
+<li>To export Azure resources from a resource group to a template file.</li>
+</ul>
+<blockquote>
+<p>To export Azure resources from a resource group to a template file.<br>
+<a href="https://learn.microsoft.com/en-us/powershell/module/az.resources/export-azresourcegroup?view=azps-10.3.0&amp;viewFallbackFrom=azps-2.6.0">https://learn.microsoft.com/en-us/powershell/module/az.resources/export-azresourcegroup?view=azps-10.3.0&amp;viewFallbackFrom=azps-2.6.0</a></p>
+</blockquote>
+<h3 id="question-50-3">Question 50</h3>
+<p>You have an Azure subscription that contains a resource group named Prod-RG1 in the West Europe location.<br>
+Prod-RG1 contains the resources shown in the following table:<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_###Question/2023-10-03_13-33-02-dd705177c3c37e60891bbf9b032a0d3e.png" alt=""><br>
+Prod-SQLDB01 is a backup to Prod-RGV1.<br>
+This entire setup was part of a testing project. Your testing is done, and you are trying to delete the resource group, Prod-RG1, but deletion fails.<br>
+What should you do first?</p>
+<h4 id="correct-answer-239">Correct answer</h4>
+<ul>
+<li>Stop the backup of Prod-SQLDB01</li>
+</ul>
+<blockquote>
+<p>You can’t delete a vault that contains protected data sources (for example, IaaS VMs, SQL databases, or Azure file shares).<br>
+You can’t delete a vault that contains backup data. Once backup data is deleted, it will go into the soft deleted state.<br>
+You can’t delete a vault that contains backup data in the soft deleted state.<br>
+You can’t delete a vault that has registered storage accounts.<br>
+So, before you can delete a recovery services vault, you need to stop the backup and delete the backup data.</p>
+</blockquote>
 </div>
 </body>
 
