@@ -3243,6 +3243,593 @@ You can’t delete a vault that contains backup data in the soft deleted state.<
 You can’t delete a vault that has registered storage accounts.<br>
 So, before you can delete a recovery services vault, you need to stop the backup and delete the backup data.</p>
 </blockquote>
+<h3 id="question-1-8">Question 1</h3>
+<p>You have a production Azure AD tenant - <a href="http://tailwind.com">tailwind.com</a>.<br>
+You deploy a development Azure AD tenant and then create several custom administrative roles in the development tenant.<br>
+You need to copy the roles for the production tenant.<br>
+What should you do first?</p>
+<h4 id="correct-answer-240">Correct answer</h4>
+<ul>
+<li>From the development tenant, export the custom roles to JSON.</li>
+</ul>
+<blockquote>
+<p>Custom roles can be exported in JSON and then imported into a new role.</p>
+</blockquote>
+<h3 id="question-2-5">Question 2</h3>
+<p>You have an Azure subscription that contains an Azure Storage account. You plan to copy an on-premises virtual machine image to a container named vm. You need to create the container for the planned image.<br>
+Complete the below command.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-15-25-65ff24f4ce17dd4aa2166b19ca84cd2e.png" alt=""></p>
+<h4 id="correct-answer-241">Correct answer</h4>
+<ul>
+<li>A: make; B: Blob</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-make">https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-make</a></p>
+</blockquote>
+<h3 id="question-3-6">Question 3</h3>
+<p>You need to configure Azure AD authentication for an Azure Storage Account named Prod-Storage1. You need to ensure that members of an AD group – test can upload files by using Azure portal.<br>
+The Solution must use the principle of least privilege?<br>
+Which two roles should you configure for Prod-Storage1 ?</p>
+<h4 id="correct-answer-242">Correct answer</h4>
+<ul>
+<li>Reader.</li>
+<li>Storage Blob Data contributor.</li>
+</ul>
+<blockquote>
+<p>The  <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader">Reader</a>  role is an Azure Resource Manager role that permits users to view storage account resources, but not modify them. It does not provide read permissions to data in Azure Storage, but only to account management resources. The  <strong>Reader</strong>  role is necessary so that users can navigate to blob containers in the Azure portal.<br>
+For example, if you assign the  <strong>Storage Blob Data Contributor</strong>  role to users at the level of a container named  <strong>sample-container</strong>, then user is granted read, write, and delete access to all of the blobs in that container.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal">https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal</a></p>
+</blockquote>
+<h3 id="question-4-5">Question 4</h3>
+<p>Which refers to as look back window over which metric values are checked, while configuring a static threshold metric alert rule ?</p>
+<h4 id="correct-answer-243">Correct answer</h4>
+<ul>
+<li>Period</li>
+</ul>
+<h3 id="question-5-6">Question 5</h3>
+<p>You have some VMs in your Azure subscription in a virtual network. The company has some users that work remotely. Remote workers require access to VMs on VNET. How would you provide access?</p>
+<h4 id="correct-answer-244">Correct answer</h4>
+<ul>
+<li>Configure Point-to-Site VPN.</li>
+</ul>
+<blockquote>
+<p>Point-to-Site VPN allows you to create a secure connection to your virtual network from Individual computers.</p>
+</blockquote>
+<h3 id="question-6-5">Question 6</h3>
+<p>A company is planning to deploy Kubernetes cluster. Cluster has the following requirements:<br>
+You must ensure nodes get an IP address from Azure virtual network subnet, but Pods receive an IP address from a logically different address space.<br>
+What network configuration should you choose ?</p>
+<h4 id="correct-answer-245">Correct answer</h4>
+<ul>
+<li>Kubenet.</li>
+</ul>
+<blockquote>
+<p>Network configuration for Kubernetes cluster can be done in two ways:</p>
+<ul>
+<li>Kubenet</li>
+<li>Azure CNI</li>
+</ul>
+<p>We need to choose kubenet since our requirement is Pods should receive an IP address from a logically different address space.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-43-12-8c206c759c65656bacef358d0598cd87.png" alt=""></p>
+</blockquote>
+<h3 id="question-7-6">Question 7</h3>
+<p>Which Azure policy will be evaluated first ?</p>
+<h4 id="correct-answer-246">Correct answer</h4>
+<ul>
+<li>Disabled.</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effects">https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effects</a></p>
+</blockquote>
+<h3 id="question-8-5">Question 8</h3>
+<p>You have the following scale set named  <strong>– prod-scaleset1</strong>  configured :<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-52-31-beb206d2707d0aaf53c70ffcf838366e.png" alt=""><br>
+If prod-scale1 is utilized at 85 % for six minutes after it is deployed, scale set will be running how many VM.</p>
+<h4 id="correct-answer-247">Correct answer</h4>
+<ul>
+<li>6 VM</li>
+</ul>
+<blockquote>
+<p>If “prod-scale1” is utilized at 85% CPU for six minutes after it is deployed, here’s how the scaling would occur:</p>
+<ol>
+<li>The CPU utilization is above the threshold (80%) for more than 5 minutes.</li>
+<li>According to the scale out condition, 2 instances should be increased from the initial count of 4 instances.</li>
+</ol>
+</blockquote>
+<p>Therefore, in this specific scenario, the instance count will increase to 6 (initial count of 4 + 2 more instances) to handle the increased CPU load.</p>
+<h3 id="question-9-7">Question 9</h3>
+<p>You have four virtual networks, and all of them are peer-to-peer. All virtual machines inside these virtual networks should use the DNS suffix <a href="http://tailwind.com">tailwind.com</a>.<br>
+You need to configure name resolution for the virtual networks to ensure all virtual machines can communicate by using their FQDN. The solution must minimize administrative effort.<br>
+What should you choose?</p>
+<h4 id="correct-answer-248">Correct answer</h4>
+<ul>
+<li>Azure DNS private Zone</li>
+</ul>
+<blockquote>
+<p>Azure DNS private zone allows private name resolution between Azure Virtual Networks.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/dns/private-dns-privatednszone">https://learn.microsoft.com/en-us/azure/dns/private-dns-privatednszone</a></p>
+</blockquote>
+<h3 id="question-10-7">Question 10</h3>
+<p>Which two roles can provide permission to other users at subscription level ?</p>
+<h4 id="correct-answer-249">Correct answer</h4>
+<ul>
+<li>Owner and User Access Administrator</li>
+</ul>
+<blockquote>
+<p>Only the User Access Administrator role and Owner role can assign permissions.</p>
+</blockquote>
+<h3 id="question-11-6">Question 11</h3>
+<p>You have an Active Directory Forest named <a href="http://contoso.com">contoso.com</a>. You install and configure Azure AD Connect to use password hash synchronization as the single sign-on (SSO) method. Staging mode is enabled. You review the synchronization results and discover that the<br>
+Synchronization Service Manager does not display any sync jobs.<br>
+You need to ensure that the synchronization completes successfully, and that exports, imports and synchronization could run.<br>
+What should you do?</p>
+<h4 id="correct-answer-250">Correct answer</h4>
+<ul>
+<li>Run Azure AD connect and disable staging mode.</li>
+</ul>
+<blockquote>
+<p>Staging mode must be disabled. If the Azure AD connect is in staging mode, password hash synchronization will not work.</p>
+</blockquote>
+<h3 id="question-12-8">Question 12</h3>
+<p>You have an Azure virtual machine named Prod-vm1 that runs windows server 2019. VM was deployed with default drive settings .<br>
+You have some files on C and D drive on the VM.<br>
+You are planning to redeploy VM. Which drive files will be lost after you redeploy prod-vm1 ?</p>
+<h4 id="correct-answer-251">Correct answer</h4>
+<ul>
+<li>D drive</li>
+</ul>
+<blockquote>
+<p>Since D drive is temporary storage drive. If any VM is rebooted, it clears all the content.</p>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_07-00-09-10363944cd5fba4d088cef4b1f657188.png" alt=""></p>
+</blockquote>
+<h3 id="question-13-8">Question 13</h3>
+<p>You have a user named Bob in your Azure AD tenant. You need to ensure that Bob can deploy virtual machines and manage virtual networks. The solution must use the principle of least privilege.<br>
+Which RBAC role should you assign to Bob?</p>
+<h4 id="correct-answer-252">Correct answer</h4>
+<ul>
+<li>Contributor</li>
+</ul>
+<blockquote>
+<p>Contributor: It grants full access to manage all resources but does not allow you to assign roles in Azure RBAC.<br>
+<strong>Incorrect Answers</strong>:<br>
+Owner: Grants full access to manage all resources, including the ability to assign roles in Azure RBAC.<br>
+Virtual Machine Contributor: Lets you manage virtual machines, but not access to them or the virtual network or storage account they’re connected to.<br>
+Virtual Machine Administrator Login: View virtual machines in the portal and login as an administrator.</p>
+</blockquote>
+<h3 id="question-14-6">Question 14</h3>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-48-55-ee91117c368f483e1713d95fd830c3a4.png" alt=""></p>
+<h4 id="correct-answer-253">Correct answer</h4>
+<ul>
+<li>Storage account – Prod-Storage3 ; Log Analytics workspace – Prod-Analytics1, Prod-Analytics2, Prod-Analytics3.</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-48-55-ef2ba6073cd7e6c7ad527922f9b21c98.png" alt=""></p>
+</blockquote>
+<h3 id="question-15-9">Question 15</h3>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-45-35-8d64dc50d08a0547e8b5e7de184373a4.png" alt=""><br>
+Would the company be able to deploy VM3?</p>
+<h4 id="correct-answer-254">Correct answer</h4>
+<ul>
+<li>No</li>
+</ul>
+<blockquote>
+<p>Even though VM1 is in stopped state but it still contributes towards quota. Quota is calculated on total no of cores in both allocated and deallocated way.</p>
+</blockquote>
+<h3 id="question-16-6">Question 16</h3>
+<p>There are resources deployed to a resource group named prod-rg-01 by using ARM templates.<br>
+You need to verify the date and time the resources were created within prod-rg-01.<br>
+Which blade will you review inside prod-RG-01?</p>
+<h4 id="correct-answer-255">Correct answer</h4>
+<ul>
+<li>Deployments</li>
+</ul>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-22-21-aac150601e873e75456431f937725926.png" alt=""></p>
+<h3 id="question-17-7">Question 17</h3>
+<p>You have an Azure subscription that contains an Azure Active Directory (Azure AD) tenant named <a href="http://cloudportal.com">cloudportal.com</a> and an Azure Kubernetes Service (AKS) cluster named AKS1.<br>
+An administrator reports that she is unable to grant access to AKS1 to the users in <a href="http://cloudportal.com">cloudportal.com</a>. You need to ensure that access to AKS1 can be granted to the <a href="http://cloudportal.com">cloudportal.com</a> users.<br>
+What should you do first?</p>
+<h4 id="correct-answer-256">Correct answer</h4>
+<ul>
+<li>From <a href="http://cloudportal.com">cloudportal.com</a>, create an OAuth 2.0 authorization endpoint.</li>
+</ul>
+<blockquote>
+<p>There are different ways to authenticate, control access/authorize and secure Kubernetes clusters.<br>
+Azure AD authentication is provided to AKS clusters with OpenID Connect. OpenID Connect is an identity layer built on top of the OAuth 2.0 protocol.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/aks/concepts-identity">https://learn.microsoft.com/en-us/azure/aks/concepts-identity</a></p>
+</blockquote>
+<h3 id="question-18-7">Question 18</h3>
+<p>You plan to deploy several virtual machines inside virtual machine scale set that will run windows server 2019. You need to ensure IIS is available on all virtual machines after they are deployed.<br>
+What should you use?</p>
+<h4 id="correct-answer-257">Correct answer</h4>
+<ul>
+<li>Azure custom script extension</li>
+</ul>
+<blockquote>
+<p>The Custom Script Extension downloads and runs scripts on Azure virtual machines (VMs). Use this extension for post-deployment configuration, software installation, or any other configuration or management task.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows</a></p>
+<h3 id="question-19-6">Question 19</h3>
+<p>Your company has several departments. Each department has several virtual machines (VMs).<br>
+The company has an Azure subscription that contains a resource group named Prod-RG1.<br>
+All VMs are in Prod-RG1.<br>
+You want to associate each VM with its respective department.<br>
+What should you do?</p>
+<h4 id="correct-answer-258">Correct answer</h4>
+<ul>
+<li>Assign tags to virtual machines.</li>
+</ul>
+<blockquote>
+<p>Tags are metadata elements that you apply to your Azure resources. They’re key-value pairs that help you identify resources based on settings that are relevant to your organization.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources">https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources</a></p>
+</blockquote>
+<h3 id="question-20-6">Question 20</h3>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-03_14-53-49-f3ae291d669644237cb6b1e2176c25e2.png" alt=""></p>
+<h4 id="correct-answer-259">Correct answer</h4>
+<ul>
+<li>Storage4</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-03_14-53-50-226fbcdfff838b9722758cfe769e1cf2.png" alt=""></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/import-export/storage-import-export-requirements">https://learn.microsoft.com/en-us/azure/import-export/storage-import-export-requirements</a></p>
+</blockquote>
+<h3 id="question-21-5">Question 21</h3>
+<p>Your company has a subscription – Staging and it has following resource groups.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-40-59-30344715fdf09e826a9f0ebed6055d5c.png" alt=""><br>
+You have deployed a storage account in RG1. Would you be able to move storage account to RG2.</p>
+<h4 id="correct-answer-260">Correct answer</h4>
+<ul>
+<li>No</li>
+</ul>
+<blockquote>
+<p>Since RG2 has read only lock defined. Read-only lock means user cannot make any changes/updates in the resource group.</p>
+</blockquote>
+<h3 id="question-22-7">Question 22</h3>
+<p>You plan to backup Azure virtual machine – Prod-VM01. You found that backup Pre-Check status displays a status of warning.<br>
+What is the possible cause of the warning status?</p>
+<h4 id="correct-answer-261">Correct answer</h4>
+<ul>
+<li>VM does not have the latest version of Azure VM agent (WaAPPAgent.exe) installed.</li>
+</ul>
+<blockquote>
+<p>The warning state indicates that there is some problem with the VM configuration that might lead to backup failures.</p>
+</blockquote>
+<h3 id="question-23-7">Question 23</h3>
+<p>You have an Azure active directory tenant: <a href="http://cloudportalfinance.onmicrosoft.com">cloudportalfinance.onmicrosoft.com</a>. Your company has purchased the domain name <a href="http://cloudportalfinance.com">cloudportalfinance.com</a>. You need to add <a href="http://cloudportalfinance.com">cloudportalfinance.com</a> as a custom domain name in Azure AD. You need to ensure Azure can verify the domain name.<br>
+Which type of DNS record is required?</p>
+<h4 id="correct-answer-262">Correct answer</h4>
+<ul>
+<li>MX</li>
+</ul>
+<blockquote>
+<p>We can create two types of records: TXT and MX. So, in the options given, we can choose an MX record to verify the domain.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-33-36-a9952d5b5c4be1d6723f1766fd5de613.png" alt=""></p>
+</blockquote>
+<h3 id="question-24-7">Question 24</h3>
+<p>You are planning to deploy the latest version of Windows Server 2016 using an ARM template. You need to complete the offer and sku sections of the ARM template.<br>
+Select the appropriate option.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-31-26-1feacafff37813b824ad0419384a0a6f.png" alt=""></p>
+<h4 id="correct-answer-263">Correct answer</h4>
+<ul>
+<li>Offer: WindowsServer; sku: 2016-Datacenter.</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines?pivots=deployment-language-arm-template">https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines?pivots=deployment-language-arm-template</a></p>
+</blockquote>
+<h3 id="question-25-7">Question 25</h3>
+<p>You have the following scale set named  <strong>– prod-scaleset1</strong>  configured :<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-53-34-400595e9658580c479cb79270fdf1616.png" alt=""><br>
+If scale set is utilized at 25 % for six minutes after it is deployed, and then utilized at 50 % for 6 minutes, scale set will be running how many VMs ?</p>
+<h4 id="correct-answer-264">Correct answer</h4>
+<ul>
+<li>2 VM</li>
+</ul>
+<blockquote>
+<ol>
+<li>Initially, the scale set is utilized at 25% CPU for six minutes. According to the scale-in condition, it should decrease by 4 instances, but the minimum instance count is 2. So, the instance count remains at 2.</li>
+<li>Then, the scale set is utilized at 50% CPU for 6 minutes, which does not trigger any scale-out or scale-in conditions.<br>
+Therefore, in this scenario, the scale set will be running with 2 instances.</li>
+</ol>
+</blockquote>
+<h3 id="question-26-2">Question 26</h3>
+<p>You need to identify the virtual machines that are underutilized. Which Azure Advisor feature should you choose?</p>
+<h4 id="correct-answer-265">Correct answer</h4>
+<ul>
+<li>Cost.</li>
+</ul>
+<blockquote>
+<p><strong>Cost</strong>: To optimize and reduce your overall Azure spending.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/advisor/advisor-overview">https://learn.microsoft.com/en-us/azure/advisor/advisor-overview</a></p>
+</blockquote>
+<h3 id="question-27-2">Question 27</h3>
+<p>You need to write an ARM template to create an Azure virtual machine. But passwords for virtual machines should not be stored in plain text. You need to reference an administrative password, and access to the password must be secured.<br>
+What should you choose to store the password?</p>
+<h4 id="correct-answer-266">Correct answer</h4>
+<ul>
+<li>Azure Key Vault and access configuration.</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-13-25-dcbbfbfaadaba54f94f6dd77e14bb98f.png" alt=""><br>
+You can use Azure Key Vault to store the password and refer to the resource ID of the key vault in the ARM template, as you can see in the above screenshot.<br>
+Also, you must enable an access configuration called Enable Access to ARM for template deployment before the template can retrieve secrets from the vault, as you can see in the below screenshot.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_06-13-25-c7e998afe00e47471505c1d10d1b25b4.png" alt=""></p>
+</blockquote>
+<h3 id="question-28-4">Question 28</h3>
+<p>You have an Azure Webapp, prodwebapp1, that is pointing to the domain name <a href="http://prodwebapp1.azurewebsites.net">prodwebapp1.azurewebsites.net</a>. You need to add a custom domain named <a href="http://www.cloudportalweb.com">www.cloudportalweb.com</a> to prodwebapp1. You have verified the domain ownership.<br>
+Which DNS record should you use next?</p>
+<h4 id="correct-answer-267">Correct answer</h4>
+<ul>
+<li>CNAME</li>
+</ul>
+<blockquote>
+<p>CNAME record is required to map  <a href="http://www.cloudportalweb.com/">www.cloudportalweb.com</a>  to <a href="http://prodwebapp1.azurewebsites.net">prodwebapp1.azurewebsites.net</a>.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain?tabs=root%2Cazurecli">https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain?tabs=root%2Cazurecli</a></p>
+</blockquote>
+<h3 id="question-29-3">Question 29</h3>
+<p>You have the below user account in an Azure AD tenant.<br>
+UserPrinicpalName: <strong>John_contoso_com#Ext#@fabrikam.com</strong><br>
+Which statement best describes the user?</p>
+<h4 id="correct-answer-268">Correct answer</h4>
+<ul>
+<li>User is a guest in the tenant.</li>
+</ul>
+<blockquote>
+<p>Here, EXT means external user or guest user.</p>
+</blockquote>
+<h3 id="question-30-3">Question 30</h3>
+<p>You have an Azure subscription named Sub1 that contains two users named User1 and User2. You need to assign role-based access control (RBAC) roles to User1 and User2.<br>
+The users must be able to perform the following tasks in Sub1:<br>
+• User1 must view the data in any storage account.<br>
+• User2 must assign users the Contributor role for storage accounts.</p>
+<p>The solution must use the principle of least privilege.<br>
+<strong>RBAC roles available:</strong><br>
+<strong>Owner</strong><br>
+<strong>Contributor</strong><br>
+<strong>Reader and Data Access</strong><br>
+<strong>Storage account contributor</strong></p>
+<p>Which RBAC role should you assign to user1 and user2.</p>
+<h4 id="correct-answer-269">Correct answer</h4>
+<ul>
+<li>User1: Reader and Data Access; User2: Owner</li>
+</ul>
+<blockquote>
+<p>Reader and Data Access: It will allow everything but will not let you delete or create a storage account or contained resource. It will also allow read/write access to all data contained in a storage account via access to storage account keys.</p>
+</blockquote>
+<p>Owner is needed since we need to assign permission to other users.</p>
+<h3 id="question-31-3">Question 31</h3>
+<p>You plan to use a deployment template to deploy 6 instances of web app in east us region.<br>
+You need to ensure that you have met minimum prerequisites for deployment. Your solution must minimize costs in Azure.</p>
+<h4 id="correct-answer-270">Correct answer</h4>
+<ul>
+<li>Deploy one Azure App service plan.</li>
+</ul>
+<blockquote>
+<p>Deploy One Azure App Service Plan:<br>
+Cost-Effective: This option is typically the most cost-effective because you only need one App Service Plan to host all six web app instances.</p>
+</blockquote>
+<h3 id="question-32-2">Question 32</h3>
+<p>You need to recover files from the Azure virtual machine backup. You performed the below steps:<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-03_14-56-43-9ee93bb929e5414d2063ff4f218d6cfd.png" alt=""><br>
+Does this meet the goal ?</p>
+<h4 id="correct-answer-271">Correct answer</h4>
+<ul>
+<li>Yes</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/backup/backup-azure-restore-files-from-vm">https://learn.microsoft.com/en-us/azure/backup/backup-azure-restore-files-from-vm</a></p>
+</blockquote>
+<h3 id="question-33-3">Question 33</h3>
+<p>You have an Azure subscription that is utilized by four different departments within your company. This subscription includes 10 resource groups, and each department uses resources across several of these resource groups. Your objective is to generate a report for the finance department that provides a breakdown of costs for each of the four departments.<br>
+Arrange the following three actions in the correct sequence:</p>
+<p>A) Assign a tag to each resource group.<br>
+B) Assign a tag to each resource.<br>
+C) Download the usage report.<br>
+D) From the Cost analysis blade, filter the view by tag.<br>
+E) Open the Resource costs blade of each resource group.</p>
+<h4 id="correct-answer-272">Correct answer</h4>
+<ul>
+<li>B,D,C</li>
+</ul>
+<blockquote>
+<p>Assign a tag to each resource.<br>
+From the Cost analysis blade, filter the view by tag.<br>
+Download the usage report.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources">https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources</a></p>
+</blockquote>
+<h3 id="question-34-3">Question 34</h3>
+<p>You have an Azure subscription that contains the resources in the following table:<br>
+NIC1 network interface card attaches VM1 to Subnet1. Subnet1 is associated to VNet1. You need to apply ASG1 to VM1.<br>
+What should you do?<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_07-05-40-1d2a06ac067ff044c37adf5c65c58943.png" alt=""></p>
+<h4 id="correct-answer-273">Correct answer</h4>
+<ul>
+<li>Associate NIC1 to ASG1.</li>
+</ul>
+<blockquote>
+<p>Network interface cards (NICs) can be associated to Application Security Groups (ASGs). Application security groups enable you to configure network security as a natural extension of an application’s structure, allowing you to group virtual machines and define network security policies based on those groups.</p>
+</blockquote>
+<h3 id="question-35-2">Question 35</h3>
+<p>You plan to deploy three Azure virtual machines named VM1, VM2, and VM3. The virtual machines will host a web app named App1. You need to ensure that at least two virtual machines are available if a single Azure datacenter becomes unavailable. What should you deploy?</p>
+<h4 id="correct-answer-274">Correct answer</h4>
+<ul>
+<li>Each virtual machine in a separate Availability Zone.</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview?tabs=azure-cli">https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview?tabs=azure-cli</a></p>
+</blockquote>
+<h3 id="question-36-3">Question 36</h3>
+<p>You have Azure virtual machines that run windows server 2019. Below is the table for the same.<br>
+<img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question/2023-10-07_06-39-24-b6d588f9221077a19ee79f575ba360db.png" alt=""><br>
+You create a private DNS zone named <a href="http://adatum.com">adatum.com</a>. You configure the <a href="http://adatum.com">adatum.com</a> zone to allow auto registration from VNET1 .<br>
+Which A records will be added to the <a href="http://adatum.com">adatum.com</a> zone for each virtual machine?</p>
+<h4 id="correct-answer-275">Correct answer</h4>
+<ul>
+<li>VM1 – Private IP address; VM2 – Private IP address</li>
+</ul>
+<blockquote>
+<p>The virtual machines are registered (added) to the private zone as A records pointing to their private IP addresses. Since it is private DNS zones, we need private IP addresses only.</p>
+</blockquote>
+<h3 id="question-37-3">Question 37</h3>
+<p>You have an Azure subscription that contains AKS clusters, and the autoscaling feature is enabled.<br>
+You need to configure the minimum and maximum node counts for AKS.<br>
+Which PowerShell cmdlet will you choose?</p>
+<h4 id="correct-answer-276">Correct answer</h4>
+<ul>
+<li>Set-AzAksCluster</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.aks/set-azakscluster?view=azps-10.3.0">https://learn.microsoft.com/en-us/powershell/module/az.aks/set-azakscluster?view=azps-10.3.0</a></p>
+</blockquote>
+<h3 id="question-38-4">Question 38</h3>
+<p>Your company has a Microsoft Azure subscription. The company has datacenters in Los Angeles and New York. You are configuring the two datacenters as geo-clustered sites for site resiliency.<br>
+You need to recommend an Azure storage redundancy option. You have the following data storage requirements:<br>
+Data must be stored on multiple nodes.<br>
+Data must be stored on nodes in separate geographic locations.<br>
+Data can be read from the secondary location as well as from the primary location.<br>
+Which of the following Azure stored redundancy options should you recommend?</p>
+<h4 id="correct-answer-277">Correct answer</h4>
+<ul>
+<li>RA-GRS (Read only geo-redundant storage)</li>
+</ul>
+<blockquote>
+<p>With GRS, the data in the secondary region isn’t available for read or write access unless there’s a failover to the primary region. For read access to the secondary region, configure your storage account to use read-access geo-redundant storage (RA-GRS).</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy">https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy</a></p>
+</blockquote>
+<h3 id="question-39-3">Question 39</h3>
+<p>Your company has three virtual machines (VMs) that are included in an availability set.<br>
+You try to resize one of the VMs, which returns an allocation failure message.<br>
+It is imperative that the VM is resized.<br>
+Which of the following actions should you take?</p>
+<h4 id="correct-answer-278">Correct answer</h4>
+<ul>
+<li>You should stop all three VMs.</li>
+</ul>
+<blockquote>
+<p>If the VM you wish to resize is part of an availability set, then you must stop all VMs in the availability set before changing the size of any VM in the availability set.<br>
+The reason all VMs in the availability set must be stopped before performing the resize operation to a size that requires different hardware is that all running VMs in the availability set must be using the same physical hardware cluster.</p>
+</blockquote>
+<h3 id="question-40-2">Question 40</h3>
+<p>What is the default frequency of collecting platform metrics ?</p>
+<h4 id="correct-answer-279">Correct answer</h4>
+<ul>
+<li>1 min</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-07_07-06-56-660e5039df9591eacec09df4e863c1c7.png" alt=""></p>
+</blockquote>
+<h3 id="question-41-3">Question 41</h3>
+<p>You have created the ARM template to create a virtual machine. You have stored the template in the GitHub repository. How would you deploy the ARM template using the PowerShell cmdlet?</p>
+<h4 id="correct-answer-280">Correct answer</h4>
+<ul>
+<li>New-AzResourceGroupDeployment -ResourceGroupName “RG1” -TemplateUri <a href="https://raw.githubusercontent.com/Azure/new.json">https://raw.githubusercontent.com/Azure/new.json</a></li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-03_14-55-19-e48b8ba5c42ca5557a665941eb395acc.png" alt=""></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-powershell">https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-powershell</a></p>
+</blockquote>
+<h3 id="question-42-4">Question 42</h3>
+<p>You have an Azure subscription that contains the following resources:<br>
+VNET1 (Virtual Network)</p>
+<pre><code>Subnet1: Subnet in VNET1
+WebApp1: Web Application Service
+</code></pre>
+<p>NSG1 (Network Security Group)<br>
+You create an application security group, ASG1.<br>
+Which resource can use ASG1?</p>
+<h4 id="correct-answer-281">Correct answer</h4>
+<ul>
+<li>NSG1</li>
+</ul>
+<blockquote>
+<p>ASGs is typically associated with NSGs. You can define security rules in the NSG1 based on the ASG1, allowing you to control the traffic to and from resources associated with ASG1.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-network/application-security-groups">https://learn.microsoft.com/en-us/azure/virtual-network/application-security-groups</a></p>
+</blockquote>
+<h3 id="question-43-3">Question 43</h3>
+<p>What is the likely reason for the failure of the resize operation when you try to change the VM1’s size from Standard_D4s_v3 to Standard_D2s_v3 in Azure.<br>
+Considering VM1’s properties</p>
+<pre><code>Number of virtual CPUs : 2
+Storage type: Premium
+Number of data disks: 6
+Public IP address: Standard SKU
+</code></pre>
+<h4 id="correct-answer-282">Correct answer</h4>
+<ul>
+<li>Number of data disk</li>
+</ul>
+<blockquote>
+<p>In this scenario, the virtual machine (VM) resize failure is caused by the VM’s current number of data disks. The Standard_D4s_v3 instance size supports up to eight data disks, but the Standard D2s_v3 instance size only supports up to four data disks. Therefore, you will be unable to make the VM size reduction unless you detach the extra data disks from the VM.</p>
+</blockquote>
+<h3 id="question-44-3">Question 44</h3>
+<p>You have 5 TB of data that needs to be transferred to an Azure subscription. You are planning to use the Azure Import/Export Job.<br>
+What can you use as the destination of the imported data?</p>
+<h4 id="correct-answer-283">Correct answer</h4>
+<ul>
+<li>Azure Blob Storage</li>
+</ul>
+<blockquote>
+<p>Data can be imported to Blob storage and Azure File Share.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/import-export/storage-import-export-data-to-blobs?tabs=azure-portal-preview">https://learn.microsoft.com/en-us/azure/import-export/storage-import-export-data-to-blobs?tabs=azure-portal-preview</a></p>
+</blockquote>
+<h3 id="question-45-3">Question 45</h3>
+<p>You have a Microsoft 365 tenant and an Azure Active Directory (Azure AD) tenant named <a href="http://contoso.com">contoso.com</a>. You plan to grant three users named User1, User2, and User3 access to a temporary Microsoft SharePoint document library named Library1. You need to create groups for the users. The solution must ensure that the groups are deleted automatically after 180 days. Which two groups should you create? Each correct answer presents a complete solution.<br>
+NOTE: Each correct selection is worth one point.</p>
+<h4 id="correct-answer-284">Correct answer</h4>
+<ul>
+<li>A Microsoft 365 group that uses the Dynamic User membership type.</li>
+<li>A Microsoft 365 group that uses the Assigned membership type.</li>
+</ul>
+<blockquote>
+<p>You can set an expiration policy only for Office 365 groups in Azure Active Directory (Azure AD). Note: With the increase in usage of Office 365 Groups, administrators and users need a way to clean up unused groups. Expiration policies can help remove inactive groups from the system and make things cleaner. When a group expires, all its associated services (the mailbox, planner, SharePoint site, etc.) are also deleted. You can set up a rule for dynamic membership in security groups or Office 365 groups.</p>
+</blockquote>
+<h3 id="question-46-4">Question 46</h3>
+<p>Which PowerShell cmdlet allows you to create a template from a deployment that is in the deployment history of a resource group ?</p>
+<h4 id="correct-answer-285">Correct answer</h4>
+<ul>
+<li>Save-AzresourceGroupDeployment</li>
+</ul>
+<blockquote>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.resources/save-azresourcegroupdeploymenttemplate?view=azps-10.3.0">https://learn.microsoft.com/en-us/powershell/module/az.resources/save-azresourcegroupdeploymenttemplate?view=azps-10.3.0</a></p>
+</blockquote>
+<h3 id="question-47-3">Question 47</h3>
+<p>You have an Azure resource group – RG1 that contains an existing tag as shown below:<br>
+<strong>“Env”: “Prod”</strong></p>
+<p>You need to add another below tag to RG1.<br>
+<strong>“Owner”:” John”</strong></p>
+<p>You executed below powershell cmdlet:<br>
+$tags = (Get-AzResourceGroup -name RG1).Tags<br>
+$tags. Add(“Owner”:”John”)<br>
+Set-AzResourceGroup -Tag $tags -Name RG1</p>
+<p>Does this meet the goal ?</p>
+<h4 id="correct-answer-286">Correct answer</h4>
+<ul>
+<li>True</li>
+</ul>
+<blockquote>
+<p><img src="https://img-c.udemycdn.com/redactor/raw/practice_test_question_explanation/2023-10-03_14-49-20-97aa135ab9d2c86b0407aa0b88f08ea7.png" alt=""></p>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.resources/set-azresourcegroup?view=azps-10.4.1&amp;viewFallbackFrom=azps-2.6.0">https://learn.microsoft.com/en-us/powershell/module/az.resources/set-azresourcegroup?view=azps-10.4.1&amp;viewFallbackFrom=azps-2.6.0</a></p>
+</blockquote>
+<h3 id="question-48-3">Question 48</h3>
+<p>Your company has an Azure subscription. You need to deploy several Azure virtual machines (VMs) using ARM templates. You have been informed that the VMs will be included in a single availability set. You are required to make sure that the ARM template you configure allows for as many VMs as possible to remain accessible in the event of fabric failure or maintenance. Which of the following is the value that you should configure for the platformUpdateDomainCount property?</p>
+<h4 id="correct-answer-287">Correct answer</h4>
+<ul>
+<li>20</li>
+</ul>
+<blockquote>
+<p>Each availability set can be configured with up to 3 fault domains and 20 update domains.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/availability-set-overview">https://learn.microsoft.com/en-us/azure/virtual-machines/availability-set-overview</a></p>
+</blockquote>
+<h3 id="question-49-4">Question 49</h3>
+<p>You have an Azure subscription named Subscription1 that contains two Azure virtual networks named VNet1 and VNet2. VNet1 contains a VPN gateway named VPNGW1 that uses static routing. There is a site-to-site VPN connection between your on-premises network and VNet1.<br>
+On a computer named Client1 that runs Windows 10, you configure a point-to-site VPN connection to VNet1.<br>
+You configure virtual network peering between VNet1 and VNet2. You verify that you can connect to VNet2 from the on-premises network. Client1 is unable to connect to VNet2.<br>
+You need to ensure that you can connect Client1 to VNet2.<br>
+What should you do?</p>
+<h4 id="correct-answer-288">Correct answer</h4>
+<ul>
+<li>Download and re-install the VPN client configuration package on client1.</li>
+</ul>
+<blockquote>
+<p>If you make a change to the topology of your network, VPN client packages must be downloaded and installed again for the changes to be applied. Also, Gateway transi</p>
+</blockquote>
 </div>
 </body>
 
