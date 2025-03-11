@@ -1,5 +1,5 @@
 const menuItems = [
-    { id: 'lang', label: 'Languages', file: 'languages/index.html'},
+    { id: 'lang', label: 'Languages', file: 'languages.html'},
     { id: 'os', label: 'Operating System', file: 'os.html'},
     { id: 'containerization', label: "Containerization", file: 'containerization.html' },
     { id: 'orchestration', label: "Orchestration", file: 'orchestration.html' },
