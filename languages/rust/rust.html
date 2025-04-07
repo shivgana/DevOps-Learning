@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rust</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="ultimate-rust-curriculum">Ultimate Rust Curriculum</h1>
+<h2 id="ultimate-rust-foundations">Ultimate Rust Foundations</h2>
+<p>Getting Started with Rust:</p>
+<ul>
+<li>1.0 - Introduction</li>
+<li>1.1 - Setup &amp; Update Rust</li>
+<li>1.2 - Setup Dev Environment</li>
+<li>1.3 - IDE Configuration</li>
+<li>1.4 - Rust Fundamentals</li>
+<li>1.5 - Console Text Input</li>
+<li>1.6 - Create a Library</li>
+<li>1.7- World’s Simplest Login System</li>
+<li>1.8 - Enumerations</li>
+<li>1.9 - Structures</li>
+<li>1.10 - Vectors</li>
+<li>1.11 - HashMaps</li>
+<li>1.12 - Serialization/Deserialization</li>
+<li>1.13 - Hashing Passwords</li>
+<li>1.14 - Start a CLI App</li>
+</ul>
+<p>Fearless System Thread Concurrency:</p>
+<ul>
+<li>2.0 - Introduction</li>
+<li>2.1 - System Threads: Overview</li>
+<li>2.2 - Create Your First Thread</li>
+<li>2.3 - Spawning Threads with Parameters and Closures</li>
+<li>2.4 - Returning Data from Threads</li>
+<li>2.5 - Dividing Workloads</li>
+<li>2.6 - The ThreadBuilder Pattern</li>
+<li>2.7 - Scoped Threads for Easy Local Data Sharing</li>
+<li>2.8 - Sharing Data with Atomics</li>
+<li>2.9 - Sharing Data with Mutexes</li>
+<li>2.10 - Read/Write Locks</li>
+<li>2.11 - Deadlocks, Panics and Poisoning</li>
+<li>2.12 - Sharing Data with Lock-Free Structures</li>
+<li>2.13 - Parking Threads</li>
+<li>2.14 - Sending Data Between Threads with Channels</li>
+<li>2.15 - Sending Functions to Worker Threads</li>
+<li>2.16 - Let’s build a work queue with a thread pool</li>
+<li>2.17 - Thread CPU/Core Affinity</li>
+<li>2.18 - Thread Priority</li>
+<li>2.19 - Making it Easy with Rayon</li>
+<li>2.20 - Scopes and Pooled Threads with Rayon</li>
+</ul>
+<p>Async/Await Concurrency:</p>
+<ul>
+<li>3.0 - ntroduction / Async Overview</li>
+<li>3.1 - Hello Async/Await</li>
+<li>3.2 - Getting Started with Tokio</li>
+<li>3.3 - Working with Tokio Futures: Awaiting, Yielding and Spawning</li>
+<li>3.4 - Blocking Tasks</li>
+<li>3.5 - Unit Testing Tokio</li>
+<li>3.6 - Handling Errors</li>
+<li>3.7 - File I/O</li>
+<li>3.8 - Basic Network I/O</li>
+<li>3.9 - Async Channels (Tokio)</li>
+<li>3.10 - Shared State (Tokio)</li>
+<li>3.11 - Selecting Futures</li>
+<li>3.12 - Pinning</li>
+<li>3.13 - Tokio Tracing</li>
+<li>3.14 - Working with Databases</li>
+<li>3.15 - Axum - A Web Framework built on Tokio</li>
+<li>3.16 - Let’s Build a Thumbnail Server</li>
+</ul>
+<p>Memory &amp; Resource Management:</p>
+<ul>
+<li>4.0 - Why Haven’t We Manually Managed Any Memory Yet?</li>
+<li>4.1 - The unsafe Keyword</li>
+<li>4.2 - Low-Level Memory Management</li>
+<li>4.3 - The Drop Trait &amp; RAII (Resource Acquisition is Initialization)</li>
+<li>4.4 - Reference Counting</li>
+<li>4.5 - Lifetimes</li>
+<li>4.6 - Traits</li>
+<li>4.7 - Generics</li>
+<li>4.8 - Iterators</li>
+<li>4.9 - Cycles and the Difficulty of Linked Lists</li>
+<li>4.10 - Memory Fragmentation, Allocators and Arenas</li>
+<li>4.11 - Packing, Reordering &amp; Mangling</li>
+<li>4.12 - From Bytes to Types</li>
+<li>4.13 - Safely Interacting with Other Languages &amp; Surprise: Memory Leaks are Safe!</li>
+</ul>
+<p>Build a Network Service:</p>
+<ul>
+<li>5.0 - Introduction &amp; Planning Our Project</li>
+<li>5.1 - Shared Data Structures</li>
+<li>5.2 - Collection Daemon Mk 1</li>
+<li>5.3 - Collection Server Mk 1</li>
+<li>5.4 - Error Handling in the Collector</li>
+<li>5.5 - Setting the Collector ID</li>
+<li>5.6 - Web Service Mk 1</li>
+<li>5.7 - Web Server</li>
+<li>5.8 - Let’s Use Less Bandwidth</li>
+</ul>
+<h2 id="ultimate-rust-foundations---next-steps">Ultimate Rust: Foundations - Next Steps</h2>
+<p>Ultimate Rust: Foundations - Next Steps</p>
+<ul>
+<li>1.0 - Bi-Directional Communication</li>
+<li>1.2 - Sending Commands &amp; Prevent Unbounded Growth</li>
+<li>1.3 - Giving the Collector a Diet</li>
+<li>1.4 - Giving the Collector a Diet (Cont)</li>
+<li>1.5 - Optimizing File Reading &amp; Adapting Files In Flight</li>
+</ul>
+<h2 id="ultimate-rust-best-practices">Ultimate Rust Best Practices</h2>
+<p>Section 1: Tooling</p>
+<ul>
+<li>1.0 - Introduction - Formatting</li>
+<li>1.1 - Clippy (the linter)</li>
+<li>1.2 - Documentation</li>
+<li>1.3 - Understanding Dependencies</li>
+<li>1.4 - Managing Your Own Dependencies</li>
+<li>1.5 - Checking for Vulnerabilities</li>
+<li>1.6 - Check for Outdated Dependencies</li>
+<li>1.7 - Denying Dependencies by Licensing</li>
+</ul>
+<p>Section 2 : Code Best Practices</p>
+<ul>
+<li>2.0 - Favor Iterators</li>
+<li>2.1 - Minimize Cloning (we have an alternative name as well Cloning Can Be a Code Smell)</li>
+<li>2.2 - Don’t Emulate OOP</li>
+<li>2.3 - Favor Small Functions</li>
+<li>2.4 - Clever Code</li>
+<li>2.5 - Floating Point Numbers</li>
+<li>2.6 - Platform &amp; Feature Specific Code</li>
+</ul>
+<p>Section 3 : General Best Practices</p>
+<ul>
+<li>3.0 - TANSTAAFL (There Ain’t No Such Thing As A Free Lunch)</li>
+<li>3.1 - YAGNI : You Ain’t Gonna Need It</li>
+<li>3.2 - Domain Boundaries</li>
+<li>3.3 - Taming Compile Times</li>
+</ul>
+<h2 id="rust-from-cc">Rust From C/C++</h2>
+<p>Introduction:</p>
+<ul>
+<li>1.0 - Introduction</li>
+</ul>
+<p>Hello World:</p>
+<ul>
+<li>2.1 - Setup &amp; Update Rust</li>
+<li>2.2 - Setup Dev Environment</li>
+<li>2.3 - IDE Configuration</li>
+<li>2.4 - Rust Fundamentals</li>
+</ul>
+<p>Touring the Rust Langauge:</p>
+<ul>
+<li>3.1 - Primitive Types</li>
+<li>3.2 - Mutability</li>
+<li>3.3 - Primitive Type Conversion</li>
+<li>3.4 - Numeric Overflow</li>
+<li>3.5 - Control Flow</li>
+<li>3.6 - Loops</li>
+<li>3.7 - Strings</li>
+<li>3.8 - Functions and Scopes</li>
+<li>3.9 - Structures</li>
+<li>3.10 - Structure Functions</li>
+<li>3.11 - Destructors - Drop</li>
+<li>3.12 - Tuples and Destructuring</li>
+<li>3.13 - Enums</li>
+<li>3.14 - Containers</li>
+<li>3.15 - Iterators</li>
+<li>3.16 - Move by Default</li>
+<li>3.17 - Borrowing</li>
+<li>3.18 - Slices</li>
+<li>3.19 - Memory Management</li>
+<li>3.20 - Concurrency</li>
+<li>3.21 - Program Organization</li>
+<li>3.22 - Traits</li>
+<li>3.23 - Generics</li>
+<li>3.24 - Error Handling</li>
+</ul>
+<p>Touring the Rust Ecosystem:</p>
+<ul>
+<li>4.1 - Tool Equivalencies</li>
+<li>4.2 - Unit Tests</li>
+<li>4.3 - Benchmarking</li>
+</ul>
+<p>Calling C from Rust with FFI:</p>
+<ul>
+<li>5.1 - Calling C from Rust with FFI</li>
+</ul>
+<h2 id="rust-as-a-service">Rust as a Service</h2>
+<p>Introduction:</p>
+<ul>
+<li>1.0 - Introduction</li>
+</ul>
+<p>REST Service:</p>
+<ul>
+<li>2.1 - Minimal HTTP Server</li>
+<li>2.2 - Service Stack</li>
+<li>2.3 - Extractors</li>
+<li>2.4 - Add a Simple Tower Layer (State)</li>
+<li>2.5 - Add a Simple Tower Layer (Mutable State)</li>
+<li>2.6 - Multiple States - Extension Layers</li>
+<li>2.7 - Quick Recap on State and Layers</li>
+<li>2.8 - Nesting Multiple Routers</li>
+<li>2.9 - Nested Routers with State</li>
+<li>2.10 - Calling Other Services</li>
+<li>2.11 - Returning Status Codes</li>
+<li>2.12 - Using IntoResponse</li>
+<li>2.13 - Error Handling with IntoResponse</li>
+<li>2.14 - Quick Recap on Nesting, Making Calls and Responses</li>
+<li>2.15 - Serving Static Content with Tower</li>
+<li>2.16 - Simple Header-Based Authentication</li>
+<li>2.17 - Simple Header-Based Auth with Middleware</li>
+<li>2.18 - Middleware Auth with Injection</li>
+<li>2.19 - Selectively Applying Layers</li>
+<li>2.20 - Router Layers</li>
+<li>2.21 - Layer Recap</li>
+</ul>
+<p>Tracing:</p>
+<ul>
+<li>3.1 - Minimal Example</li>
+<li>3.2 - Logging Axum/Tower</li>
+<li>3.3 - Timing Spans</li>
+<li>3.4 - Axum Spans</li>
+<li>3.5 - Logging to a File</li>
+<li>3.6 - Structured Logging to JSON</li>
+<li>3.7 - OpenTelemetry</li>
+</ul>
+<p>OpenAPI Documentation:</p>
+<ul>
+<li>4.1 - OpenAPI Documentation</li>
+</ul>
+<p>Handling Service Configuration:</p>
+<ul>
+<li>5.1 - Environment Variables with .env</li>
+<li>5.2 - The Config Crate - Basics</li>
+<li>5.3 - Loading Config via HTTP</li>
+<li>5.4 - CLI configuration with Clap</li>
+<li>5.5 - Recap</li>
+</ul>
+<p>Handling Service Configuration:</p>
+<ul>
+<li>6.1 - Hello Tonic - Protocol Definition</li>
+<li>6.2 - Hello Tonic - Project Definition and Build</li>
+<li>6.3 - Hello Tonic - The Server</li>
+<li>6.4 - Hello Tonic - The Client</li>
+<li>6.5 - gRPC Streaming</li>
+<li>6.6 - gRPC Streaming - Protocol Definition</li>
+<li>6.7 - gRPC Streaming - The Server</li>
+<li>6.8 - gRPC Streaming - The Client</li>
+<li>6.9 - Recap So Far</li>
+<li>6.10 - Authentication</li>
+<li>6.11 - Tracing</li>
+<li>6.12 - When to use gRPC</li>
+</ul>
+<p>Web Sockets:</p>
+<ul>
+<li>7.1 - Minimal Echo Server</li>
+<li>7.2 - A native WS client</li>
+<li>7.3 - JSON</li>
+</ul>
+<p>Service Deployment:</p>
+<ul>
+<li>8.1 - Test Service</li>
+<li>8.2 - Native Host Deployment</li>
+<li>8.3 - Docker Deployment</li>
+</ul>
+<p>Service Design:</p>
+<ul>
+<li>9.1 - Understanding Your Company Architecture</li>
+<li>9.2 - Designing Individual Services</li>
+<li>9.3 - Combining Services into a Modular Monolith</li>
+<li>9.4 - Service Exposure</li>
+<li>9.5 - Scaling Out</li>
+</ul>
+</div>
+</body>
+
+</html>

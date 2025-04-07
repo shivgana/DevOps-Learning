@@ -1,0 +1,458 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>golang</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="go-learning">Go learning</h1>
+<h2 id="practical-go-foundations">Practical Go Foundations</h2>
+<p>Strings &amp; Formatted Output:</p>
+<ul>
+<li>What is a string?</li>
+<li>Unicode basics</li>
+<li>Using fmt package for formatted output</li>
+</ul>
+<p>Calling REST APIs:</p>
+<ul>
+<li>Making HTTP calls with net/http</li>
+<li>Defining structs</li>
+<li>Serializing JSON</li>
+</ul>
+<p>Working with Files:</p>
+<ul>
+<li>Handling errors</li>
+<li>Using defer to manage resources</li>
+<li>Working with io.Reader &amp; io.Writer interfaces</li>
+</ul>
+<p>Sorting:</p>
+<ul>
+<li>Working with slices</li>
+<li>Writing methods</li>
+<li>Understanding interfaces</li>
+</ul>
+<p>Catching Panics:</p>
+<ul>
+<li>The built-in recover function</li>
+<li>Named return values</li>
+</ul>
+<p>Processing Text:</p>
+<ul>
+<li>Reading line by line with bufio.Scanner</li>
+<li>Using regular expressions</li>
+</ul>
+<p>Distributing Work:</p>
+<ul>
+<li>Using goroutines &amp; channels</li>
+<li>Using the sync package to coordinate work</li>
+</ul>
+<p>Timeouts &amp; Cancellation:</p>
+<ul>
+<li>Working with multiple channels using select</li>
+<li>Using context for timeouts &amp; cancellations</li>
+<li>Standard library support for context</li>
+</ul>
+<p>Testing Your Code:</p>
+<ul>
+<li>Working with the testing package</li>
+<li>Using testify</li>
+<li>Managing dependencies with go mod</li>
+</ul>
+<p>Structuring Your Code:</p>
+<ul>
+<li>Writing sub-packages</li>
+</ul>
+<p>Writing an HTTP Server:</p>
+<ul>
+<li>Writing handlers</li>
+<li>Using gorilla/mux for routing</li>
+</ul>
+<p>Adding Metrics &amp; Logging:</p>
+<ul>
+<li>Using expvar for metrics</li>
+<li>Using the log package and a look at user/zap</li>
+</ul>
+<p>Configuration Patterns:</p>
+<ul>
+<li>Reading environment variables and a look at external packages</li>
+<li>Using the flag package for command line processing</li>
+</ul>
+<h2 id="ultimate-go-language-guide">Ultimate Go: Language Guide</h2>
+<p>Strings &amp; Formatted Output:</p>
+<ul>
+<li>1.1 - Prepare Your Mind</li>
+<li>1.2 - Productivity vs. Performance</li>
+<li>1.3 - Correctness vs. Performance</li>
+<li>1.4 - Code Reviews</li>
+<li>1.5 - If Performance Matters</li>
+</ul>
+<p>Memory &amp; Data Semantics:</p>
+<ul>
+<li>2.1 - Variables</li>
+<li>2.2 - Struct Types</li>
+<li>2.3.1 - Pointers (Pass by Values)</li>
+<li>2.3.2 - Pointers (Sharing Data)</li>
+<li>2.3.3 - Pointers ( Escape Analysis)</li>
+<li>2.4 - Constants</li>
+</ul>
+<p>Data Structures:&lt;</p>
+<ul>
+<li>3.2.1 - Arrays (Mechanical Sympathy)</li>
+<li>3.2.1 - Arrays (Semantics)</li>
+<li>3.2.1 - Arrays (Range Mechanics)</li>
+<li>3.3.1 - Slices (Declare, Length &amp; Reference Types)</li>
+<li>3.3.2 - Slices (Appending Slices)</li>
+<li>3.3.3 - Slices (Taking Slices of Slices)</li>
+<li>3.3.4 - Slices (Slices &amp; References)</li>
+<li>3.3.5 - Slices (Strings &amp; Slices)</li>
+<li>3.3.6 - Slices (Range Mechanics)</li>
+<li>3.4 - Maps</li>
+</ul>
+<p>Decoupling:</p>
+<ul>
+<li>4.1.1 - Methods (Value &amp; Pointer Semantics)</li>
+<li>4.1.2 - Methods (Function/Method Variables)</li>
+<li>4.2.1 - Interfaces (Polymorphism)</li>
+<li>4.2.2 - Interfaces (Method Sets &amp; Address of Value)</li>
+<li>4.3 - Embedding</li>
+<li>4.4 - Exporting</li>
+</ul>
+<p>Composition:</p>
+<ul>
+<li>5.1 - Grouping Types</li>
+<li>5.2.1 - Decoupling Part 1</li>
+<li>5.3.2 - Conversion &amp; Assertions</li>
+<li>5.4 - Interface Pollution</li>
+<li>5.5 - Mocking</li>
+</ul>
+<p>Error Handling:</p>
+<ul>
+<li>6.1 - Default Error Values</li>
+<li>6.2 - Error Variables</li>
+<li>6.3 - Types as Context</li>
+<li>6.4 - Behavior as Context</li>
+<li>6.5 - Find the Bug</li>
+<li>6.6 - Wrapping Errors</li>
+</ul>
+<p>Packaging:</p>
+<ul>
+<li>7.1 - Language Mechanics &amp; Design Guidelines</li>
+<li>7.2 - Package-Oriented Design</li>
+</ul>
+<p>Go Routines:</p>
+<ul>
+<li>8.1 - OS Scheduler Mechanics</li>
+<li>8.2 - Go Scheduler Mechanics</li>
+<li>8.3 - Creating Go Routines</li>
+</ul>
+<p>Data Races:</p>
+<ul>
+<li>9.1 - Managing Data Races</li>
+</ul>
+<p>Channels:</p>
+<ul>
+<li>10.1 - Signaling Semantics</li>
+<li>10.2 - Basic Patterns</li>
+<li>10.3 - Fan Out</li>
+<li>10.4 - Wait for Task</li>
+<li>10.5 - Pooling</li>
+<li>10.6 - Fan Out Semaphore</li>
+<li>10.7 - Fan Out Bounded</li>
+<li>10.8 - Drop Pattern</li>
+<li>10.9 - Cancellation Pattern</li>
+</ul>
+<p>Concurrency Patterns:</p>
+<ul>
+<li>11.1 - Failure Detection</li>
+</ul>
+<p>Testing:</p>
+<ul>
+<li>12.2 - Table Unit Testing</li>
+<li>12.3 - Mocking Web Server Response</li>
+<li>12.4 - Testing Internal Endpoints</li>
+<li>12.5 - Sub Tests</li>
+<li>12.6 - Code Coverage</li>
+</ul>
+<p>Benchmarks:</p>
+<ul>
+<li>13.1 - Basic Benchmarking</li>
+<li>13.2 - Validate Benchmarking</li>
+<li>13.3 - CPU-Bound Benchmarking</li>
+<li>13.4 - IO-Bound Benchmarking</li>
+</ul>
+<p>Profiling &amp; Tracing:</p>
+<ul>
+<li>14.1 - Profiling Guidelines</li>
+<li>14.2 - Stack Traces</li>
+<li>14.3 - Micro Level Optimization</li>
+<li>14.4 - Macro Level Optimization</li>
+<li>14.5 - Execution Tracing</li>
+</ul>
+<h2 id="ultimate-go-software-design-with-kubernetes">Ultimate Go: Software Design with Kubernetes</h2>
+<p>Introduction:</p>
+<p>Introduction to the class and all the engineering that you will learn.</p>
+<ul>
+<li>1.1: Design Philosophy, Guidelines, What to Expect</li>
+<li>1.2: Tooling and Images to Install</li>
+</ul>
+<p>Deploy First Mentality:</p>
+<p>We begin to build the service with a focus on the ability to deploy the service in Kubernetes.</p>
+<ul>
+<li>2.1: Project Layers, Policies, and Guidelines</li>
+<li>2.2: Prepare Project</li>
+<li>2.3: Build Service with Logging</li>
+</ul>
+<p>Kubernetes:</p>
+<p>We introduce Kubernetes and get a K8s environment up and running. At this point, everything we do runs in the K8s environment.</p>
+<ul>
+<li>3.1: Clusters, Nodes and Pods</li>
+<li>3.2: Start the Kubernetes Cluster</li>
+<li>3.3: Create/Build Dockerfile for the Service</li>
+<li>3.4: Create/Apply K8s Deployment for the Service</li>
+</ul>
+<p>Kubernetes Quotas:</p>
+<p>We introduce applying Quotas to the deployment and discuss the problems that can result.</p>
+<ul>
+<li>4.1: Understanding the Go Scheduler</li>
+<li>4.2: Understanding CPU Quotas</li>
+<li>4.3: Adding Quotas and Adjusting GOMAXPROCS</li>
+</ul>
+<p>Finish Initial Service Startup/Shutdown:</p>
+<p>We finish the initial startup and shutdown of the service.</p>
+<ul>
+<li>5.1: Configuration</li>
+<li>5.2: Debugging / Metrics</li>
+<li>5.3: Shutdown Signaling and Load Shedding</li>
+</ul>
+<p>Web Framework:</p>
+<p>We build out our own router by extending an existing one. This gives us a framework for injecting business logic into the processing of requests. It also allows for more consistency in the handling of requests.</p>
+<ul>
+<li>6.1: Basic Structure of an HTTP Router</li>
+<li>6.2: Liveness and Readiness Handlers</li>
+<li>6.3: Customize the Router</li>
+<li>6.4: Middleware Support</li>
+<li>6.5: Sending Responses</li>
+</ul>
+<p>Middleware:</p>
+<p>We add middleware functions for business-level logic that needs to be injected into the processing of requests.</p>
+<ul>
+<li>7.1: Logging</li>
+<li>7.2: Error Handling
+<ul>
+<li>Understanding What Error Handling Means</li>
+<li>Declaring Custom Error Types</li>
+<li>Consistent Handling and Response</li>
+</ul>
+</li>
+<li>7.3: Panic Handling</li>
+<li>7.4: Metrics</li>
+</ul>
+<p>JSON Web Tokens (JWT):</p>
+<p>We gain an understanding of how JWT’s work and their shortcomings. We also learn about OPA and how we will use it to perform the actual authentication and authorization.</p>
+<ul>
+<li>8.1: Understanding JWT</li>
+<li>8.2: Private/Public Key Generation</li>
+<li>8.3: Token Generation</li>
+<li>8.4: Token Signature Validation with OPA</li>
+</ul>
+<p>Key Store:</p>
+<p>We create a simple key store for the project to store and retrieve the private key.</p>
+<ul>
+<li>9.1: Key Store Package</li>
+</ul>
+<p>Authentication / Authorization:</p>
+<p>We integrate authentication and authorization support into the project by developing a package to generate and validate tokens. Then we integrate the packages into the application and test that things are working.</p>
+<ul>
+<li>10.1: Auth Package</li>
+<li>10.2: Auth Unit Test</li>
+<li>10.3: Add Middleware</li>
+<li>10.4: Auth Service</li>
+<li>10.5: Auth Client</li>
+</ul>
+<p>Domain Driven, Data-Oriented Architecture:</p>
+<p>We talk about the data-driven data oriented architecture that is implemented in the project. We discuss the design philosophy, guidelines, and semantics of how the three layers of App, Business, and Storage work together.</p>
+<ul>
+<li>11.1: Architecture Review</li>
+<li>11.2: Data Flow Trust vs Non-Trust</li>
+</ul>
+<p>Database Support:</p>
+<p>We add a Postgres database to our K8s environment. Then we write a small database package that provides more effective support for using the SQLx package. Finally, integrate the database package on application startup.</p>
+<ul>
+<li>12.1: Kubernetes Support for Postgres</li>
+<li>12.2: Create Database Package</li>
+<li>12.3: Update Readiness Handler to Perform DB Checks</li>
+</ul>
+<p>Database Migrations and Seeding:</p>
+<p>We define our schema and provide support for migration schema changes over time. We also provide support for seeding the database. Finally, we added support in Kubernetes to run the migration and seeding on POD startup.</p>
+<ul>
+<li>13.1: Maintaining Database Schemas and Seeds</li>
+<li>13.2: Admin Tooling and Init Containers to Automate Migrations</li>
+</ul>
+<p>API, App, Business, and Storage Implementation:</p>
+<p>We implement the Create domain inside the App, Business, and Storage layers.</p>
+<ul>
+<li>14.1: User Business Domain Support</li>
+<li>14.2: User Storage Domain Support</li>
+<li>14.3: User App Domain Support</li>
+<li>14.4: User API Domain Support</li>
+</ul>
+<p>Testing:</p>
+<p>We add docker and unit testing support for writing tests against a real database and write the actual user package tests.</p>
+<ul>
+<li>15.1: Starting and Stopping Containers</li>
+<li>15.2: Database Testing Support</li>
+<li>15.3: Unit and API Testing Support</li>
+<li>15.4: Write User Business Test</li>
+<li>15.5: Write User API Tests</li>
+</ul>
+<p>Delegate and Transactions:</p>
+<p>We talk about how the delegate and transaction systems work.</p>
+<ul>
+<li>16.1: Delegate System</li>
+<li>16.2: Transaction System</li>
+</ul>
+<p>Observability:</p>
+<p>We add tracing to the project by integrating Open Telemetry and Zipkin.</p>
+<ul>
+<li>17.1: Integrate OTEL into the Project</li>
+</ul>
+<p>Review Service Project:</p>
+<p>Review service project and get it running.</p>
+<ul>
+<li>18.1: Check For Dependency Upgrades, Rebuild, Run</li>
+</ul>
+<h2 id="ultimate-go-advanced-engineering">Ultimate Go: Advanced Engineering</h2>
+<p>Introduction:</p>
+<ul>
+<li>1.1: Design Philosophy, Guidelines, What to Expect</li>
+<li>1.2: Tooling to Install</li>
+<li>1.3: Initial Code for the Project</li>
+</ul>
+<p><strong>Blockchain Fundamentals:</strong></p>
+<ul>
+<li>2.1: Blockchain Fundamentals</li>
+<li>2.2: Genesis</li>
+<li>2.3: Transactions and Blocks</li>
+<li>2.4: Digital Signatures</li>
+<li>2.5: Account Management</li>
+<li>2.6: Memory Pooling</li>
+<li>2.7: Mining and Consensus</li>
+<li>2.8: Fraud Detection</li>
+</ul>
+<p><strong>Genesis:</strong></p>
+<ul>
+<li>3.1: What is Genesis</li>
+<li>3.2: Configuration Options</li>
+<li>3.3: Reading From Disk</li>
+</ul>
+<p><strong>Digital Signatures:</strong></p>
+<ul>
+<li>4.1: What is a Digital Signature</li>
+<li>4.2: Hashing</li>
+<li>4.3: Stamping</li>
+<li>4.4: Signing</li>
+<li>4.5: Addressing</li>
+<li>4.6: Verification</li>
+</ul>
+<p><strong>Database:</strong></p>
+<ul>
+<li>5.1: What is Inside the Blockchain Database</li>
+<li>5.2: Transaction Types</li>
+<li>5.3: Accounting</li>
+<li>5.4: Block Types</li>
+</ul>
+<p><strong>Cryptographic Audit Trails:</strong></p>
+<ul>
+<li>6.1: What is a Cryptographic Audit Trail</li>
+<li>6.2: Chaining</li>
+<li>6.3: Merkle Tree Proofs</li>
+<li>6.4: Account Database Proof</li>
+</ul>
+<p><strong>Memory Pools:</strong></p>
+<ul>
+<li>7.1: What is a Mempool</li>
+<li>7.2: Storing Transactions</li>
+<li>7.3: Transaction Selection</li>
+</ul>
+<p><strong>Accepting Signed Transations:</strong></p>
+<ul>
+<li>8.1: Handler function</li>
+<li>8.2: Transaction Signature Verification</li>
+<li>8.3: Mempool Inclusion</li>
+</ul>
+<p><strong>Mining:</strong></p>
+<ul>
+<li>9.1: What is Consensus and Mining</li>
+<li>9.2: Proof Of Work Algorithm</li>
+<li>9.3: Implement Mining Workflow</li>
+</ul>
+<p><strong>Storage:</strong></p>
+<ul>
+<li>10.1: Storage Options</li>
+<li>10.2: Writing Blocks</li>
+<li>10.3: Reading and Searching Blocks</li>
+</ul>
+<p><strong>Peer to Peer Networks:</strong></p>
+<ul>
+<li>11.1: What is the P2P Network</li>
+<li>11.2: Peer Discovery</li>
+<li>11.3: Sharing Transactions</li>
+<li>11.4: Sharing Blocks</li>
+</ul>
+<p><strong>Wallets:</strong></p>
+<ul>
+<li>12.1: Chrome Plugin Basics</li>
+<li>12.2: Javascript Support</li>
+<li>12.3: Send Signed Transaction</li>
+</ul>
+<h2 id="ultimate-debugging">Ultimate Debugging</h2>
+<p>Day 1:</p>
+<ul>
+<li>Introduction, getting started, navigating your program, inspecting program state, changing program state.</li>
+</ul>
+<p>Day 2:</p>
+<ul>
+<li>Advanced program navigation, tracing your program, examining core dumps (post-mortem debugging). Part 1</li>
+</ul>
+<p>Day 3:</p>
+<ul>
+<li>Advanced program navigation, tracing your program, examining core dumps (post-mortem debugging). Part 2</li>
+</ul>
+<p>Day 4:</p>
+<ul>
+<li>Scripting Delve, remote debugging, using the JSON-RPC API, record and replay debugging.</li>
+</ul>
+<p>Day 5:</p>
+<ul>
+<li>Debugging containerized applications, debugging an application on Kubernetes. Part 1</li>
+</ul>
+<p>Day 6:</p>
+<ul>
+<li>Debugging containerized applications, debugging an application on Kubernetes. Part2</li>
+</ul>
+<p>Day 7:</p>
+<ul>
+<li>Using proof profiling tools, using perf on Go binaries, and deep dive into Delve and Go internals. Part 1</li>
+</ul>
+<p>Day 8:</p>
+<ul>
+<li>Using proof profiling tools, using perf on Go binaries, and deep dive into Delve and Go internals. Part 2</li>
+</ul>
+<h2 id="writing-secure-go-code">Writing Secure Go Code</h2>
+<ul>
+<li>The Security Mindset</li>
+<li>Go Security Policy</li>
+<li>OWASP Top Ten</li>
+<li>Input</li>
+<li>Output</li>
+<li>Authentication</li>
+<li>Infrastructure</li>
+</ul>
+</div>
+</body>
+
+</html>

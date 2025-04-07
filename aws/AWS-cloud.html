@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="aws-account-structure-and-identity"><strong>1. AWS Account Structure and Identity</strong></h3>
+<h4 id="🔹-a.-create-an-aws-account">🔹 a. <strong>Create an AWS Account</strong></h4>
+<ul>
+<li>Or multiple accounts via <strong>AWS Organizations</strong> for dev, prod, etc.</li>
+</ul>
+<h4 id="🔹-b.-set-up-iam-identity-and-access-management">🔹 b. <strong>Set up IAM (Identity and Access Management)</strong></h4>
+<ul>
+<li>
+<p>Create <strong>IAM Users/Groups/Roles</strong> (never use root for daily work)</p>
+</li>
+<li>
+<p>Apply <strong>MFA on root and users</strong></p>
+</li>
+<li>
+<p>Use <strong>IAM Policies</strong> to control permissions</p>
+</li>
+<li>
+<p>Optional: Set up <strong>SSO</strong> (AWS IAM Identity Center)</p>
+</li>
+</ul>
+<hr>
+<h3 id="✅-2.-networking-–-vpc-virtual-private-cloud">✅ <strong>2. Networking – VPC (Virtual Private Cloud)</strong></h3>
+<p>This is the <strong>first real resource</strong> you typically create:</p>
+<h4 id="🔹-a.-create-a-vpc">🔹 a. <strong>Create a VPC</strong></h4>
+<ul>
+<li>
+<p>CIDR block (e.g., <code>10.0.0.0/16</code>)</p>
+</li>
+<li>
+<p>Public &amp; private subnets (across multiple AZs)</p>
+</li>
+<li>
+<p>Internet Gateway (for public access)</p>
+</li>
+<li>
+<p>NAT Gateway (for private outbound traffic)</p>
+</li>
+<li>
+<p>Route Tables</p>
+</li>
+</ul>
+<h4 id="🔹-b.-security-groups--nacls">🔹 b. <strong>Security Groups &amp; NACLs</strong></h4>
+<ul>
+<li>Firewall rules for EC2, RDS, etc.</li>
+</ul>
+<hr>
+<h3 id="✅-3.-optional-foundational-services">✅ <strong>3. Optional Foundational Services</strong></h3>
+<ul>
+<li>
+<p><strong>CloudTrail</strong> – for logging and auditing</p>
+</li>
+<li>
+<p><strong>Config</strong> – for compliance and resource tracking</p>
+</li>
+<li>
+<p><strong>Budgets</strong> – to monitor costs</p>
+</li>
+<li>
+<p><strong>S3 Bucket</strong> – to store artifacts, logs, backups</p>
+</li>
+</ul>
+<hr>
+<h3 id="✅-4.-then-start-building-your-stack">✅ <strong>4. Then Start Building Your Stack</strong></h3>
+<p>Based on your project, you might now:</p>
+<ul>
+<li>
+<p>Launch <strong>EC2</strong> instances</p>
+</li>
+<li>
+<p>Deploy <strong>RDS/Aurora</strong> for databases</p>
+</li>
+<li>
+<p>Set up <strong>S3</strong> for storage</p>
+</li>
+<li>
+<p>Use <strong>EKS (Kubernetes)</strong> or <strong>ECS (Containers)</strong></p>
+</li>
+<li>
+<p>Deploy <strong>Lambda</strong> if serverless</p>
+</li>
+<li>
+<p>Create <strong>CloudFront</strong>, <strong>Route53</strong>, etc.</p>
+</li>
+</ul>
+<hr>
+<h3 id="📌-tldr">📌 TL;DR:</h3>
+<p><strong>First resource to create</strong> in AWS:<br>
+🔹 <strong>IAM roles/users for security</strong><br>
+🔹 <strong>Then VPC</strong> for your networking foundation</p>
+</div>
+</body>
+
+</html>
