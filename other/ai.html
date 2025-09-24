@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ai</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="architecture-high-level">Architecture (high level)</h1>
+<h2 id="overview-—-single-pane-devops-monitor">1) Overview — single-pane DevOps monitor</h2>
+<p>Your app will be a lightweight frontend that aggregates data from multiple DevOps tools and presents a correlated view (tickets → commits/merge requests → CI/CD runs → docs). For a production product this becomes a set of small components; for the prototype we keep everything in the Streamlit app and add small connector helpers.</p>
+<h2 id="components">2) Components</h2>
+<ul>
+<li>
+<p><strong>Streamlit Frontend</strong> — UI for config, dashboard, test-connections, and issue correlation.</p>
+</li>
+<li>
+<p><strong>Connector layer (adapters)</strong> — small functions that call Jira, GitLab/Gerrit/GitHub, Jenkins, Spinnaker, Confluence APIs. Normalizes responses into a small common shape (id, title, url, status, updated_at, links).</p>
+</li>
+<li>
+<p><strong>Persistence</strong> — local file (prototype) or a secure secrets store (vault / AWS Secrets Manager) in prod. Stores endpoints and tokens.</p>
+</li>
+<li>
+<p><strong>Webhook / Polling</strong> — for prototype use short polling; prod should use webhooks (Jira webhooks, Git webhooks, Jenkins/Spinnaker webhooks) + event queue.</p>
+</li>
+<li>
+<p><strong>Cache / Queue</strong> — Redis or in-memory cache for large scale to avoid frequent API calls.</p>
+</li>
+<li>
+<p><strong>AI assistant (optional)</strong> — A separate microservice that consumes normalized events and provides summarization, triage suggestions, and failure root-cause hints (calls OpenAI).</p>
+</li>
+<li>
+<p><strong>Security</strong> — RBAC at app level, HTTPS, tokens in secure store, rotate tokens, audit logs.</p>
+</li>
+<li>
+<p><strong>Observability</strong> — metrics (Prometheus), logs, error reporting.</p>
+</li>
+</ul>
+<h2 id="data-flow-prototype">3) Data flow (prototype)</h2>
+<ol>
+<li>
+<p>User enters configs in Streamlit UI and saves → saved into local <code>configs.json</code>.</p>
+</li>
+<li>
+<p>Dashboard polls Jira for latest issues (or receives webhook in prod).</p>
+</li>
+<li>
+<p>For each issue, connectors query git provider (search for the issue key in commits/merge-requests), query Jenkins/Spinnaker for related pipeline statuses, and show Confluence pages that reference the issue.</p>
+</li>
+<li>
+<p>The UI shows correlated items and offers “AI Summary” button that sends consolidated context to the configured OpenAI endpoint.</p>
+</li>
+</ol>
+<h2 id="scaling--security-notes">4) Scaling &amp; Security notes</h2>
+<ul>
+<li>
+<p>For scale, move connectors into async worker services, queue webhook events into Kafka/RabbitMQ, store normalized entities in a database (Postgres + ElasticSearch for search).</p>
+</li>
+<li>
+<p>Use OAuth2 or token-based scopes where supported. Store secrets in a secrets manager — do not save raw tokens to disk in prod.</p>
+</li>
+<li>
+<p>Apply fine-grained RBAC so only permitted users can view specific projects.</p>
+</li>
+</ul>
+<hr>
+<h1 id="prototype-improved-app.py">Prototype: improved <code>app.py</code></h1>
+<p>I modified and extended your Streamlit app to:</p>
+<ul>
+<li>
+<p>persist configs to disk (<code>~/.devops_dashboard/configs.json</code>) so configs survive refresh,</p>
+</li>
+<li>
+<p>add connection test buttons (Jira, Jenkins) and clearer error messages (helps debug 401),</p>
+</li>
+<li>
+<p>make provider selectbox robust,</p>
+</li>
+<li>
+<p>show Jira issues + quick links to Git search/Jenkins/Spinnaker (best-effort links),</p>
+</li>
+<li>
+<p>keep code simple so you can expand connectors later.</p>
+</li>
+</ul>
+<p>Copy this into <code>app.py</code> and run with <code>streamlit run app.py</code>.</p>
+<pre class=" language-py"><code class="prism  language-py"><span class="token comment"># app.py</span>
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> base64
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> streamlit <span class="token keyword">as</span> st
+<span class="token keyword">from</span> typing <span class="token keyword">import</span> Dict<span class="token punctuation">,</span> Any<span class="token punctuation">,</span> Optional
+<span class="token keyword">from</span> pathlib <span class="token keyword">import</span> Path
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Persistence helpers</span>
+<span class="token comment"># -----------------------</span>
+CONFIG_PATH <span class="token operator">=</span> Path<span class="token punctuation">.</span>home<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token string">".devops_dashboard"</span>
+CONFIG_FILE <span class="token operator">=</span> CONFIG_PATH <span class="token operator">/</span> <span class="token string">"configs.json"</span>
+
+DEFAULT_CONFIG <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">"openai"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"system_prompt"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"jira"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"project"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"git"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"provider"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"jenkins"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"spinnaker"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token string">"confluence"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"url"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"token"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">def</span> <span class="token function">ensure_config_dir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    CONFIG_PATH<span class="token punctuation">.</span>mkdir<span class="token punctuation">(</span>parents<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> exist_ok<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token comment"># tighten file permissions if possible (unix)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        os<span class="token punctuation">.</span>chmod<span class="token punctuation">(</span>CONFIG_PATH<span class="token punctuation">,</span> <span class="token number">0o700</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+
+<span class="token keyword">def</span> <span class="token function">save_configs</span><span class="token punctuation">(</span>configs<span class="token punctuation">:</span> Dict<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> Any<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    ensure_config_dir<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># NOTE: For a real deployment, DO NOT save secrets in plain JSON. Use a secrets manager.</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>CONFIG_FILE<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>configs<span class="token punctuation">,</span> f<span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        os<span class="token punctuation">.</span>chmod<span class="token punctuation">(</span>CONFIG_FILE<span class="token punctuation">,</span> <span class="token number">0o600</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception<span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+
+<span class="token keyword">def</span> <span class="token function">load_configs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Dict<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> Any<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> CONFIG_FILE<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>CONFIG_FILE<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                data <span class="token operator">=</span> json<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+            <span class="token comment"># merge with defaults to avoid missing keys</span>
+            merged <span class="token operator">=</span> DEFAULT_CONFIG<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            merged<span class="token punctuation">.</span>update<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> merged
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            st<span class="token punctuation">.</span>warning<span class="token punctuation">(</span>f<span class="token string">"Could not load saved config ({e}), using defaults."</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> DEFAULT_CONFIG<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> DEFAULT_CONFIG<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Session State Helpers</span>
+<span class="token comment"># -----------------------</span>
+<span class="token keyword">def</span> <span class="token function">init_session_state</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token string">"configs"</span> <span class="token operator">not</span> <span class="token keyword">in</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">:</span>
+        st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs <span class="token operator">=</span> load_configs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">"last_jira_fetch"</span> <span class="token operator">not</span> <span class="token keyword">in</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">:</span>
+        st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>last_jira_fetch <span class="token operator">=</span> <span class="token boolean">None</span>
+
+
+init_session_state<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Connector helpers</span>
+<span class="token comment"># -----------------------</span>
+<span class="token keyword">def</span> <span class="token function">test_jira_connection</span><span class="token punctuation">(</span>jira_cfg<span class="token punctuation">:</span> Dict<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Attempts a simple search request and returns (ok, message).
+    Jira Cloud typically requires email as user and API token as token.
+    """</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token punctuation">(</span>jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token string">"Missing Jira URL / user / token"</span>
+
+        api_url <span class="token operator">=</span> f<span class="token string">"{jira_cfg['url'].rstrip('/')}/rest/api/2/search"</span>
+        auth <span class="token operator">=</span> <span class="token punctuation">(</span>jira_cfg<span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> jira_cfg<span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        resp <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>api_url<span class="token punctuation">,</span> params<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"jql"</span><span class="token punctuation">:</span> <span class="token string">"order by created DESC"</span><span class="token punctuation">,</span> <span class="token string">"maxResults"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> auth<span class="token operator">=</span>auth<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> resp<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token string">"OK — Jira reachable"</span>
+        <span class="token keyword">elif</span> resp<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">401</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token string">"401 Unauthorized — check user/token (Jira Cloud needs email + API token)."</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> f<span class="token string">"{resp.status_code} {resp.reason}: {resp.text[:200]}"</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> f<span class="token string">"Error: {e}"</span>
+
+
+<span class="token keyword">def</span> <span class="token function">fetch_jira_issues</span><span class="token punctuation">(</span>jira_cfg<span class="token punctuation">:</span> Dict<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">,</span> max_results<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token punctuation">(</span>jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"project"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">"Missing Jira configuration (url/project/token)"</span><span class="token punctuation">)</span>
+
+    api_url <span class="token operator">=</span> f<span class="token string">"{jira_cfg['url'].rstrip('/')}/rest/api/2/search"</span>
+    jql <span class="token operator">=</span> f<span class="token string">"project={jira_cfg['project']} ORDER BY created DESC"</span>
+    auth <span class="token operator">=</span> <span class="token punctuation">(</span>jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    resp <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>api_url<span class="token punctuation">,</span> params<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"jql"</span><span class="token punctuation">:</span> jql<span class="token punctuation">,</span> <span class="token string">"maxResults"</span><span class="token punctuation">:</span> max_results<span class="token punctuation">}</span><span class="token punctuation">,</span> auth<span class="token operator">=</span>auth<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+    resp<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> resp<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"issues"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">test_jenkins_connection</span><span class="token punctuation">(</span>jenkins_cfg<span class="token punctuation">:</span> Dict<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token string">"Missing Jenkins URL"</span>
+        url <span class="token operator">=</span> jenkins_cfg<span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>rstrip<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"/api/json"</span>
+        <span class="token keyword">if</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            auth <span class="token operator">=</span> <span class="token punctuation">(</span>jenkins_cfg<span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> jenkins_cfg<span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            resp <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> auth<span class="token operator">=</span>auth<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># token-only — try header</span>
+            headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Authorization"</span><span class="token punctuation">:</span> f<span class="token string">"Bearer {jenkins_cfg['token']}"</span><span class="token punctuation">}</span>
+            resp <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            resp <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> resp<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token string">"OK — Jenkins reachable"</span>
+        <span class="token keyword">elif</span> resp<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">401</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token string">"401 Unauthorized — check Jenkins credentials/token"</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> f<span class="token string">"{resp.status_code} {resp.reason}: {resp.text[:200]}"</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span><span class="token punctuation">,</span> f<span class="token string">"Error: {e}"</span>
+
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Config Page</span>
+<span class="token comment"># -----------------------</span>
+<span class="token keyword">def</span> <span class="token function">config_page</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    st<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"⚙️ Configuration Setup"</span><span class="token punctuation">)</span>
+
+    cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"🔑 OpenAI Config (optional)"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"openai_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"OpenAI URL"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"OpenAI Token"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"system_prompt"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_area<span class="token punctuation">(</span><span class="token string">"System Prompt"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"openai"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"system_prompt"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save OpenAI Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+            st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ OpenAI config saved"</span><span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"📌 Jira Config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"jira_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jira URL (e.g. https://yourcompany.atlassian.net)"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jira User (email for Cloud)"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jira Token (API token)"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"project"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jira Project Key"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"project"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        col1<span class="token punctuation">,</span> col2 <span class="token operator">=</span> st<span class="token punctuation">.</span>columns<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">with</span> col1<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save Jira Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+                st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ Jira config saved"</span><span class="token punctuation">)</span>
+        <span class="token keyword">with</span> col2<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Test Jira Connection"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                ok<span class="token punctuation">,</span> msg <span class="token operator">=</span> test_jira_connection<span class="token punctuation">(</span>cfg<span class="token punctuation">[</span><span class="token string">"jira"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> ok<span class="token punctuation">:</span>
+                    st<span class="token punctuation">.</span>success<span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    st<span class="token punctuation">.</span>error<span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"🛠 Git / GitLab / Gerrit Config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"git_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        providers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"GitHub"</span><span class="token punctuation">,</span> <span class="token string">"GitLab"</span><span class="token punctuation">,</span> <span class="token string">"Gerrit"</span><span class="token punctuation">]</span>
+        <span class="token comment"># safe index</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            idx <span class="token operator">=</span> providers<span class="token punctuation">.</span>index<span class="token punctuation">(</span>cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"provider"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> ValueError<span class="token punctuation">:</span>
+            idx <span class="token operator">=</span> <span class="token number">0</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"provider"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>selectbox<span class="token punctuation">(</span><span class="token string">"Provider"</span><span class="token punctuation">,</span> providers<span class="token punctuation">,</span> index<span class="token operator">=</span>idx<span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Repo Base URL (for search links)"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Token"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"git"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save Git Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+            st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ Git config saved"</span><span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"🚀 Jenkins Config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"jenkins_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jenkins URL"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jenkins User"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Jenkins Token"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        col1<span class="token punctuation">,</span> col2 <span class="token operator">=</span> st<span class="token punctuation">.</span>columns<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">with</span> col1<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save Jenkins Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+                st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ Jenkins config saved"</span><span class="token punctuation">)</span>
+        <span class="token keyword">with</span> col2<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Test Jenkins Connection"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                ok<span class="token punctuation">,</span> msg <span class="token operator">=</span> test_jenkins_connection<span class="token punctuation">(</span>cfg<span class="token punctuation">[</span><span class="token string">"jenkins"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> ok<span class="token punctuation">:</span>
+                    st<span class="token punctuation">.</span>success<span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    st<span class="token punctuation">.</span>error<span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"🌊 Spinnaker Config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"spinnaker_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"spinnaker"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Spinnaker URL"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"spinnaker"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"spinnaker"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Spinnaker Token"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"spinnaker"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save Spinnaker Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+            st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ Spinnaker config saved"</span><span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>header<span class="token punctuation">(</span><span class="token string">"📖 Confluence Config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> st<span class="token punctuation">.</span>form<span class="token punctuation">(</span><span class="token string">"confluence_config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"url"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Confluence URL"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Confluence User"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"token"</span><span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span>text_input<span class="token punctuation">(</span><span class="token string">"Confluence Token"</span><span class="token punctuation">,</span> cfg<span class="token punctuation">[</span><span class="token string">"confluence"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token operator">=</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> st<span class="token punctuation">.</span>form_submit_button<span class="token punctuation">(</span><span class="token string">"Save Confluence Config"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            save_configs<span class="token punctuation">(</span>cfg<span class="token punctuation">)</span>
+            st<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">"✅ Confluence config saved"</span><span class="token punctuation">)</span>
+
+    st<span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>
+        <span class="token string">"⚠️ **Security note:** This prototype saves tokens locally at `~/.devops_dashboard/configs.json`.\n"</span>
+        <span class="token string">"For production, use a secrets manager (HashiCorp Vault / AWS Secrets Manager) and never store raw tokens on disk."</span>
+    <span class="token punctuation">)</span>
+
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Home Page</span>
+<span class="token comment"># -----------------------</span>
+<span class="token keyword">def</span> <span class="token function">home_page</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    st<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"🏠 DevOps Dashboard"</span><span class="token punctuation">)</span>
+    st<span class="token punctuation">.</span>subheader<span class="token punctuation">(</span><span class="token string">"Linked Jira Tickets"</span><span class="token punctuation">)</span>
+
+    jira_cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"jira"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    git_cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"git"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    jenkins_cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"jenkins"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    spinnaker_cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"spinnaker"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"project"</span><span class="token punctuation">)</span> <span class="token operator">and</span> jira_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> st<span class="token punctuation">.</span>spinner<span class="token punctuation">(</span><span class="token string">"Fetching latest Jira tickets..."</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                issues <span class="token operator">=</span> fetch_jira_issues<span class="token punctuation">(</span>jira_cfg<span class="token punctuation">,</span> max_results<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token operator">not</span> issues<span class="token punctuation">:</span>
+                st<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"No issues returned for project."</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span>
+
+            <span class="token keyword">for</span> issue <span class="token keyword">in</span> issues<span class="token punctuation">:</span>
+                key <span class="token operator">=</span> issue<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span>
+                fields <span class="token operator">=</span> issue<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"fields"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+                summary <span class="token operator">=</span> fields<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"summary"</span><span class="token punctuation">,</span> <span class="token string">"&lt;no summary&gt;"</span><span class="token punctuation">)</span>
+                status <span class="token operator">=</span> fields<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"status"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> fields<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"status"</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">"Unknown"</span>
+                issue_url <span class="token operator">=</span> f<span class="token string">"{jira_cfg['url'].rstrip('/')}/browse/{key}"</span>
+
+                st<span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"### 🔗 [{key} - {summary}]({issue_url})"</span><span class="token punctuation">)</span>
+                st<span class="token punctuation">.</span>write<span class="token punctuation">(</span>f<span class="token string">"**Status:** {status} · **Updated:** {fields.get('updated')}"</span><span class="token punctuation">)</span>
+
+                <span class="token comment"># Quick links: try to craft git search or pipeline links</span>
+                cols <span class="token operator">=</span> st<span class="token punctuation">.</span>columns<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token comment"># Git search link (best-effort)</span>
+                git_search_url <span class="token operator">=</span> <span class="token string">""</span>
+                provider <span class="token operator">=</span> git_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"provider"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> provider<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"github"</span><span class="token punctuation">:</span>
+                    git_search_url <span class="token operator">=</span> f<span class="token string">"{git_cfg.get('url', '').rstrip('/')}/search?q={key}"</span>
+                <span class="token keyword">elif</span> provider<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"gitlab"</span><span class="token punctuation">:</span>
+                    git_search_url <span class="token operator">=</span> f<span class="token string">"{git_cfg.get('url', '').rstrip('/')}/-/search?search={key}"</span>
+                <span class="token keyword">elif</span> provider<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"gerrit"</span><span class="token punctuation">:</span>
+                    git_search_url <span class="token operator">=</span> f<span class="token string">"{git_cfg.get('url', '').rstrip('/')}/q/{key}"</span>
+                <span class="token keyword">if</span> git_search_url<span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"[Search {provider} commits/PRs]({git_search_url})"</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"Git: not configured"</span><span class="token punctuation">)</span>
+
+                <span class="token comment"># Jenkins job search (best-effort)</span>
+                jenkins_search <span class="token operator">=</span> <span class="token string">""</span>
+                <span class="token keyword">if</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token comment"># no standard search; provide base url to jobs</span>
+                    jenkins_search <span class="token operator">=</span> jenkins_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>rstrip<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"/"</span>
+                    cols<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"[Open Jenkins]({jenkins_search})"</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"Jenkins: not configured"</span><span class="token punctuation">)</span>
+
+                <span class="token comment"># Spinnaker (open)</span>
+                <span class="token keyword">if</span> spinnaker_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"[Open Spinnaker]({spinnaker_cfg.get('url')})"</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"Spinnaker: not configured"</span><span class="token punctuation">)</span>
+
+                <span class="token comment"># Confluence search</span>
+                conf_search <span class="token operator">=</span> <span class="token string">""</span>
+                conf_cfg <span class="token operator">=</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">.</span>configs<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"confluence"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> conf_cfg<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    conf_search <span class="token operator">=</span> f<span class="token string">"{conf_cfg.get('url').rstrip('/')}/display/All/{key}"</span>
+                    cols<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"[Confluence (try)]({conf_search})"</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    cols<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"Confluence: not configured"</span><span class="token punctuation">)</span>
+
+                <span class="token comment"># Expand to show description (short)</span>
+                <span class="token keyword">if</span> st<span class="token punctuation">.</span>checkbox<span class="token punctuation">(</span>f<span class="token string">"Show description for {key}"</span><span class="token punctuation">,</span> key<span class="token operator">=</span>f<span class="token string">"desc_{key}"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    desc <span class="token operator">=</span> fields<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"description"</span><span class="token punctuation">)</span> <span class="token operator">or</span> <span class="token string">"(no description)"</span>
+                    st<span class="token punctuation">.</span>write<span class="token punctuation">(</span>desc <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>desc<span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token builtin">str</span><span class="token punctuation">(</span>desc<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+                st<span class="token punctuation">.</span>divider<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> requests<span class="token punctuation">.</span>HTTPError <span class="token keyword">as</span> he<span class="token punctuation">:</span>
+            st<span class="token punctuation">.</span>error<span class="token punctuation">(</span>f<span class="token string">"HTTP error fetching Jira issues: {he}"</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            st<span class="token punctuation">.</span>error<span class="token punctuation">(</span>f<span class="token string">"Error fetching Jira tickets: {e}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        st<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"⚠️ Jira config missing. Please configure in 'Config' page."</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Main App</span>
+<span class="token comment"># -----------------------</span>
+st<span class="token punctuation">.</span>sidebar<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"📍 Navigation"</span><span class="token punctuation">)</span>
+page <span class="token operator">=</span> st<span class="token punctuation">.</span>sidebar<span class="token punctuation">.</span>radio<span class="token punctuation">(</span><span class="token string">"Go to"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"Home"</span><span class="token punctuation">,</span> <span class="token string">"Config"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> page <span class="token operator">==</span> <span class="token string">"Config"</span><span class="token punctuation">:</span>
+    config_page<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    home_page<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+</div>
+</body>
+
+</html>
