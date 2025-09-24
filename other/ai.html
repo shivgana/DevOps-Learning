@@ -407,6 +407,88 @@ page <span class="token operator">=</span> st<span class="token punctuation">.</
 <span class="token keyword">else</span><span class="token punctuation">:</span>
     home_page<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
+<h3 id="install-dependencies">1. Install dependencies</h3>
+<pre><code>pip install authlib streamlit-oauthlib
+</code></pre>
+<hr>
+<h3 id="add-an-auth-helper">2. Add an Auth Helper</h3>
+<p>Create a small <code>auth.py</code>:</p>
+<pre class=" language-py"><code class="prism  language-py"><span class="token comment"># auth.py</span>
+<span class="token keyword">import</span> streamlit <span class="token keyword">as</span> st
+<span class="token keyword">from</span> authlib<span class="token punctuation">.</span>integrations<span class="token punctuation">.</span>requests_client <span class="token keyword">import</span> OAuth2Session
+
+<span class="token keyword">def</span> <span class="token function">get_oauth_client</span><span class="token punctuation">(</span>client_id<span class="token punctuation">,</span> client_secret<span class="token punctuation">,</span> authorize_url<span class="token punctuation">,</span> token_url<span class="token punctuation">,</span> redirect_uri<span class="token punctuation">,</span> scope<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> OAuth2Session<span class="token punctuation">(</span>
+        client_id<span class="token operator">=</span>client_id<span class="token punctuation">,</span>
+        client_secret<span class="token operator">=</span>client_secret<span class="token punctuation">,</span>
+        scope<span class="token operator">=</span>scope<span class="token punctuation">,</span>
+        redirect_uri<span class="token operator">=</span>redirect_uri
+    <span class="token punctuation">)</span><span class="token punctuation">,</span> authorize_url<span class="token punctuation">,</span> token_url
+
+
+<span class="token keyword">def</span> <span class="token function">login_oauth</span><span class="token punctuation">(</span>provider_name<span class="token operator">=</span><span class="token string">"github"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Simple OAuth login workflow.
+    Currently supports GitHub (default).
+    """</span>
+    <span class="token keyword">if</span> provider_name<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">"github"</span><span class="token punctuation">:</span>
+        client_id <span class="token operator">=</span> st<span class="token punctuation">.</span>secrets<span class="token punctuation">[</span><span class="token string">"oauth"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"github_client_id"</span><span class="token punctuation">]</span>
+        client_secret <span class="token operator">=</span> st<span class="token punctuation">.</span>secrets<span class="token punctuation">[</span><span class="token string">"oauth"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"github_client_secret"</span><span class="token punctuation">]</span>
+        authorize_url <span class="token operator">=</span> <span class="token string">"https://github.com/login/oauth/authorize"</span>
+        token_url <span class="token operator">=</span> <span class="token string">"https://github.com/login/oauth/access_token"</span>
+        redirect_uri <span class="token operator">=</span> st<span class="token punctuation">.</span>secrets<span class="token punctuation">[</span><span class="token string">"oauth"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"redirect_uri"</span><span class="token punctuation">]</span>
+        scope <span class="token operator">=</span> <span class="token string">"read:user user:email"</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span>f<span class="token string">"Unsupported provider {provider_name}"</span><span class="token punctuation">)</span>
+
+    client<span class="token punctuation">,</span> authorize_url<span class="token punctuation">,</span> token_url <span class="token operator">=</span> get_oauth_client<span class="token punctuation">(</span>
+        client_id<span class="token punctuation">,</span> client_secret<span class="token punctuation">,</span> authorize_url<span class="token punctuation">,</span> token_url<span class="token punctuation">,</span> redirect_uri<span class="token punctuation">,</span> scope
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token string">"oauth_token"</span> <span class="token operator">not</span> <span class="token keyword">in</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">:</span>
+        <span class="token comment"># Step 1: Redirect user</span>
+        auth_url<span class="token punctuation">,</span> state <span class="token operator">=</span> client<span class="token punctuation">.</span>create_authorization_url<span class="token punctuation">(</span>authorize_url<span class="token punctuation">)</span>
+        st<span class="token punctuation">.</span>session_state<span class="token punctuation">[</span><span class="token string">"oauth_state"</span><span class="token punctuation">]</span> <span class="token operator">=</span> state
+        st<span class="token punctuation">.</span>markdown<span class="token punctuation">(</span>f<span class="token string">"[🔑 Login with {provider_name}]({auth_url})"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        st<span class="token punctuation">.</span>success<span class="token punctuation">(</span>f<span class="token string">"✅ Logged in with {provider_name}"</span><span class="token punctuation">)</span>
+
+</code></pre>
+<hr>
+<h3 id="secure-pages-with-oauth">3. Secure Pages with OAuth</h3>
+<p>Modify your <code>app.py</code>:</p>
+<pre class=" language-py"><code class="prism  language-py"><span class="token keyword">import</span> streamlit <span class="token keyword">as</span> st
+<span class="token keyword">from</span> auth <span class="token keyword">import</span> login_oauth
+
+<span class="token comment"># -----------------------</span>
+<span class="token comment"># Main App</span>
+<span class="token comment"># -----------------------</span>
+st<span class="token punctuation">.</span>sidebar<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"📍 Navigation"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Protect pages: show login first</span>
+<span class="token keyword">if</span> <span class="token string">"oauth_token"</span> <span class="token operator">not</span> <span class="token keyword">in</span> st<span class="token punctuation">.</span>session_state<span class="token punctuation">:</span>
+    st<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"🔐 Please Login"</span><span class="token punctuation">)</span>
+    login_oauth<span class="token punctuation">(</span><span class="token string">"github"</span><span class="token punctuation">)</span>   <span class="token comment"># you can switch to Google/Azure later</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    page <span class="token operator">=</span> st<span class="token punctuation">.</span>sidebar<span class="token punctuation">.</span>radio<span class="token punctuation">(</span><span class="token string">"Go to"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"Home"</span><span class="token punctuation">,</span> <span class="token string">"Config"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> page <span class="token operator">==</span> <span class="token string">"Config"</span><span class="token punctuation">:</span>
+        config_page<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        home_page<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<hr>
+<h3 id="configure-secrets">4. Configure Secrets</h3>
+<p>Store credentials in <code>.streamlit/secrets.toml</code> (never in code):</p>
+<pre><code>[oauth]  
+github_client_id = "your_client_id"  
+github_client_secret = "your_client_secret"  
+redirect_uri = "http://localhost:8501"` 
+</code></pre>
+<hr>
+<h3 id="run">5. Run</h3>
+<p><code>streamlit run app.py</code></p>
 </div>
 </body>
 
